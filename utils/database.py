@@ -44,7 +44,8 @@ def make_slug(scientific_name: str) -> str:
 
 LIST_COLUMNS = (
     "id, scientific_name, dutch_names, slug, category, "
-    "edible, toxic, light_needs, bloom_start, bloom_end, soil_types, photos"
+    "edible, toxic, light_needs, bloom_start, bloom_end, soil_types, photos, "
+    "evergreen, hardiness, family, family_common"
 )
 
 
@@ -141,6 +142,8 @@ def filter_plants(
     light_needs: Optional[List[str]] = None,
     soil_types: Optional[List[str]] = None,
     categories: Optional[List[str]] = None,
+    evergreen: Optional[bool] = None,
+    hardiness: Optional[List[str]] = None,
 ) -> List[Dict]:
     """Filter planten op basis van eigenschappen."""
     client = get_client()
@@ -156,6 +159,10 @@ def filter_plants(
         q = q.in_("light_needs", light_needs)
     if categories:
         q = q.in_("category", categories)
+    if evergreen is not None:
+        q = q.eq("evergreen", evergreen)
+    if hardiness:
+        q = q.in_("hardiness", hardiness)
 
     results: List[Dict] = (q.order("scientific_name").execute()).data or []
 
@@ -168,6 +175,103 @@ def filter_plants(
         ]
 
     return results
+
+
+# ── Plantenfamilies ──────────────────────────────────────────────────────────
+
+@st.cache_data(ttl=300, show_spinner=False)
+def get_all_families() -> List[Dict]:
+    """Geeft alle plantenfamilies terug, gesorteerd op naam."""
+    response = (
+        get_client()
+        .table("plant_families")
+        .select("*")
+        .order("name")
+        .execute()
+    )
+    return response.data or []
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def get_family(name: str) -> Optional[Dict]:
+    """Zoek één plantenfamilie op naam."""
+    response = (
+        get_client()
+        .table("plant_families")
+        .select("*")
+        .eq("name", name)
+        .limit(1)
+        .execute()
+    )
+    return response.data[0] if response.data else None
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def get_plants_by_family(family_name: str) -> List[Dict]:
+    """Geeft alle planten in een bepaalde familie terug."""
+    response = (
+        get_client()
+        .table("plants")
+        .select(LIST_COLUMNS)
+        .eq("family", family_name)
+        .order("scientific_name")
+        .execute()
+    )
+    return response.data or []
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def get_families_with_counts() -> List[Dict]:
+    """Geeft families terug met het aantal planten per familie."""
+    # Haal alle planten op met hun familie
+    all_pl = get_all_plants("family, family_common")
+    counts: dict = {}
+    for p in all_pl:
+        fam = p.get("family")
+        if fam:
+            counts[fam] = counts.get(fam, 0) + 1
+
+    # Combineer met family-tabel
+    families = get_all_families()
+    fam_map = {f["name"]: f for f in families}
+
+    result = []
+    for fam_name, count in sorted(counts.items()):
+        entry = fam_map.get(fam_name, {"name": fam_name, "dutch_name": None, "description": None})
+        result.append({**entry, "plant_count": count})
+
+    return result
+
+
+def upsert_family(family_data: Dict) -> Optional[Dict]:
+    """Maak een nieuwe familie aan of werk een bestaande bij (op naam)."""
+    try:
+        resp = (
+            get_admin_client()
+            .table("plant_families")
+            .upsert(family_data, on_conflict="name")
+            .execute()
+        )
+        get_all_families.clear()
+        get_family.clear()
+        get_families_with_counts.clear()
+        return resp.data[0] if resp.data else None
+    except Exception as exc:
+        st.error(f"Fout bij opslaan familie: {exc}")
+        return None
+
+
+def delete_family(family_id: str) -> bool:
+    """Verwijder een plantenfamilie."""
+    try:
+        get_admin_client().table("plant_families").delete().eq("id", family_id).execute()
+        get_all_families.clear()
+        get_family.clear()
+        get_families_with_counts.clear()
+        return True
+    except Exception as exc:
+        st.error(f"Fout bij verwijderen familie: {exc}")
+        return False
 
 
 # ── Soort van de dag ─────────────────────────────────────────────────────────

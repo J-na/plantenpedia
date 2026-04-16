@@ -12,16 +12,21 @@ from typing import Any, Dict
 import streamlit as st
 
 from utils.database import (
+    delete_family,
     delete_plant,
+    get_all_families,
     get_all_plants,
+    get_family,
     get_plant_by_id,
     get_pod_schedule,
     remove_pod_schedule,
     schedule_plant_of_day,
+    upsert_family,
     upsert_plant,
 )
 from utils.display import (
     CATEGORY_LABELS,
+    HARDINESS_LABELS,
     LIGHT_LABELS,
     MONTH_NAMES,
     SOIL_LABELS,
@@ -76,11 +81,12 @@ with col_out:
         st.rerun()
 
 # ── Tabbladen ─────────────────────────────────────────────────────────────────
-tab_pod, tab_edit, tab_new, tab_del = st.tabs([
+tab_pod, tab_edit, tab_new, tab_del, tab_fam = st.tabs([
     "🌸 Soort van de dag",
     "📝 Plant bewerken",
     "➕ Plant toevoegen",
     "🗑️ Plant verwijderen",
+    "🌿 Plantenfamilies",
 ])
 
 # ════════════════════════════════════════════════════════════════
@@ -194,6 +200,44 @@ def render_plant_form(plant: Dict, form_key: str) -> None:
             growth_habit = st.text_input(
                 "Groeiwijze (vast/eenjarig/tweejarig/…)",
                 value=plant.get("growth_habit") or "",
+            )
+
+        c_fam1, c_fam2, c_orig = st.columns(3)
+        with c_fam1:
+            family = st.text_input(
+                "Plantenfamilie (wetenschappelijk)",
+                value=plant.get("family") or "",
+                placeholder="bv. Asteraceae",
+            )
+        with c_fam2:
+            family_common = st.text_input(
+                "Plantenfamilie (Nederlands)",
+                value=plant.get("family_common") or "",
+                placeholder="bv. Composietenfamilie",
+            )
+        with c_orig:
+            origin = st.text_input(
+                "Herkomst / verspreidingsgebied",
+                value=plant.get("origin") or "",
+                placeholder="bv. Europa, West-Azië",
+            )
+
+        c_hard, c_eg = st.columns(2)
+        with c_hard:
+            hard_opts = [""] + list(HARDINESS_LABELS.keys())
+            curr_hard = plant.get("hardiness") or ""
+            hard_idx = hard_opts.index(curr_hard) if curr_hard in hard_opts else 0
+            hardiness = st.selectbox(
+                "Winterhardheid",
+                options=hard_opts,
+                format_func=lambda x: HARDINESS_LABELS.get(x, "— Selecteer —") if x else "— Selecteer —",
+                index=hard_idx,
+            )
+        with c_eg:
+            st.markdown("&nbsp;")
+            evergreen = st.checkbox(
+                "🌲 Wintergroen (behoudt blad het hele jaar)",
+                value=bool(plant.get("evergreen")),
             )
 
         st.subheader("Basisinformatie")
@@ -355,6 +399,11 @@ def render_plant_form(plant: Dict, form_key: str) -> None:
             "scientific_name": sci.strip(),
             "dutch_names": [n.strip() for n in dutch_raw.split(",") if n.strip()],
             "category": category,
+            "family": family.strip() or None,
+            "family_common": family_common.strip() or None,
+            "origin": origin.strip() or None,
+            "hardiness": hardiness or None,
+            "evergreen": evergreen,
             "growth_habit": growth_habit.strip() or None,
             "description": description.strip() or None,
             "distribution": distribution.strip() or None,
@@ -456,4 +505,80 @@ with tab_del:
             if st.button("🗑️ Definitief verwijderen", type="primary"):
                 if delete_plant(del_id):
                     st.success("Plant verwijderd.")
+                    st.rerun()
+
+
+# ════════════════════════════════════════════════════════════════
+# TAB 5 — Plantenfamilies beheren
+# ════════════════════════════════════════════════════════════════
+with tab_fam:
+    st.header("Plantenfamilies beheren")
+    st.markdown(
+        "Voeg hier beschrijvingen toe aan plantenfamilies. "
+        "De familienaam koppelt automatisch aan planten die dezelfde waarde hebben in het veld 'Plantenfamilie'."
+    )
+
+    all_families = get_all_families()
+
+    # ── Bestaande families bewerken ──────────────────────────────
+    if all_families:
+        st.subheader("Bestaande families")
+        fam_opts: Dict[str, str] = {
+            f["id"]: f"{f['name']}" + (f" — {f['dutch_name']}" if f.get("dutch_name") else "")
+            for f in all_families
+        }
+        sel_fam = st.selectbox(
+            "Selecteer een familie",
+            options=[""] + list(fam_opts.keys()),
+            format_func=lambda x: fam_opts.get(x, "— Selecteer —"),
+            key="sel_fam_edit",
+        )
+
+        if sel_fam:
+            fam = next((f for f in all_families if f["id"] == sel_fam), {})
+            with st.form("fam_edit_form"):
+                fn = st.text_input("Familienaam (wetenschappelijk)", value=fam.get("name", ""))
+                fd = st.text_input("Familienaam (Nederlands)", value=fam.get("dutch_name") or "")
+                fd_desc = st.text_area(
+                    "Beschrijving (markdown)", value=fam.get("description") or "", height=200
+                )
+                c_save, c_del = st.columns(2)
+                save_fam = c_save.form_submit_button("💾 Opslaan", type="primary")
+                del_fam = c_del.form_submit_button("🗑️ Verwijderen")
+
+            if save_fam:
+                result = upsert_family({
+                    "id": fam["id"],
+                    "name": fn.strip(),
+                    "dutch_name": fd.strip() or None,
+                    "description": fd_desc.strip() or None,
+                })
+                if result:
+                    st.success(f"✅ Familie **{fn}** opgeslagen!")
+                    st.rerun()
+
+            if del_fam:
+                if delete_family(fam["id"]):
+                    st.success("Familie verwijderd.")
+                    st.rerun()
+
+    st.divider()
+
+    # ── Nieuwe familie toevoegen ─────────────────────────────────
+    st.subheader("Nieuwe familie toevoegen")
+    with st.form("fam_new_form"):
+        new_fn = st.text_input("Familienaam (wetenschappelijk) *", placeholder="bv. Asteraceae")
+        new_fd = st.text_input("Familienaam (Nederlands)", placeholder="bv. Composietenfamilie")
+        new_desc = st.text_area("Beschrijving (markdown)", height=200)
+        if st.form_submit_button("➕ Familie aanmaken", type="primary"):
+            if not new_fn.strip():
+                st.error("Familienaam is verplicht.")
+            else:
+                result = upsert_family({
+                    "name": new_fn.strip(),
+                    "dutch_name": new_fd.strip() or None,
+                    "description": new_desc.strip() or None,
+                })
+                if result:
+                    st.success(f"✅ Familie **{new_fn}** aangemaakt!")
                     st.rerun()

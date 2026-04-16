@@ -63,6 +63,22 @@ SOIL_LABELS: Dict[str, str] = {
     "nat":        "Natte / moerassige grond",
 }
 
+HARDINESS_LABELS: Dict[str, str] = {
+    "volledig_winterhard": "Volledig winterhard",
+    "winterhard":          "Winterhard",
+    "matig_winterhard":    "Matig winterhard",
+    "vorstgevoelig":       "Vorstgevoelig",
+    "niet_winterhard":     "Niet winterhard",
+}
+
+HARDINESS_ICONS: Dict[str, str] = {
+    "volledig_winterhard": "❄️❄️",
+    "winterhard":          "❄️",
+    "matig_winterhard":    "🌡️",
+    "vorstgevoelig":       "⚠️",
+    "niet_winterhard":     "🌴",
+}
+
 PHOTO_TYPE_LABELS: Dict[str, str] = {
     "jonge_plant":  "Jonge plant",
     "bloeiwijze":   "Bloeiwijze",
@@ -175,12 +191,17 @@ def _render_header(plant: Dict) -> None:
     dutch_names = plant.get("dutch_names") or []
     dutch_str = ", ".join(dutch_names)
 
+    # Titel met wintergroen-badge
+    title_parts = [dutch_str or plant["scientific_name"]]
+    evergreen_badge = " 🌲 *Wintergroen*" if plant.get("evergreen") else ""
     st.title(dutch_str or plant["scientific_name"])
+    if evergreen_badge:
+        st.caption("🌲 Wintergroene plant — behoudt zijn blad het hele jaar door")
     st.markdown(f"### *{plant['scientific_name']}*")
 
-    # Eigenschappen-badges als columns
+    # Eigenschappen-badges als 6 columns
     cat = plant.get("category", "overig")
-    cols = st.columns(5)
+    cols = st.columns(6)
     with cols[0]:
         st.metric("Type", CATEGORY_LABELS.get(cat, cat))
     with cols[1]:
@@ -203,6 +224,13 @@ def _render_header(plant: Dict) -> None:
         else:
             st.metric("Hoogte", "–")
     with cols[4]:
+        hardiness = plant.get("hardiness")
+        if hardiness:
+            icon = HARDINESS_ICONS.get(hardiness, "❄️")
+            st.metric("Winterhardheid", f"{icon} {HARDINESS_LABELS.get(hardiness, hardiness)}")
+        else:
+            st.metric("Winterhardheid", "–")
+    with cols[5]:
         if plant.get("toxic"):
             st.metric("Status", "⚠️ Giftig")
         elif plant.get("edible"):
@@ -235,6 +263,31 @@ def _render_header(plant: Dict) -> None:
 
 def _render_basic_info(plant: Dict) -> None:
     st.header("Basisinformatie")
+
+    # Herkomst & familie — compacte metarij
+    family = plant.get("family")
+    family_common = plant.get("family_common")
+    origin = plant.get("origin")
+    meta_items = []
+    if origin:
+        meta_items.append(f"🌍 **Herkomst:** {origin}")
+    if family:
+        fam_label = family
+        if family_common:
+            fam_label = f"{family} ({family_common})"
+        meta_items.append(f"🌿 **Familie:** {fam_label}")
+    if meta_items:
+        meta_col, btn_col = st.columns([4, 1])
+        with meta_col:
+            st.markdown(" &nbsp;·&nbsp; ".join(meta_items), unsafe_allow_html=True)
+        with btn_col:
+            if family and st.button(
+                f"Bekijk familie →",
+                key=f"fam_btn_{plant.get('slug', family)}",
+                help=f"Alle soorten in de familie {family}",
+            ):
+                st.query_params["family"] = family
+                st.switch_page("pages/4_Families.py")
 
     if plant.get("description"):
         st.markdown(plant["description"])

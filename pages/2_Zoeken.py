@@ -7,6 +7,7 @@ import streamlit as st
 from utils.database import filter_plants, make_slug
 from utils.display import (
     CATEGORY_LABELS,
+    HARDINESS_LABELS,
     LIGHT_LABELS,
     MONTH_NAMES,
     SOIL_LABELS,
@@ -88,7 +89,18 @@ with st.form("filter_form"):
             label_visibility="collapsed",
         )
 
-        st.markdown("&nbsp;")  # verticale ruimte
+        st.markdown("**Winterhardheid**")
+        selected_hardiness = st.multiselect(
+            "Winterhardheid",
+            options=list(HARDINESS_LABELS.keys()),
+            format_func=lambda x: HARDINESS_LABELS[x],
+            label_visibility="collapsed",
+        )
+
+        st.markdown("**Overige eigenschappen**")
+        only_evergreen = st.checkbox("Alleen wintergroene planten")
+
+        st.markdown("&nbsp;")
         submitted = st.form_submit_button(
             "🔍 Zoeken", type="primary", use_container_width=True
         )
@@ -115,6 +127,8 @@ if submitted:
         light_needs=selected_light or None,
         soil_types=selected_soils or None,
         categories=selected_categories or None,
+        evergreen=True if only_evergreen else None,
+        hardiness=selected_hardiness or None,
     )
 
     st.divider()
@@ -186,6 +200,8 @@ else:
         | **Bloeiperiode** | Welke maand wil je bloei zien? |
         | **Lichtbehoefte** | Vol zon, halfschaduw of schaduw |
         | **Grondsoort** | Zand, klei, leem, veen, humusrijk, etc. |
+        | **Winterhardheid** | Van volledig winterhard tot vorstgevoelig |
+        | **Wintergroen** | Plant behoudt zijn blad het hele jaar door |
 
         Je kunt meerdere waarden binnen een filter selecteren — dan worden alle
         planten getoond die aan *één of meer* van die waarden voldoen.

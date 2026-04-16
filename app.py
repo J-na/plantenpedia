@@ -79,9 +79,9 @@ st.markdown(
 
 # ── Soort van de dag ──────────────────────────────────────────────────────────
 today = date.today()
-dag_str = today.strftime("%-d %B %Y") if hasattr(today, "strftime") else today.isoformat()
+dag_str = f"{today.day} {MONTH_NAMES[today.month]} {today.year}"
 
-st.markdown(f"## 🌸 Soort van de dag &nbsp;·&nbsp; {today.strftime('%d %B %Y')}")
+st.markdown(f"## 🌸 Soort van de dag &nbsp;·&nbsp; {dag_str}")
 
 plant = get_plant_of_day(today)
 
@@ -143,7 +143,7 @@ st.divider()
 # ── Navigatiekaarten ──────────────────────────────────────────────────────────
 st.markdown("## Verken de gids")
 
-nav1, nav2, nav3 = st.columns(3, gap="medium")
+nav1, nav2, nav3, nav4 = st.columns(4, gap="medium")
 
 with nav1:
     with st.container(border=True):
@@ -159,11 +159,20 @@ with nav2:
         st.markdown("### 🔍 Zoeken & filteren")
         st.markdown(
             "Vind planten op basis van eigenschappen: eetbaarheid, bloeiperiode, "
-            "benodigde lichtinval en geschikte grondsoort."
+            "lichtinval, grondsoort en winterhardheid."
         )
         st.page_link("pages/2_Zoeken.py", label="Ga naar zoeken →", icon="🔍")
 
 with nav3:
+    with st.container(border=True):
+        st.markdown("### 🌿 Plantenfamilies")
+        st.markdown(
+            "Verken planten per botanische familie. Lees over gemeenschappelijke "
+            "kenmerken en ontdek verwante soorten."
+        )
+        st.page_link("pages/4_Families.py", label="Ga naar families →", icon="🌿")
+
+with nav4:
     with st.container(border=True):
         st.markdown("### ⚙️ Beheer")
         st.markdown(
