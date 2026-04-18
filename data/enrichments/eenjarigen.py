@@ -1,0 +1,214 @@
+"""
+Plantenpedia — Verrijkingsdata: Eenjarigen & Tweejarigen
+
+Voeg nieuwe planten toe door een nieuw item aan ENRICHMENTS toe te voegen:
+
+    "Wetenschappelijke naam": {
+        "description": "...",
+        "photos": [wiki("Bestandsnaam.jpg", "Bijschrift")],
+        ...
+    },
+
+Zie data/enrichments/__init__.py voor alle beschikbare velden.
+Gebruik `python data/upload.py --help` om te uploaden.
+"""
+from ._helpers import wiki, img  # noqa: F401
+
+ENRICHMENTS: dict = {
+
+"Alcea rosea": {
+    "description": "De stokroos is een echte boerentuin-klassieker: statige stengels van 1,5–2,5 m dragen van juli tot september grote, zijdeachtige bloemen in wit, roze, rood, geel of zwart-paars. Ze zijn tweejarig maar zaaien zichzelf zo gemakkelijk dat ze permanent aanwezig zijn.",
+    "distribution": "Oorspronkelijk afkomstig uit Azië; in Europa al eeuwenlang gekweekt langs boerderijen en kerktuinen.",
+    "growth_habit": "Tweejarige plant van 150–250 cm; bloeit in het tweede jaar van juli tot september.",
+    "ecological_value": "Hommels en bijen gebruiken de grote bloemen als nectar- en stuifmeelbron; het holle merg van de stengels biedt nestmogelijkheden voor wilde bijen.",
+    "edible_parts": "Bloemen en jonge blaadjes zijn eetbaar; de bloemen worden gebruikt in thee en ter decoratie.",
+    "taste": "Mild, licht zoet, slijmerig (slijmstoffen)",
+    "fertilizer_needs": "Compost bij het planten; vochtige maar goed doorlatende grond.",
+    "pruning_info": "Na de bloei de zaaddozen laten staan voor herplant; verdorde stengels in het najaar verwijderen.",
+    "maintenance_level": "laag",
+    "family": "Malvaceae", "family_common": "Kaasjeskruidfamilie",
+    "origin": "Azië",
+    "hardiness": "winterhard", "evergreen": False,
+    "photos": [wiki("Alcea_rosea,_Cloppenburg_(DE)P6244238.jpg", "Stokrozen in bloei")],
+},
+
+"Calendula officinalis": {
+    "description": "Goudsbloem is de optimistischste plant van de tuin: van mei tot oktober bloeien de oranje en gele bloemen onvermoeibaar en herstellen ze zichzelf na regen alsof er niets is gebeurd. De bloemblaadjes zijn eetbaar en medicinaal waardevol.",
+    "distribution": "Herkomst onzeker, waarschijnlijk het Mediterraan gebied; al duizenden jaren geteeld in tuinen wereldwijd.",
+    "growth_habit": "Eenjarige plant van 30–60 cm; bloeit van mei tot de eerste vorst.",
+    "ecological_value": "Zweefvliegen, bijen en vlinders drinken de rijke nectar; goudsbloem is een must in de moestuin als insectenvriend.",
+    "edible_parts": "Bloemblaadjes zijn eetbaar en kunnen worden gebruikt als safraanvervanger voor kleur.",
+    "taste": "Licht bitter, fris, bloemig",
+    "recipes": "Strooi verse bloemblaadjes over salades of rijst. Gebruik als decoratie op taarten en soepen.",
+    "medicinal_uses": "Goudsbloem is een klassiek wondheling-kruid: zalf van de bloemen verzacht brandwonden, eczeem en droge huid.",
+    "fertilizer_needs": "Weinig voeding nodig; zaait zichzelf rijkelijk.",
+    "pruning_info": "Regelmatig dode bloemen verwijderen voor een langere bloeiduur.",
+    "maintenance_level": "laag",
+    "family": "Asteraceae", "family_common": "Composietenfamilie",
+    "origin": "Mediterraan gebied",
+    "hardiness": "vorstgevoelig", "evergreen": False,
+    "photos": [wiki("Calendula_officinalis,_Armenia,_Hatsik.jpg", "Goudsbloem in bloei")],
+},
+
+"Centaurea cyanus": {
+    "description": "Korenbloem is het symbool van het akker- en bloemveldenseizoen: de intensief blauwe bloemen van juni tot september zijn een van de meest geliefde wilde bloemen van Europa. Ze hoorden vroeger onlosmakelijk bij het graanveld en zijn nu teruggekeerd in bloemrijke borders.",
+    "distribution": "Inheems op graanakkers door heel Europa; tegenwoordig zeldzamer in het wild maar populair in bloemmengsels.",
+    "growth_habit": "Eenjarige plant van 30–80 cm; bloeit van juni tot september.",
+    "ecological_value": "Een van de beste planten voor bijen en zweefvliegen; de bloemen zijn een rijke nectarbron.",
+    "edible_parts": "Bloemen zijn eetbaar en worden gebruikt als salade-decoratie of in thee.",
+    "taste": "Licht bitter, bloemig",
+    "fertilizer_needs": "Geen voeding nodig; zaad direct in de grond zaaien in het voorjaar.",
+    "pruning_info": "Dode bloemen verwijderen voor langere bloei; laat sommige staan voor zaad.",
+    "maintenance_level": "laag",
+    "family": "Asteraceae", "family_common": "Composietenfamilie",
+    "origin": "Oost-Mediterraan gebied (verwilderd in Europa)",
+    "hardiness": "winterhard", "evergreen": False,
+    "photos": [wiki("Cornflower,_McLaren_Park_-_geograph.org.uk_-_4021920.jpg", "Korenbloem")],
+},
+
+"Digitalis purpurea": {
+    "description": "Vingerhoedskruid is een van de meest imposante tweejarige planten: hoge stengels van 60–150 cm dragen in juni–juli tientallen buisvormige bloemen in roze, paars of wit, elk met een gevlekte mond. Alle delen zijn uiterst giftig, maar de plant is onmisbaar in de tuin.",
+    "distribution": "Inheems in bosranden en heide in West-Europa; in Nederland verwilderd op zandgrond en als tuinplant.",
+    "growth_habit": "Tweejarig: het eerste jaar een bladrozet, het tweede jaar een bloemstengel tot 150 cm.",
+    "ecological_value": "De buisvormige bloemen zijn speciaal vormgegeven voor hommels als bestuivers — ze zijn de enigen die de bloemen kunnen bereiken.",
+    "insects_animals": [
+        {"name": "Hommel", "type": "insect", "desirable": True, "description": "Hommels zijn de exclusieve bestuivers: ze passen precies in de bloemmond."},
+    ],
+    "toxic_info": "Alle plantendelen zijn giftig (digitalis-glycosiden); kan hartproblemen veroorzaken. Absoluut niet eten.",
+    "fertilizer_needs": "Compost bij het planten; vochtige, humusrijke, licht zure grond.",
+    "pruning_info": "Laat een deel van de zaaddozen staan voor herplant; de rest verwijderen.",
+    "maintenance_level": "laag",
+    "family": "Plantaginaceae", "family_common": "Weegbreefamilie",
+    "origin": "West-Europa",
+    "hardiness": "volledig_winterhard", "evergreen": False,
+    "photos": [wiki("Digitalis_purpurea,_Common_Foxglove_-_geograph.org.uk_-_4046266.jpg", "Vingerhoedskruid in bloei")],
+},
+
+"Helianthus annuus": {
+    "description": "De zonnebloem is de vrolijkste eenjarige van de zomertuin: op stengels van 50–300 cm dragen de enorme gele bloemen met bruin hart van juli tot september. In de herfst hangen de rijpe zaadknoppen vol eetbare zaden die ook vogels als pimpelmees en distelvink smullen.",
+    "distribution": "Inheems in Noord-Amerika; al duizenden jaren geteeld door inheemse volkeren voor de oliezaden.",
+    "growth_habit": "Eenjarige plant van 50–300 cm; bloeit van juli tot september.",
+    "ecological_value": "Bijen en hommels bezoeken de open bloemschijven; in de herfst eten distelvink en pimpelmees de zaden.",
+    "insects_animals": [
+        {"name": "Distelvink", "type": "vogel", "desirable": True, "description": "Eet de rijpe zaden in de herfst rechtstreeks van de knoppen."},
+        {"name": "Pimpelmees", "type": "vogel", "desirable": True, "description": "Bezoekt de zaaddozen voor de energierijke zaden."},
+    ],
+    "edible_parts": "Zaden zijn eetbaar: rauw, geroosterd of als olie. Ook de bloemblaadjes zijn eetbaar.",
+    "taste": "Nootachtig, licht zoetig (zaden)",
+    "recipes": "Rooster de zaden voor een knapperige topping op salades en soepen. Pers ze voor zonnebloemolie.",
+    "fertilizer_needs": "Matig rijke grond; bij te rijke bemesting veel blad ten koste van bloei.",
+    "pruning_info": "Laat de zaadknoppen staan voor vogels; na de winter verwijderen.",
+    "maintenance_level": "laag",
+    "family": "Asteraceae", "family_common": "Composietenfamilie",
+    "origin": "Noord-Amerika",
+    "hardiness": "vorstgevoelig", "evergreen": False,
+    "photos": [wiki("Sunflower_sky_backdrop.jpg", "Zonnebloem")],
+},
+
+"Tagetes": {
+    "description": "Afrikaantjes zijn de kleurrijkste eenjarigen van het late zomerterras: oranje, gele en tweekleurige bloemen bloeien van juni tot de eerste vorst. De sterke geur van het blad werkt als insectverjager en wordt in de moestuin gebruikt om aaltjes te weren.",
+    "distribution": "Inheems in Mexico en Midden-Amerika; wereldwijd een van de meest geteelde eenjarigen.",
+    "growth_habit": "Eenjarige plant van 15–60 cm; bloeit onvermoeibaar van juni tot de eerste vorst.",
+    "ecological_value": "Zweefvliegen en kleine bijen bezoeken de bloemen; het blad werkt als aaltjeswerende plant in de moestuin.",
+    "edible_parts": "Bloemblaadjes zijn eetbaar en smaken naar citroen-kruidig; worden gebruikt als safraanvervanger.",
+    "taste": "Citrusachtig, licht kruidig, ietwat bitter",
+    "fertilizer_needs": "Matig rijke grond; te rijke grond geeft minder bloei.",
+    "pruning_info": "Regelmatig dode bloemen verwijderen voor een maximale bloeiduur.",
+    "maintenance_level": "laag",
+    "family": "Asteraceae", "family_common": "Composietenfamilie",
+    "origin": "Mexico en Midden-Amerika",
+    "hardiness": "vorstgevoelig", "evergreen": False,
+    "photos": [wiki("Tagetes_erecta(marigold).jpg", "Afrikaantje")],
+},
+
+"Zinnia elegans": {
+    "description": "Zinnia's zijn de glamour-koninginnen van de zomertuin: grote, ronde bloemen in felrood, oranje, roze, wit of bicolor bloeien van juli tot de eerste nachtvorst. Ze zijn eenvoudig uit zaad te telen en groeien snel tot bloemenpracht.",
+    "distribution": "Inheems in Mexico; overal ter wereld populair als eenjarige snijbloem en tuinplant.",
+    "growth_habit": "Eenjarige plant van 30–90 cm; bloeit van juli tot de eerste vorst.",
+    "ecological_value": "Vlinders (distelvlinder, atalanta) en zweefvliegen zijn verzot op de rijke nectarproductie.",
+    "fertilizer_needs": "Matig rijke, goed doorlatende grond; regelmatig water in droge perioden.",
+    "pruning_info": "Dode bloemen regelmatig verwijderen stimuleert de vorming van nieuwe knoppen.",
+    "maintenance_level": "laag",
+    "family": "Asteraceae", "family_common": "Composietenfamilie",
+    "origin": "Mexico",
+    "hardiness": "vorstgevoelig", "evergreen": False,
+    "photos": [wiki("Zinnia_elegans,_2020-09-22,_Beechview,_01.jpg", "Zinnia in bloei")],
+},
+
+"Cosmos bipinnatus": {
+    "description": "Cosmea is een luchtige, romantische eenjarige met vederlichte, fijngesneden blaadjes en grote, sierlijke bloemen in roze, wit of donkerroze met een geel hart. Van juli tot oktober bloeit de plant onvermoeibaar en trekt een eindeloze stroom vlinders en bijen.",
+    "distribution": "Inheems in Mexico; wereldwijd populair als eenjarige border- en snijbloem.",
+    "growth_habit": "Eenjarige plant van 60–120 cm; bloeit van juli tot de eerste vorst.",
+    "ecological_value": "Vlinders en zweefvliegen zijn gek op de open bloemschijven; een topkeuze voor de vlindertuin.",
+    "fertilizer_needs": "Arme grond is juist beter — op rijke grond veel blad en weinig bloem.",
+    "pruning_info": "Dode bloemen verwijderen voor een langere bloeiduur; laat sommige zaaddozen staan.",
+    "maintenance_level": "laag",
+    "family": "Asteraceae", "family_common": "Composietenfamilie",
+    "origin": "Mexico",
+    "hardiness": "vorstgevoelig", "evergreen": False,
+    "photos": [wiki("Cosmos_bipinnatus(2).jpg", "Cosmea in bloei")],
+},
+
+"Hesperis matronalis": {
+    "description": "Damastbloem is een geurende tweejarige plant met paarse of witte bloemen die 's avonds het sterkst geuren — een klassieke cottage garden plant die zichzelf jaarlijks verspreidt. De geur trekt nachtvlinders aan.",
+    "distribution": "Inheems in Zuid-Europa en West-Azië; in Nederland verwilderd langs bermen en in tuinen.",
+    "growth_habit": "Tweejarige van 60–100 cm; bloeit in mei–juli.",
+    "ecological_value": "De avondgeur trekt nachtvlinders; overdag bezoeken vlinders en hommels de bloemen.",
+    "edible_parts": "Bloemen en jonge blaadjes zijn eetbaar als garnering.",
+    "maintenance_level": "laag",
+    "family": "Brassicaceae", "family_common": "Kruisbloemenfamilie",
+    "origin": "Zuid-Europa en West-Azië",
+    "hardiness": "winterhard", "evergreen": False,
+    "photos": [wiki("Hesperis_matronalis,_2015-05-29,_Mount_Lebanon,_01.jpg", "Damastbloem")],
+},
+
+"Begonia semperflorens": {
+    "description": "Zaaibegonia is een compacte, rijkbloeiende eenjarige voor halfschaduw tot schaduw: van juni tot oktober bloeit de plant ononderbroken in wit, roze of rood, zelfs op moeilijke plaatsen waar weinig anders wil bloeien.",
+    "distribution": "Inheems in Brazilië; in Nederland een populaire beplantingsbegonia voor borders en potten.",
+    "growth_habit": "Eenjarige van 15–30 cm; bloeit van juni tot de eerste vorst.",
+    "fertilizer_needs": "Matig rijke, vochtige grond; regelmatig bijmesten.",
+    "maintenance_level": "midden",
+    "family": "Begoniaceae", "family_common": "Begoniafamilie",
+    "origin": "Brazilië",
+    "hardiness": "niet_winterhard", "evergreen": False,
+    "photos": [wiki("Begonia_semperflorens,_Impatiens_walleriana,_Abutilon_pictum.jpg", "Zaaibegonia")],
+},
+
+"Impatiens walleriana": {
+    "description": "Vlijtig Liesje is de meest populaire schaduwplant voor balkon en terras: van juni tot oktober bloeit de plant onvermoeibaar in alle kleuren van de regenboog, zelfs in diepe schaduw. De naam slaat op het explosief openspringen van de rijpe zaaddozen.",
+    "distribution": "Inheems in Oost-Afrika; in Nederland een klassieke balkon- en kamerplant.",
+    "growth_habit": "Eenjarige van 20–40 cm; bloeit van juni tot de eerste vorst.",
+    "pests_diseases": "Valse meeldauw (Plasmopara destructor) kan grote populaties vernietigen; kies resistente cultivars.",
+    "maintenance_level": "laag",
+    "family": "Balsaminaceae", "family_common": "Balsemkruidfamilie",
+    "origin": "Oost-Afrika",
+    "hardiness": "niet_winterhard", "evergreen": False,
+    "photos": [wiki("Impatiens_walleriana,_Washington,_D.C.jpg", "Vlijtig Liesje")],
+},
+
+"Dianthus barbatus": {
+    "description": "Duizendschoon is een charmante tweejarige met dichte, kleurrijke bloemschermen van juni tot juli die de tuin kleuren met rood, roze, wit of bicolor. De bloemen geuren aangenaam en worden gegeten door dagvlinders.",
+    "distribution": "Inheems in berggebieden van Midden- en Zuid-Europa; in Nederland een klassieke cottagetuinplant.",
+    "growth_habit": "Tweejarige van 30–60 cm; bloeit in juni–juli.",
+    "ecological_value": "Vlinders, hommels en bijen bezoeken de bloemschermen.",
+    "edible_parts": "Bloemblaadjes zijn eetbaar als decoratie.",
+    "maintenance_level": "laag",
+    "family": "Caryophyllaceae", "family_common": "Anjerfamilie",
+    "origin": "Midden- en Zuid-Europa",
+    "hardiness": "winterhard", "evergreen": False,
+    "photos": [wiki("Dianthus_barbatus*_(7188916133).jpg", "Duizendschoon")],
+},
+
+"Osteospermum cultivars": {
+    "description": "Spaanse margriet is een Afrikaanse madelief-achtige eenjarige met grote, witte, gele of paarse bloemen die van mei tot oktober bloeien. De bloemen sluiten 's avonds en bij slecht weer — een bijzonder ritme.",
+    "distribution": "Inheems in Zuid-Afrika; in Nederland een populaire terras- en border-eenjarige.",
+    "growth_habit": "Eenjarige of kuipplant van 20–40 cm; bloeit van mei tot oktober.",
+    "ecological_value": "Zweefvliegen en bijen bezoeken de open bloemschijven.",
+    "maintenance_level": "laag",
+    "family": "Asteraceae", "family_common": "Composietenfamilie",
+    "origin": "Zuid-Afrika",
+    "hardiness": "vorstgevoelig", "evergreen": False,
+    "photos": [wiki("Osteospermum_cultivar.jpg", "Spaanse margriet")],
+},
+
+}
