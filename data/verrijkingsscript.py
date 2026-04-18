@@ -10,6 +10,7 @@ Elke plant wordt direct na verwerking opgeslagen; onderbreking is veilig.
 """
 from __future__ import annotations
 import os, re, sys
+sys.stdout.reconfigure(encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
@@ -54,7 +55,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Nieuw-Zeeland",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Acaena_buchananii_kz1.jpg", "Acaena buchananii")],
+    "photos": [wiki("Acaena_buchananii_Hook.f._(AM_AK367579).jpg", "Acaena buchananii")],
 },
 
 "Acanthus mollis": {
@@ -69,7 +70,7 @@ ENRICHMENTS: dict = {
     "family": "Acanthaceae", "family_common": "Acanthusfamilie",
     "origin": "Mediterraan gebied",
     "hardiness": "matig_winterhard", "evergreen": False,
-    "photos": [wiki("Acanthus_mollis_Hdg_02.jpg", "Bloeiende acanthus")],
+    "photos": [wiki("Acanthus_mollis,_Bear's_Breeches_-_geograph.org.uk_-_8087257.jpg", "Bloeiende acanthus")],
 },
 
 "Achillea millefolium": {
@@ -92,7 +93,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa en West-Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Achillea_millefolium_kz.jpg", "Duizendblad in bloei")],
+    "photos": [wiki("Achillea_millefolium_001.JPG", "Duizendblad in bloei")],
 },
 
 "Aconitum carmichaelii": {
@@ -110,7 +111,7 @@ ENRICHMENTS: dict = {
     "family": "Ranunculaceae", "family_common": "Boterbloemfamilie",
     "origin": "China en Japan",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Aconitum_carmichaelii2.jpg", "Monnikskap in bloei")],
+    "photos": [wiki("Aconitum_carmichaelii_'Arendsii'.JPG", "Monnikskap in bloei")],
 },
 
 "Ajuga reptans": {
@@ -128,7 +129,7 @@ ENRICHMENTS: dict = {
     "family": "Lamiaceae", "family_common": "Lipbloemenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Ajuga_reptans_200904.jpg", "Zenegroen in bloei")],
+    "photos": [wiki("Ajuga_reptans,_2015-05-07,_Mount_Lebanon,_01.jpg", "Zenegroen in bloei")],
 },
 
 "Alchemilla mollis": {
@@ -145,7 +146,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Kaukasus en Turkije",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Alchemilla_mollis_003.jpg", "Vrouwenmantel in bloei")],
+    "photos": [wiki("Alchemilla_mollis,_Grass_Wood_(53060351457).jpg", "Vrouwenmantel in bloei")],
 },
 
 "Arabis caucasica": {
@@ -159,7 +160,7 @@ ENRICHMENTS: dict = {
     "family": "Brassicaceae", "family_common": "Kruisbloemenfamilie",
     "origin": "Mediterraan gebied en Kaukasus",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Arabis_caucasica_-_flowers_(aka).jpg", "Randjesbloem in bloei")],
+    "photos": [wiki("Arabis_caucasica.JPG", "Randjesbloem in bloei")],
 },
 
 "Armeria maritima": {
@@ -173,7 +174,7 @@ ENRICHMENTS: dict = {
     "family": "Plumbaginaceae", "family_common": "Strandkruidfamilie",
     "origin": "Kusten van Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Armeria_maritima_Whitley_Bay.jpg", "Engels gras aan de kust")],
+    "photos": [wiki("Armeria_maritima,_Bellhouse_Park.jpg", "Engels gras aan de kust")],
 },
 
 "Aster frikartii": {
@@ -207,7 +208,7 @@ ENRICHMENTS: dict = {
     "family": "Apiaceae", "family_common": "Schermbloemenfamilie",
     "origin": "Alpen, Kaukasus en Balkan",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Astrantia_major_001.jpg", "Zeeuws knoopje in close-up")],
+    "photos": [wiki("Astrantia_major,_Große_Sterndolde_1.JPG", "Zeeuws knoopje in close-up")],
 },
 
 "Aubrieta": {
@@ -221,7 +222,7 @@ ENRICHMENTS: dict = {
     "family": "Brassicaceae", "family_common": "Kruisbloemenfamilie",
     "origin": "Oost-Mediterraan gebied",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Aubrieta_deltoidea0.jpg", "Aubrieta in volle bloei")],
+    "photos": [wiki("Aubrieta_deltoidea,_Fabaceae.jpg", "Aubrieta in volle bloei")],
 },
 
 "Aurinia saxatilis": {
@@ -235,7 +236,7 @@ ENRICHMENTS: dict = {
     "family": "Brassicaceae", "family_common": "Kruisbloemenfamilie",
     "origin": "Mediterraan gebied en Centraal-Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Aurinia_saxatilis_(Brassicaceae)_plant.jpg", "Schildzaad in bloei")],
+    "photos": [wiki("Aurinia_saxatilis.jpg", "Schildzaad in bloei")],
 },
 
 "Brunnera macrophylla": {
@@ -249,7 +250,7 @@ ENRICHMENTS: dict = {
     "family": "Boraginaceae", "family_common": "Ruwblaadfamilie",
     "origin": "Kaukasus",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Brunnera_macrophylla_plant.jpg", "Kaukasisch vergeet-mij-niet")],
+    "photos": [wiki("Brunnera_macrophylla,_2015-04-29,_Bird_Park,_Mount_Lebanon,_Pennsylvania,_01.jpg", "Kaukasisch vergeet-mij-niet")],
 },
 
 "Campanula carpatica": {
@@ -263,7 +264,7 @@ ENRICHMENTS: dict = {
     "family": "Campanulaceae", "family_common": "Klokjesfamilie",
     "origin": "Karpaten",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Campanula_carpatica_003.jpg", "Karpatenklokje in bloei")],
+    "photos": [wiki("Campanula_carpatica,_Bellflower_-_geograph.org.uk_-_8058876.jpg", "Karpatenklokje in bloei")],
 },
 
 "Campanula portenschlagiana": {
@@ -293,7 +294,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa (berggebieden)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Centaurea_montana0.jpg", "Bergcentaurie in bloei")],
+    "photos": [wiki("Centaurea_montana,_Chasseron_-_img_13271.jpg", "Bergcentaurie in bloei")],
 },
 
 "Cerastium tomentosum": {
@@ -308,7 +309,7 @@ ENRICHMENTS: dict = {
     "family": "Caryophyllaceae", "family_common": "Anjerfamilie",
     "origin": "Italië en Sicilië",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Cerastium_tomentosum_plant.jpg", "Hoornbloem in bloei")],
+    "photos": [wiki("Cerastium_tomentosum,_Beechview,_2024-05-12,_01.jpg", "Hoornbloem in bloei")],
 },
 
 "Coreopsis verticillata": {
@@ -322,7 +323,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Oost-Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Coreopsis_verticillata4.jpg", "Meisjesogen in volle bloei")],
+    "photos": [wiki("Coreopsis_verticillata,_Poznan.jpg", "Meisjesogen in volle bloei")],
 },
 
 "Dianthus deltoides": {
@@ -336,7 +337,7 @@ ENRICHMENTS: dict = {
     "family": "Caryophyllaceae", "family_common": "Anjerfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Dianthus_deltoides_flowers.jpg", "Steenanjer in bloei")],
+    "photos": [wiki("Dianthus_deltoides,_Heide-Nelke_Blüte.jpg", "Steenanjer in bloei")],
 },
 
 "Dicentra spectabilis": {
@@ -351,7 +352,7 @@ ENRICHMENTS: dict = {
     "family": "Papaveraceae", "family_common": "Papaverbloemenfamilie",
     "origin": "China en Japan",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Dicentra_spectabilis_Flore.jpg", "Gebroken hartje in bloei")],
+    "photos": [wiki("Dicentra_spectabilis-0001.jpg", "Gebroken hartje in bloei")],
 },
 
 "Doronicum orientale": {
@@ -365,7 +366,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Mediterraan gebied en Kaukasus",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Doronicum_orientale_flower.jpg", "Voorjaarszonnebloem")],
+    "photos": [wiki("Doronicum_orientale.JPG", "Voorjaarszonnebloem")],
 },
 
 "Echinacea purpurea": {
@@ -386,7 +387,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Oost-Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Echinacea_purpurea1.jpg", "Rode zonnehoed in bloei")],
+    "photos": [wiki("Echinacea_purpurea&Aglais_urticae20090813_041.jpg", "Rode zonnehoed in bloei")],
 },
 
 "Echinops bannaticus": {
@@ -418,7 +419,7 @@ ENRICHMENTS: dict = {
     "family": "Brassicaceae", "family_common": "Kruisbloemenfamilie",
     "origin": "Mediterraan gebied (hybride)",
     "hardiness": "matig_winterhard", "evergreen": True,
-    "photos": [wiki("Erysimum_cheiri1.jpg", "Steenraket in bloei")],
+    "photos": [wiki("Erysimum_cheiri,_Wallflower_-_geograph.org.uk_-_4474349.jpg", "Steenraket in bloei")],
 },
 
 "Euphorbia epithymoides": {
@@ -433,7 +434,7 @@ ENRICHMENTS: dict = {
     "family": "Euphorbiaceae", "family_common": "Wolfsmelkfamilie",
     "origin": "Balkan en Oost-Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Euphorbia_epithymoides1.jpg", "Wolfsmelk in voorjaarsbloei")],
+    "photos": [wiki("Euphorbia_epithymoides-IMG_7205.JPG", "Wolfsmelk in voorjaarsbloei")],
 },
 
 "Foeniculum vulgare": {
@@ -456,7 +457,7 @@ ENRICHMENTS: dict = {
     "family": "Apiaceae", "family_common": "Schermbloemenfamilie",
     "origin": "Mediterraan gebied",
     "hardiness": "matig_winterhard", "evergreen": False,
-    "photos": [wiki("Foeniculum_vulgare_002.jpg", "Venkel in bloei")],
+    "photos": [wiki("Foeniculum_vulgare,_Villa_Borg.jpg", "Venkel in bloei")],
 },
 
 "Galium odoratum": {
@@ -474,7 +475,7 @@ ENRICHMENTS: dict = {
     "family": "Rubiaceae", "family_common": "Sterbladigenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Galium_odoratum_eF.jpg", "Lievevrouwenbedstro in bloei")],
+    "photos": [wiki("Galium_odoratum,_2015-05-09,_Trillium_Trail,_01.jpg", "Lievevrouwenbedstro in bloei")],
 },
 
 "Geranium endressii": {
@@ -488,7 +489,7 @@ ENRICHMENTS: dict = {
     "family": "Geraniaceae", "family_common": "Ooievaarsbekfamilie",
     "origin": "Pyreneeën en Noordwest-Spanje",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Geranium_endressii_a1.jpg", "Ooievaarsbek in bloei")],
+    "photos": [wiki("Geranium_endressii.jpg", "Ooievaarsbek in bloei")],
 },
 
 "Geranium sanguineum": {
@@ -502,7 +503,7 @@ ENRICHMENTS: dict = {
     "family": "Geraniaceae", "family_common": "Ooievaarsbekfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Geranium_sanguineum_003.jpg", "Bloedooievaarsbek")],
+    "photos": [wiki("Geranium_sanguineum,_27-06-2024._(actm.).jpg", "Bloedooievaarsbek")],
 },
 
 "Gypsophila paniculata": {
@@ -516,7 +517,7 @@ ENRICHMENTS: dict = {
     "family": "Caryophyllaceae", "family_common": "Anjerfamilie",
     "origin": "Centraal-Europa tot Centraal-Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Gypsophila_paniculata_2.jpg", "Gipskruid in volle bloei")],
+    "photos": [wiki("Gypsophila_paniculata.jpg", "Gipskruid in volle bloei")],
 },
 
 "Helianthemum": {
@@ -530,7 +531,7 @@ ENRICHMENTS: dict = {
     "family": "Cistaceae", "family_common": "Cistusroosjesfamilie",
     "origin": "Mediterraan gebied (hybride)",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Helianthemum_apenninum_1.jpg", "Zonneroosje")],
+    "photos": [wiki("Helianthemum_apenninum,_Brean_Down_(52354711711).jpg", "Zonneroosje")],
 },
 
 "Helleborus niger": {
@@ -559,7 +560,7 @@ ENRICHMENTS: dict = {
     "family": "Saxifragaceae", "family_common": "Steenbreekfamilie",
     "origin": "Noord-Amerika",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Heuchera_micrantha_Palace_Purple.jpg", "Purperklokje 'Palace Purple'")],
+    "photos": [wiki("Heuchera_micrantha_-_Flickr_-_brewbooks.jpg", "Purperklokje 'Palace Purple'")],
 },
 
 "Hosta tardiana": {
@@ -588,7 +589,7 @@ ENRICHMENTS: dict = {
     "family": "Brassicaceae", "family_common": "Kruisbloemenfamilie",
     "origin": "Mediterraan berggebied",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Iberis_sempervirens2.jpg", "Scheefkelk in bloei")],
+    "photos": [wiki("Iberis_sempervirens,_Poznan.jpg", "Scheefkelk in bloei")],
 },
 
 "Lamiastrum galeobdolon": {
@@ -604,7 +605,7 @@ ENRICHMENTS: dict = {
     "family": "Lamiaceae", "family_common": "Lipbloemenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Lamiastrum_galeobdolon_subsp._argentatum.jpg", "Gele dovenetel in bloei")],
+    "photos": [wiki("Lamiastrum_galeobdolon,_Ostrava_4.jpg", "Gele dovenetel in bloei")],
 },
 
 "Lamium maculatum": {
@@ -633,7 +634,7 @@ ENRICHMENTS: dict = {
     "family": "Lamiaceae", "family_common": "Lipbloemenfamilie",
     "origin": "Midden-Europa (berggebieden)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Lamium_orvala_001.jpg", "Grootbloemige dovenetel")],
+    "photos": [wiki("Lamium_orvala.jpg", "Grootbloemige dovenetel")],
 },
 
 "Leucanthemum hybriden": {
@@ -661,7 +662,7 @@ ENRICHMENTS: dict = {
     "family": "Plantaginaceae", "family_common": "Weegbreefamilie",
     "origin": "Italië",
     "hardiness": "matig_winterhard", "evergreen": False,
-    "photos": [wiki("Linaria_purpurea_002.jpg", "Paarse leeuwenbek in bloei")],
+    "photos": [wiki("Linaria_purpurea-IMG_9327.jpg", "Paarse leeuwenbek in bloei")],
 },
 
 "Lupinus hybriden": {
@@ -676,7 +677,7 @@ ENRICHMENTS: dict = {
     "family": "Fabaceae", "family_common": "Vlinderbloemenfamilie",
     "origin": "Noord-Amerika (hybride)",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Lupinus_Russell_hybrids.jpg", "Lupinen in bloei")],
+    "photos": [wiki("Lupinus,_Leavenworth,_Wenatchee,_Washington,_1920_-_NARA_-_299126.jpg", "Lupinen in bloei")],
 },
 
 "Nepeta faassenii": {
@@ -694,7 +695,7 @@ ENRICHMENTS: dict = {
     "family": "Lamiaceae", "family_common": "Lipbloemenfamilie",
     "origin": "Hybride (Europa/West-Azië)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Nepeta_x_faassenii_kz04.jpg", "Kattenkruid in bloei")],
+    "photos": [wiki("Nepeta_x_faasenii_Walkers_Low_1zz.jpg", "Kattenkruid in bloei")],
 },
 
 "Pachysandra terminalis": {
@@ -708,7 +709,7 @@ ENRICHMENTS: dict = {
     "family": "Buxaceae", "family_common": "Buxusfamilie",
     "origin": "China en Japan",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Pachysandra_terminalis_-_leaves_and_flowers.jpg", "Dikkemanskruid")],
+    "photos": [wiki("Pachysandra_terminalis.JPG", "Dikkemanskruid")],
 },
 
 "Paeonia": {
@@ -736,7 +737,7 @@ ENRICHMENTS: dict = {
     "family": "Polygonaceae", "family_common": "Duizendknoopfamilie",
     "origin": "Himalaya",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Persicaria_affinis_4.jpg", "Duizendknoop in bloei")],
+    "photos": [wiki("Persicaria_affinis_(Curtis_illustration).jpg", "Duizendknoop in bloei")],
 },
 
 "Phlox subulata": {
@@ -782,7 +783,7 @@ ENRICHMENTS: dict = {
     "family": "Ranunculaceae", "family_common": "Boterbloemfamilie",
     "origin": "Europa (kalkgraslanden)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Pulsatilla_vulgaris_004.jpg", "Wildemanskruid in bloei")],
+    "photos": [wiki("Pulsatilla_vulgaris,_Incombe_Hole_(52359302731).jpg", "Wildemanskruid in bloei")],
 },
 
 "Salvia nemorosa": {
@@ -817,7 +818,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Sanguisorba_officinalis_kz.jpg", "Grote pimpernel in bloei")],
+    "photos": [wiki("Sanguisorba_officinalis-5301_-_Flickr_-_Ragnhild_&_Neil_Crawford.jpg", "Grote pimpernel in bloei")],
 },
 
 "Solidago": {
@@ -833,7 +834,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa en Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Solidago_canadensis_Golden_Rod.jpg", "Guldenroede in bloei")],
+    "photos": [wiki("Solidago_canadensis,_Canada_goldenrod_1962.jpg", "Guldenroede in bloei")],
 },
 
 "Thymus praecox": {
@@ -851,7 +852,7 @@ ENRICHMENTS: dict = {
     "family": "Lamiaceae", "family_common": "Lipbloemenfamilie",
     "origin": "Europa (kalkgraslanden)",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Thymus_praecox_01.jpg", "Kruiptijm in bloei")],
+    "photos": [wiki("Thymus_praecox-subsp-praecox-feuilles-ciliees_carriere-saint-vaast-les-mello_60_01072008_01.jpg", "Kruiptijm in bloei")],
 },
 
 "Verbena bonariensis": {
@@ -869,7 +870,7 @@ ENRICHMENTS: dict = {
     "family": "Verbenaceae", "family_common": "IJzerhardtfamilie",
     "origin": "Zuid-Amerika",
     "hardiness": "matig_winterhard", "evergreen": False,
-    "photos": [wiki("Verbena_bonariensis_1.jpg", "IJzerhard in bloei")],
+    "photos": [wiki("Verbena_bonariensis,_Aglais_urticae.jpg", "IJzerhard in bloei")],
 },
 
 "Vinca major": {
@@ -885,7 +886,7 @@ ENRICHMENTS: dict = {
     "family": "Apocynaceae", "family_common": "Maagdenpalfamilie",
     "origin": "Mediterraan gebied",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Vinca_major_Flower_2200px.jpg", "Grote maagdenpalm in bloei")],
+    "photos": [wiki("Vinca_major,_Bahrenfeld,_Hamburg,_Germany_-_20100604.jpg", "Grote maagdenpalm in bloei")],
 },
 
 "Vinca minor": {
@@ -900,7 +901,7 @@ ENRICHMENTS: dict = {
     "family": "Apocynaceae", "family_common": "Maagdenpalfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Vinca_minor_15.jpg", "Kleine maagdenpalm in bloei")],
+    "photos": [wiki("Vinca_minor,_2006-05-03.jpg", "Kleine maagdenpalm in bloei")],
 },
 
 "Viola": {
@@ -937,7 +938,7 @@ ENRICHMENTS: dict = {
     "family": "Malvaceae", "family_common": "Kaasjeskruidfamilie",
     "origin": "Azië",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Alcea_rosea_flowers.jpg", "Stokrozen in bloei")],
+    "photos": [wiki("Alcea_rosea,_Cloppenburg_(DE)P6244238.jpg", "Stokrozen in bloei")],
 },
 
 "Calendula officinalis": {
@@ -955,7 +956,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Mediterraan gebied",
     "hardiness": "vorstgevoelig", "evergreen": False,
-    "photos": [wiki("Calendula_officinalis_001.jpg", "Goudsbloem in bloei")],
+    "photos": [wiki("Calendula_officinalis,_Armenia,_Hatsik.jpg", "Goudsbloem in bloei")],
 },
 
 "Centaurea cyanus": {
@@ -971,7 +972,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Oost-Mediterraan gebied (verwilderd in Europa)",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Cornflower_Centaurea_cyanus_Purple_Gem.jpg", "Korenbloem")],
+    "photos": [wiki("Cornflower,_McLaren_Park_-_geograph.org.uk_-_4021920.jpg", "Korenbloem")],
 },
 
 "Digitalis purpurea": {
@@ -989,7 +990,7 @@ ENRICHMENTS: dict = {
     "family": "Plantaginaceae", "family_common": "Weegbreefamilie",
     "origin": "West-Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Digitalis_purpurea_Koeh.jpg", "Vingerhoedskruid in bloei")],
+    "photos": [wiki("Digitalis_purpurea,_Common_Foxglove_-_geograph.org.uk_-_4046266.jpg", "Vingerhoedskruid in bloei")],
 },
 
 "Helianthus annuus": {
@@ -1026,7 +1027,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Mexico en Midden-Amerika",
     "hardiness": "vorstgevoelig", "evergreen": False,
-    "photos": [wiki("Tagetes_erecta_flower_head.jpg", "Afrikaantje")],
+    "photos": [wiki("Tagetes_erecta(marigold).jpg", "Afrikaantje")],
 },
 
 "Zinnia elegans": {
@@ -1040,7 +1041,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Mexico",
     "hardiness": "vorstgevoelig", "evergreen": False,
-    "photos": [wiki("Zinnia_elegans_cv._Uproar_Rose.jpg", "Zinnia in bloei")],
+    "photos": [wiki("Zinnia_elegans,_2020-09-22,_Beechview,_01.jpg", "Zinnia in bloei")],
 },
 
 "Cosmos bipinnatus": {
@@ -1054,7 +1055,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Mexico",
     "hardiness": "vorstgevoelig", "evergreen": False,
-    "photos": [wiki("Cosmos_bipinnatus_Radiance.jpg", "Cosmea in bloei")],
+    "photos": [wiki("Cosmos_bipinnatus(2).jpg", "Cosmea in bloei")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -1088,7 +1089,7 @@ ENRICHMENTS: dict = {
     "family": "Amaryllidaceae", "family_common": "Amaryllifamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Galanthus_nivalis-_snowdrop.jpg", "Sneeuwklokjes")],
+    "photos": [wiki("Galanthus_nivalis-IMG_2963.jpg", "Sneeuwklokjes")],
 },
 
 "Narcissus": {
@@ -1117,7 +1118,7 @@ ENRICHMENTS: dict = {
     "family": "Liliaceae", "family_common": "Leliesfamilie",
     "origin": "Centraal-Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Tulipa_suaveolens_floriade_to_Wikimedia.jpg", "Tulpen in bloei")],
+    "photos": [wiki("Tulipa_suaveolens._Reader.jpg", "Tulpen in bloei")],
 },
 
 "Dahlia hybriden": {
@@ -1178,7 +1179,7 @@ ENRICHMENTS: dict = {
     "family": "Amaryllidaceae", "family_common": "Amaryllifamilie",
     "origin": "Zuid-Afrika",
     "hardiness": "vorstgevoelig", "evergreen": True,
-    "photos": [wiki("Agapanthus_praecox_7.jpg", "Afrikaanse lelie")],
+    "photos": [wiki("Agapanthus_praecox,_fruit_0052_02.jpg", "Afrikaanse lelie")],
 },
 
 "Laurus nobilis": {
@@ -1196,7 +1197,7 @@ ENRICHMENTS: dict = {
     "family": "Lauraceae", "family_common": "Laurierfamilie",
     "origin": "Mediterraan kustgebied",
     "hardiness": "matig_winterhard", "evergreen": True,
-    "photos": [wiki("Laurus_nobilis-leaves.jpg", "Laurierbladeren")],
+    "photos": [wiki("Laurus-nobilis-Sitia-Crete-Greece.jpg", "Laurierbladeren")],
 },
 
 "Olea europaea": {
@@ -1212,7 +1213,7 @@ ENRICHMENTS: dict = {
     "family": "Oleaceae", "family_common": "Olijffamilie",
     "origin": "Mediterraan bekken",
     "hardiness": "matig_winterhard", "evergreen": True,
-    "photos": [wiki("Olea_europaea_kz01.jpg", "Olijfboom")],
+    "photos": [wiki("Olea_europaea,Velilla_de_San_Antonio.jpg", "Olijfboom")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -1246,7 +1247,7 @@ ENRICHMENTS: dict = {
     "family": "Iridaceae", "family_common": "Irisfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Iris_pseudacorus_flowers.jpg", "Gele lis in bloei")],
+    "photos": [wiki("Iris_pseudacorus(01).jpg", "Gele lis in bloei")],
 },
 
 "Nymphaea alba": {
@@ -1275,7 +1276,7 @@ ENRICHMENTS: dict = {
     "family": "Lythraceae", "family_common": "Kattenstaartfamilie",
     "origin": "Europa en Noord-Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Lythrum_salicaria_kz05.jpg", "Kattenstaart in bloei")],
+    "photos": [wiki("Lythrum_salicaria,_2014-09-15,_O’Hara_Twp,_01.jpg", "Kattenstaart in bloei")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -1296,7 +1297,7 @@ ENRICHMENTS: dict = {
     "family": "Amaryllidaceae", "family_common": "Amaryllifamilie",
     "origin": "Europa en Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Allium_schoenoprasum_003.jpg", "Bieslook in bloei")],
+    "photos": [wiki("Allium_schoenoprasum(01).jpg", "Bieslook in bloei")],
 },
 
 "Mentha x piperita": {
@@ -1315,7 +1316,7 @@ ENRICHMENTS: dict = {
     "family": "Lamiaceae", "family_common": "Lipbloemenfamilie",
     "origin": "Hybride (Europa)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Peppermint_Mentha_x_piperita.jpg", "Pepermunt")],
+    "photos": [wiki("Peppermint_Mentha_×_piperita_IMG_7237.jpg", "Pepermunt")],
 },
 
 "Petroselinum crispum": {
@@ -1333,7 +1334,7 @@ ENRICHMENTS: dict = {
     "family": "Apiaceae", "family_common": "Schermbloemenfamilie",
     "origin": "Mediterraan gebied",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Petroselinum_crispum_003.jpg", "Peterselie")],
+    "photos": [wiki("Petroselinum_crispum.JPG", "Peterselie")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -1442,7 +1443,7 @@ ENRICHMENTS: dict = {
     "family": "Urticaceae", "family_common": "Brandnetelsfamilie",
     "origin": "Europa en Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Urtica_dioica_Ies.jpg", "Grote brandnetel")],
+    "photos": [wiki("Urtica_dioica,_AJT_Johnsingh._P1100576.jpg", "Grote brandnetel")],
 },
 
 "Bellis perennis": {
@@ -1456,7 +1457,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Bellis_perennis_L_002.jpg", "Madeliefje")],
+    "photos": [wiki("Bellis_perennis(01).jpg", "Madeliefje")],
 },
 
 "Matricaria chamomilla": {
@@ -1472,7 +1473,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Matricaria_recutita_-_Echte_Kamille_-_true_camomile.jpg", "Echte kamille")],
+    "photos": [wiki("Matricaria_recutita.RH.jpg", "Echte kamille")],
 },
 
 "Leucanthemum vulgare": {
@@ -1498,7 +1499,7 @@ ENRICHMENTS: dict = {
     "family": "Papaveraceae", "family_common": "Papaverbloemenfamilie",
     "origin": "Europa en West-Azië",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Papaver_rhoeas_in_Kullu_valley.jpg", "Klaproos")],
+    "photos": [wiki("Papaver_rhoeas'_field(28182472016).jpg", "Klaproos")],
 },
 
 "Anthriscus sylvestris": {
@@ -1512,7 +1513,7 @@ ENRICHMENTS: dict = {
     "family": "Apiaceae", "family_common": "Schermbloemenfamilie",
     "origin": "Europa",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Anthriscus_sylvestris_kz.jpg", "Fluitenkruid in bloei")],
+    "photos": [wiki("Anthriscus_sylvestris(01).jpg", "Fluitenkruid in bloei")],
 },
 
 "Chelidonium majus": {
@@ -1573,7 +1574,7 @@ ENRICHMENTS: dict = {
     "family": "Lamiaceae", "family_common": "Lipbloemenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Glechoma_hederacea_kz2.jpg", "Hondsdraf")],
+    "photos": [wiki("Glechoma_hederacea,_2022-04-25,_Mellon_Park,_01.jpg", "Hondsdraf")],
 },
 
 "Rumex acetosa": {
@@ -1588,7 +1589,7 @@ ENRICHMENTS: dict = {
     "family": "Polygonaceae", "family_common": "Duizendknoopfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Rumex_acetosa_Lauvsnes.jpg", "Veldzuring")],
+    "photos": [wiki("Rumex_acetosa.JPG", "Veldzuring")],
 },
 
 "Plantago lanceolata": {
@@ -1662,7 +1663,7 @@ ENRICHMENTS: dict = {
     "family": "Caryophyllaceae", "family_common": "Anjerfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Stellaria_media_kz.jpg", "Vogelmuur")],
+    "photos": [wiki("Stellaria_media,_2022-03-30,_Trillium_Trail,_01.jpg", "Vogelmuur")],
 },
 
 "Geum rivale": {
@@ -1675,7 +1676,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Geum_rivale_close-up.jpg", "Knikkend nagelkruid")],
+    "photos": [wiki("Geum_rivale,_Ben_Vrackie_(52376275553).jpg", "Knikkend nagelkruid")],
 },
 
 "Heracleum sphondylium": {
@@ -1689,7 +1690,7 @@ ENRICHMENTS: dict = {
     "family": "Apiaceae", "family_common": "Schermbloemenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Heracleum_sphondylium_kz1.jpg", "Gewone berenklauw in bloei")],
+    "photos": [wiki("Heracleum_sphondylium._Badulla.jpg", "Gewone berenklauw in bloei")],
 },
 
 "Symphytum officinale": {
@@ -1744,7 +1745,7 @@ ENRICHMENTS: dict = {
     "family": "Rubiaceae", "family_common": "Sterbladigenfamilie",
     "origin": "Europa",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Galium_aparine_kz.jpg", "Kleefkruid")],
+    "photos": [wiki("Galium_aparine,_2023-05-16,_Beechview,_01.jpg", "Kleefkruid")],
 },
 
 "Tussilago farfara": {
@@ -1771,7 +1772,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Tanacetum_vulgare_kz1.jpg", "Boerenwormkruid")],
+    "photos": [wiki("Tanacetum_vulgare,_2006-07-16.jpg", "Boerenwormkruid")],
 },
 
 "Hypericum perforatum": {
@@ -1831,7 +1832,7 @@ ENRICHMENTS: dict = {
     "family": "Scrophulariaceae", "family_common": "Helmkruidfamilie",
     "origin": "Europa en West-Azië",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Verbascum_thapsus1.jpg", "Toorts in bloei")],
+    "photos": [wiki("Verbascum_thapsus,_Anti_Crow_Hut_track,_Arthur's_Pass,_Canterbury,_New_Zealand_12.jpg", "Toorts in bloei")],
 },
 
 "Knautia arvensis": {
@@ -1843,7 +1844,7 @@ ENRICHMENTS: dict = {
     "family": "Caprifoliaceae", "family_common": "Kamperfoeliefamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Knautia_arvensis_kz1.jpg", "Beemdkroon")],
+    "photos": [wiki("Knautia_arvensis-01_(xndr).jpg", "Beemdkroon")],
 },
 
 "Prunella vulgaris": {
@@ -1869,7 +1870,7 @@ ENRICHMENTS: dict = {
     "family": "Caryophyllaceae", "family_common": "Anjerfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Silene_flos-cuculi_kz1.jpg", "Echte koekoeksbloem")],
+    "photos": [wiki("Silene_flos-cuculi._Kwiat_kukułki._01.jpg", "Echte koekoeksbloem")],
 },
 
 "Capsella bursa-pastoris": {
@@ -1882,7 +1883,7 @@ ENRICHMENTS: dict = {
     "family": "Brassicaceae", "family_common": "Kruisbloemenfamilie",
     "origin": "Europa (nu kosmopoliet)",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Capsella_bursa-pastoris_kz.jpg", "Herderstasje")],
+    "photos": [wiki("Capsella_bursa-pastoris,_Sète_cf01.jpg", "Herderstasje")],
 },
 
 "Ranunculus repens": {
@@ -1895,7 +1896,7 @@ ENRICHMENTS: dict = {
     "family": "Ranunculaceae", "family_common": "Boterbloemfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Ranunculus_repens_kz.jpg", "Kruipende boterbloem")],
+    "photos": [wiki("Ranunculus_repens(02).jpg", "Kruipende boterbloem")],
 },
 
 "Claytonia perfoliata": {
@@ -1909,7 +1910,7 @@ ENRICHMENTS: dict = {
     "family": "Montiaceae", "family_common": "Posteleinsfamilie",
     "origin": "Noord-Amerika (verwilderd in Europa)",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Claytonia_perfoliata_kz1.jpg", "Winterpostelein")],
+    "photos": [wiki("Claytonia_perfoliata,_Chapeltoun,_Scotland.JPG", "Winterpostelein")],
 },
 
 "Atriplex hortensis": {
@@ -1923,7 +1924,7 @@ ENRICHMENTS: dict = {
     "family": "Amaranthaceae", "family_common": "Amarantfamilie",
     "origin": "Centraal-Azië",
     "hardiness": "vorstgevoelig", "evergreen": False,
-    "photos": [wiki("Atriplex_hortensis_kz.jpg", "Tuinmelde")],
+    "photos": [wiki("Atriplex_hortensis_Fitch886.png", "Tuinmelde")],
 },
 
 "Galinsoga parviflora": {
@@ -1936,7 +1937,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Zuid-Amerika",
     "hardiness": "vorstgevoelig", "evergreen": False,
-    "photos": [wiki("Galinsoga_parviflora_kz.jpg", "Kaal knopkruid")],
+    "photos": [wiki("Galinsoga_parviflora,_2021-06-27,_Beechview,_01.jpg", "Kaal knopkruid")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -1959,7 +1960,7 @@ ENRICHMENTS: dict = {
     "family": "Scrophulariaceae", "family_common": "Helmkruidfamilie",
     "origin": "China",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Buddleja_davidii_Fascinating_kz.jpg", "Vlinderstruik in bloei")],
+    "photos": [wiki("Buddleja_davidii,_2020-09-27,_Beechview,_01.jpg", "Vlinderstruik in bloei")],
 },
 
 "Corylus avellana": {
@@ -1978,7 +1979,7 @@ ENRICHMENTS: dict = {
     "family": "Betulaceae", "family_common": "Berkenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Corylus_avellana_catkins.jpg", "Hazelaar met katjes")],
+    "photos": [wiki("Corylus_avellana,_Czech_Republic.jpg", "Hazelaar met katjes")],
 },
 
 "Prunus spinosa": {
@@ -1998,7 +1999,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Prunus_spinosa_Prunus_spinosa_(aka).jpg", "Sleedoorn in bloei")],
+    "photos": [wiki("Prunus_spinosa,_Berwick_-_geograph.org.uk_-_1231626.jpg", "Sleedoorn in bloei")],
 },
 
 "Amelanchier lamarckii": {
@@ -2013,7 +2014,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Amelanchier_lamarckii_blooms.jpg", "Krentenboompje in bloei")],
+    "photos": [wiki("Amelanchier_lamarckii.jpg", "Krentenboompje in bloei")],
 },
 
 "Viburnum opulus": {
@@ -2042,7 +2043,7 @@ ENRICHMENTS: dict = {
     "family": "Hydrangeaceae", "family_common": "Hortensiafamilie",
     "origin": "Japan en China",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Hydrangea_macrophylla_kz01.jpg", "Boerenhortensia")],
+    "photos": [wiki("Hydrangea_macrophylla,_Giresun_2017-07-05_01-1.jpg", "Boerenhortensia")],
 },
 
 "Forsythia x intermedia": {
@@ -2055,7 +2056,7 @@ ENRICHMENTS: dict = {
     "family": "Oleaceae", "family_common": "Olijffamilie",
     "origin": "Oost-Aziatische hybride",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Forsythia_x_intermedia_Lynwood_kz.jpg", "Chinees klokje in bloei")],
+    "photos": [wiki("Forsythia_x_intermedia.JPG", "Chinees klokje in bloei")],
 },
 
 "Cornus alba": {
@@ -2095,7 +2096,7 @@ ENRICHMENTS: dict = {
     "family": "Magnoliaceae", "family_common": "Magnoliafamilie",
     "origin": "Hybride (Oost-Aziatisch)",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Magnolia_x_soulangeana_kz01.jpg", "Gewone magnolia in bloei")],
+    "photos": [wiki("Magnolia_x_'Royal_Crown'_JPG1A.jpg", "Gewone magnolia in bloei")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -2117,7 +2118,7 @@ ENRICHMENTS: dict = {
     "family": "Lamiaceae", "family_common": "Lipbloemenfamilie",
     "origin": "Westelijk Mediterraan gebied",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Lavandula_angustifolia_kz01.jpg", "Lavendel in bloei")],
+    "photos": [wiki("Lavandula_angustifolia._Espliegu.jpg", "Lavendel in bloei")],
 },
 
 "Hedera helix": {
@@ -2134,7 +2135,7 @@ ENRICHMENTS: dict = {
     "family": "Araliaceae", "family_common": "Araliafamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Hedera_helix_kz5.jpg", "Klimop")],
+    "photos": [wiki("Hedera_helix,_Bršljan_prekriven_lišćem.jpg", "Klimop")],
 },
 
 "Mahonia aquifolium": {
@@ -2149,7 +2150,7 @@ ENRICHMENTS: dict = {
     "family": "Berberidaceae", "family_common": "Zuurbesfamilie",
     "origin": "Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Mahonia_aquifolium_kz04.jpg", "Mahonia in bloei")],
+    "photos": [wiki("Mahonia_aquifolium,_Odesa,_Ukraine_-_panoramio_(130).jpg", "Mahonia in bloei")],
 },
 
 "Ilex aquifolium": {
@@ -2167,7 +2168,7 @@ ENRICHMENTS: dict = {
     "family": "Aquifoliaceae", "family_common": "Hulstfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Ilex_aquifolium_kz03.jpg", "Hulst")],
+    "photos": [wiki("Ilex_aquifolium,Grèvol_29_i_30_juliol_06_011.jpg", "Hulst")],
 },
 
 "Calluna vulgaris": {
@@ -2196,7 +2197,7 @@ ENRICHMENTS: dict = {
     "family": "Ericaceae", "family_common": "Heidefamilie",
     "origin": "Kaukasus en Iberia (hybride)",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Rhododendron_ponticum_kz2.jpg", "Rododendron in bloei")],
+    "photos": [wiki("Rhododendron_ponticum,_Binning_Wood_-_geograph.org.uk_-_7195055.jpg", "Rododendron in bloei")],
 },
 
 "Buxus sempervirens": {
@@ -2211,7 +2212,7 @@ ENRICHMENTS: dict = {
     "family": "Buxaceae", "family_common": "Buxusfamilie",
     "origin": "Mediterraan gebied",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Buxus_sempervirens_kz01.jpg", "Buxus")],
+    "photos": [wiki("Buxus_sempervirens,_Buchskugeln.jpg", "Buxus")],
 },
 
 "Erica carnea": {
@@ -2248,7 +2249,7 @@ ENRICHMENTS: dict = {
     "family": "Fagaceae", "family_common": "Beukenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Quercus_robur_kz1.jpg", "Zomereik")],
+    "photos": [wiki("Quercus_robur(Saplı_Meşe)_Serdivan-Sakarya_27.05.2024.jpg", "Zomereik")],
 },
 
 "Tilia x europaea": {
@@ -2264,7 +2265,7 @@ ENRICHMENTS: dict = {
     "family": "Malvaceae", "family_common": "Kaasjeskruidfamilie",
     "origin": "Europa (hybride)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Tilia_x_europaea_kz1.jpg", "Hollandse linde in bloei")],
+    "photos": [wiki("Tilia_x_Euchlora.jpg", "Hollandse linde in bloei")],
 },
 
 "Betula pubescens": {
@@ -2278,7 +2279,7 @@ ENRICHMENTS: dict = {
     "family": "Betulaceae", "family_common": "Berkenfamilie",
     "origin": "Noord- en Midden-Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Betula_pubescens_kz2.jpg", "Zachte berk")],
+    "photos": [wiki("Betula_pubescens.001_-_Ribadeo.jpg", "Zachte berk")],
 },
 
 "Sorbus aucuparia": {
@@ -2306,7 +2307,7 @@ ENRICHMENTS: dict = {
     "family": "Fagaceae", "family_common": "Beukenfamilie",
     "origin": "Europa (cultuurvariëteit)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Fagus_sylvatica_Atropurpurea.jpg", "Rode beuk")],
+    "photos": [wiki("Fagus_sylvatica,_Common_Beech_-_geograph.org.uk_-_7004546.jpg", "Rode beuk")],
 },
 
 "Crataegus laevigata": {
@@ -2320,7 +2321,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Crataegus_laevigata_kz1.jpg", "Tweestijlige meidoorn in bloei")],
+    "photos": [wiki("Crataegus_laevigata-flowers-1.jpg", "Tweestijlige meidoorn in bloei")],
 },
 
 "Alnus glutinosa": {
@@ -2460,7 +2461,7 @@ ENRICHMENTS: dict = {
     "family": "Vitaceae", "family_common": "Wingerdsfamilie",
     "origin": "China, Korea en Japan",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Parthenocissus_tricuspidata_kz1.jpg", "Wingerd in herfstkleur")],
+    "photos": [wiki("Parthenocissus_tricuspidata's_fruits.JPG", "Wingerd in herfstkleur")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -2493,7 +2494,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Centraal- en Zuidoost-Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Rosa_glauca_kz1.jpg", "Bergroos")],
+    "photos": [wiki("Rosa_glauca,_Claremore_-_geograph.org.uk_-_8075856.jpg", "Bergroos")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -2510,7 +2511,7 @@ ENRICHMENTS: dict = {
     "family": "Ranunculaceae", "family_common": "Boterbloemfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Aquilegia_vulgaris_kz01.jpg", "Wilde akelei")],
+    "photos": [wiki("Aquilegia_vulgaris(nova).jpg", "Wilde akelei")],
 },
 
 "Filipendula ulmaria": {
@@ -2556,7 +2557,7 @@ ENRICHMENTS: dict = {
     "family": "Ericaceae", "family_common": "Heidefamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Vaccinium_myrtillus_kz1.jpg", "Bosbes met bessen")],
+    "photos": [wiki("Vaccinium_myrtillus,_Bilberry,_Carreg_Lusog,_North_Wales,_Aug_2022.jpg", "Bosbes met bessen")],
 },
 
 "Geranium phaeum": {
@@ -2568,7 +2569,7 @@ ENRICHMENTS: dict = {
     "family": "Geraniaceae", "family_common": "Ooievaarsbekfamilie",
     "origin": "Midden-Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Geranium_phaeum_kz1.jpg", "Donkere ooievaarsbek")],
+    "photos": [wiki("Geranium_phaeum,_Dusky_crane's-bill._Chapeltoun,_North_Ayrshire.jpg", "Donkere ooievaarsbek")],
 },
 
 "Hesperis matronalis": {
@@ -2581,7 +2582,7 @@ ENRICHMENTS: dict = {
     "family": "Brassicaceae", "family_common": "Kruisbloemenfamilie",
     "origin": "Zuid-Europa en West-Azië",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Hesperis_matronalis_kz.jpg", "Damastbloem")],
+    "photos": [wiki("Hesperis_matronalis,_2015-05-29,_Mount_Lebanon,_01.jpg", "Damastbloem")],
 },
 
 "Pulmonaria officinalis": {
@@ -2620,7 +2621,7 @@ ENRICHMENTS: dict = {
     "family": "Lamiaceae", "family_common": "Lipbloemenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Thymus_pulegioides_kz.jpg", "Grote tijm")],
+    "photos": [wiki("Thymus_pulegioides-1.jpg", "Grote tijm")],
 },
 
 "Geum urbanum": {
@@ -2632,7 +2633,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Geum_urbanum_kz1.jpg", "Geel nagelkruid")],
+    "photos": [wiki("Geum_urbanum.jpg", "Geel nagelkruid")],
 },
 
 "Geranium pratense": {
@@ -2644,7 +2645,7 @@ ENRICHMENTS: dict = {
     "family": "Geraniaceae", "family_common": "Ooievaarsbekfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Geranium_pratense_kz03.jpg", "Beemdooievaarsbek")],
+    "photos": [wiki("Geranium_pratense,_Meadow_Cranesbill_-_geograph.org.uk_-_3585103.jpg", "Beemdooievaarsbek")],
 },
 
 "Saponaria officinalis": {
@@ -2657,7 +2658,7 @@ ENRICHMENTS: dict = {
     "family": "Caryophyllaceae", "family_common": "Anjerfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Saponaria_officinalis_kz.jpg", "Zeepkruid")],
+    "photos": [wiki("Saponaria_officinalis,_2021-07-06,_Kane_Woods,_01.jpg", "Zeepkruid")],
 },
 
 "Clematis vitalba": {
@@ -2697,7 +2698,7 @@ ENRICHMENTS: dict = {
     "family": "Berberidaceae", "family_common": "Zuurbesfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Berberis_vulgaris_kz1.jpg", "Gewone zuurbes")],
+    "photos": [wiki("Berberis_vulgaris,_Gveleti_Big_Waterfall,_Georgia_(52330818671).jpg", "Gewone zuurbes")],
 },
 
 "Salix aurita": {
@@ -2721,7 +2722,7 @@ ENRICHMENTS: dict = {
     "family": "Plantaginaceae", "family_common": "Weegbreefamilie",
     "origin": "Europa en Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Veronica_longifolia_kz.jpg", "Lange ereprijs")],
+    "photos": [wiki("Veronica_longifolia.jpg", "Lange ereprijs")],
 },
 
 "Myosotis scorpioides": {
@@ -2733,7 +2734,7 @@ ENRICHMENTS: dict = {
     "family": "Boraginaceae", "family_common": "Ruwblaadfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Myosotis_scorpioides_kz.jpg", "Moeras-vergeet-mij-niet")],
+    "photos": [wiki("Myosotis_scorpioides,_2020-10-14,_Wexford,_01.jpg", "Moeras-vergeet-mij-niet")],
 },
 
 "Carex buchananii": {
@@ -2747,7 +2748,7 @@ ENRICHMENTS: dict = {
     "family": "Cyperaceae", "family_common": "Zeggenfamilie",
     "origin": "Nieuw-Zeeland",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Carex_buchananii_kz.jpg", "Bronskleurige zegge")],
+    "photos": [wiki("Carex_buchananii_-_Botanischer_Garten_München-Nymphenburg_-_DSC07706.JPG", "Bronskleurige zegge")],
 },
 
 "Cortaderia selloana": {
@@ -2759,7 +2760,7 @@ ENRICHMENTS: dict = {
     "family": "Poaceae", "family_common": "Grassenfamilie",
     "origin": "Zuid-Amerika",
     "hardiness": "matig_winterhard", "evergreen": True,
-    "photos": [wiki("Cortaderia_selloana_kz1.jpg", "Pampasgras")],
+    "photos": [wiki("Cortaderia_selloana,_Reynerie_2017.jpg", "Pampasgras")],
 },
 
 "Molinia caerulea": {
@@ -2772,7 +2773,7 @@ ENRICHMENTS: dict = {
     "family": "Poaceae", "family_common": "Grassenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Molinia_caerulea_kz1.jpg", "Pijpenstrootje")],
+    "photos": [wiki("Molinia_caerulea.jpeg", "Pijpenstrootje")],
 },
 
 "Achillea ptarmica": {
@@ -2784,7 +2785,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Achillea_ptarmica_kz.jpg", "Wilde bertram")],
+    "photos": [wiki("Achillea_ptarmica,_Sélestat_-_img_40171.jpg", "Wilde bertram")],
 },
 
 "Linaria vulgaris": {
@@ -2825,7 +2826,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Hieracium_aurantiacum_kz.jpg", "Oranje havikskruid")],
+    "photos": [wiki("Hieracium_aurantiacum,_(Asteraceae)-1F.jpg", "Oranje havikskruid")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -2841,7 +2842,7 @@ ENRICHMENTS: dict = {
     "family": "Berberidaceae", "family_common": "Zuurbesfamilie",
     "origin": "Japan",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Berberis_thunbergii_kz1.jpg", "Japanse zuurbes")],
+    "photos": [wiki("Berberis_thunbergii,_2014-05-02,_Mount_Lebanon,_Pennsylvania,_01.jpg", "Japanse zuurbes")],
 },
 
 "Ribes sanguineum": {
@@ -2853,7 +2854,7 @@ ENRICHMENTS: dict = {
     "family": "Grossulariaceae", "family_common": "Kruisbesfamilie",
     "origin": "Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Ribes_sanguineum_kz01.jpg", "Rode ribes in bloei")],
+    "photos": [wiki("Ribes_sanguineum,_Flowering_Currant_-_geograph.org.uk_-_3918362.jpg", "Rode ribes in bloei")],
 },
 
 "Weigela": {
@@ -2866,7 +2867,7 @@ ENRICHMENTS: dict = {
     "family": "Caprifoliaceae", "family_common": "Kamperfoeliefamilie",
     "origin": "Oost-Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Weigela_florida_kz.jpg", "Weigelia in bloei")],
+    "photos": [wiki("Weigela_florida,_red,_buds_01.jpg", "Weigelia in bloei")],
 },
 
 "Acer campestre": {
@@ -2878,7 +2879,7 @@ ENRICHMENTS: dict = {
     "family": "Sapindaceae", "family_common": "Zeepboompjesfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Acer_campestre_kz03.jpg", "Spaanse aak in herfstkleur")],
+    "photos": [wiki("Acer_campestre,_2020_Marcali.jpg", "Spaanse aak in herfstkleur")],
 },
 
 "Cotinus coggygria": {
@@ -2921,7 +2922,7 @@ ENRICHMENTS: dict = {
     "family": "Caprifoliaceae", "family_common": "Kamperfoeliefamilie",
     "origin": "Himalaya en China",
     "hardiness": "matig_winterhard", "evergreen": False,
-    "photos": [wiki("Leycesteria_formosa_kz.jpg", "Fazantenbes")],
+    "photos": [wiki("Leycesteria_formosa.jpg", "Fazantenbes")],
 },
 
 "Deutzia gracilis": {
@@ -2934,7 +2935,7 @@ ENRICHMENTS: dict = {
     "family": "Hydrangeaceae", "family_common": "Hortensiafamilie",
     "origin": "Japan",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Deutzia_gracilis_kz.jpg", "Deutzia in bloei")],
+    "photos": [wiki("Deutzia_gracilis.jpg", "Deutzia in bloei")],
 },
 
 "Ligustrum vulgare": {
@@ -2947,7 +2948,7 @@ ENRICHMENTS: dict = {
     "family": "Oleaceae", "family_common": "Olijffamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Ligustrum_vulgare_kz.jpg", "Wilde liguster in bloei")],
+    "photos": [wiki("Ligustrum_vulgare,_Dumitru_Rascanu_Park.jpg", "Wilde liguster in bloei")],
 },
 
 "Lonicera nitida": {
@@ -2958,7 +2959,7 @@ ENRICHMENTS: dict = {
     "family": "Caprifoliaceae", "family_common": "Kamperfoeliefamilie",
     "origin": "China",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Lonicera_nitida_kz.jpg", "Box-kamperfoelie")],
+    "photos": [wiki("Lonicera_nitida.jpg", "Box-kamperfoelie")],
 },
 
 "Skimmia japonica": {
@@ -2972,7 +2973,7 @@ ENRICHMENTS: dict = {
     "family": "Rutaceae", "family_common": "Wijnruitfamilie",
     "origin": "Japan en China",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Skimmia_japonica_kz03.jpg", "Skimmia met bessen")],
+    "photos": [wiki("Skimmia_japonica,_Warwick_-_geograph.org.uk_-_8078961.jpg", "Skimmia met bessen")],
 },
 
 "Aucuba japonica": {
@@ -2985,7 +2986,7 @@ ENRICHMENTS: dict = {
     "family": "Garryaceae", "family_common": "Garryafamilie",
     "origin": "Japan en China",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Aucuba_japonica_kz.jpg", "Broodboom")],
+    "photos": [wiki("Aucuba_japonica,_Sari_Temple,_2014-04-10_01.jpg", "Broodboom")],
 },
 
 "Eucalyptus gunnii": {
@@ -2998,7 +2999,7 @@ ENRICHMENTS: dict = {
     "family": "Myrtaceae", "family_common": "Mirtenfamilie",
     "origin": "Tasmanië en Zuid-Australië",
     "hardiness": "matig_winterhard", "evergreen": True,
-    "photos": [wiki("Eucalyptus_gunnii_kz.jpg", "Eucalyptus gunnii")],
+    "photos": [wiki("Eucalyptus_gunnii,_(Cider_Gum)_,_Inverewe_Gardens_-_geograph.org.uk_-_1526732.jpg", "Eucalyptus gunnii")],
 },
 
 "Cotoneaster suecicus": {
@@ -3010,7 +3011,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Scandinavische hybride",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Cotoneaster_suecicus_kz.jpg", "Dwergmispel met bessen")],
+    "photos": [wiki("Cotoneaster_suecicus_Skogholm_2018-07-09_4563.jpg", "Dwergmispel met bessen")],
 },
 
 "Berberis julianae": {
@@ -3022,7 +3023,7 @@ ENRICHMENTS: dict = {
     "family": "Berberidaceae", "family_common": "Zuurbesfamilie",
     "origin": "China",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Berberis_julianae_kz.jpg", "Zuurbes")],
+    "photos": [wiki("Berberis_julianae,_Manie_van_der_Schijff_BT.jpg", "Zuurbes")],
 },
 
 "Clematis armandii": {
@@ -3035,7 +3036,7 @@ ENRICHMENTS: dict = {
     "family": "Ranunculaceae", "family_common": "Boterbloemfamilie",
     "origin": "China",
     "hardiness": "matig_winterhard", "evergreen": True,
-    "photos": [wiki("Clematis_armandii_kz.jpg", "Wintergroene clematis")],
+    "photos": [wiki("Clematis_armandii.jpg", "Wintergroene clematis")],
 },
 
 "Fallopia baldschuanica": {
@@ -3048,7 +3049,7 @@ ENRICHMENTS: dict = {
     "family": "Polygonaceae", "family_common": "Duizendknoopfamilie",
     "origin": "Centraal-Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Fallopia_baldschuanica_kz.jpg", "Bruidssluier in bloei")],
+    "photos": [wiki("Fallopia_baldschuanica1_ies.jpg", "Bruidssluier in bloei")],
 },
 
 "Hydrangea anomala petiolaris": {
@@ -3060,7 +3061,7 @@ ENRICHMENTS: dict = {
     "family": "Hydrangeaceae", "family_common": "Hortensiafamilie",
     "origin": "Japan en Korea",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Hydrangea_anomala_petiolaris_kz.jpg", "Klimhortensia")],
+    "photos": [wiki("Hydrangea_anomala,_May_2016.jpg", "Klimhortensia")],
 },
 
 "Rosa nitida": {
@@ -3073,7 +3074,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Rosa_nitida_kz.jpg", "Glansroos")],
+    "photos": [wiki("Rosa_nitida.jpg", "Glansroos")],
 },
 
 "Kerria japonica": {
@@ -3086,7 +3087,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "China en Japan",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Kerria_japonica_kz.jpg", "Kerria in bloei")],
+    "photos": [wiki("Kerria_japonica-BS_249.jpg", "Kerria in bloei")],
 },
 
 "Diervilla sessilifolia": {
@@ -3098,7 +3099,7 @@ ENRICHMENTS: dict = {
     "family": "Caprifoliaceae", "family_common": "Kamperfoeliefamilie",
     "origin": "Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Diervilla_sessilifolia_kz.jpg", "Diervilla in bloei")],
+    "photos": [wiki("Diervilla_sessilifolia_01.JPG", "Diervilla in bloei")],
 },
 
 "Magnolia stellata": {
@@ -3124,7 +3125,7 @@ ENRICHMENTS: dict = {
     "family": "Caprifoliaceae", "family_common": "Kamperfoeliefamilie",
     "origin": "Noord-Amerika (hybride)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Symphoricarpos_x_chenaultii_kz.jpg", "Sneeuwbes")],
+    "photos": [wiki("Symphoricarpos_x_chenaultii_20250210_142101.jpg", "Sneeuwbes")],
 },
 
 "Cornus sericea": {
@@ -3137,7 +3138,7 @@ ENRICHMENTS: dict = {
     "family": "Cornaceae", "family_common": "Kornoeljefamilie",
     "origin": "Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Cornus_sericea_kz.jpg", "Kornoelje in winter")],
+    "photos": [wiki("Cornus_sericea.JPG", "Kornoelje in winter")],
 },
 
 "Salix babylonica": {
@@ -3149,7 +3150,7 @@ ENRICHMENTS: dict = {
     "family": "Salicaceae", "family_common": "Wilgenfamilie",
     "origin": "China",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Salix_babylonica_var._pekinensis_kz.jpg", "Krulwilg")],
+    "photos": [wiki("Salix_babylonica(01).jpg", "Krulwilg")],
 },
 
 "Citrus trifoliata": {
@@ -3161,7 +3162,7 @@ ENRICHMENTS: dict = {
     "family": "Rutaceae", "family_common": "Wijnruitfamilie",
     "origin": "Noord-China en Korea",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Poncirus_trifoliata_kz.jpg", "Driebladige citroen")],
+    "photos": [wiki("Poncirus_trifoliata,_De_Dreijen_Wageningen.jpg", "Driebladige citroen")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -3178,7 +3179,7 @@ ENRICHMENTS: dict = {
     "family": "Amaryllidaceae", "family_common": "Amaryllifamilie",
     "origin": "Centraal-Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Allium_giganteum_kz.jpg", "Reuzenui")],
+    "photos": [wiki("Allium_giganteum,_Giant_Onion._Chapeltoun,_North_Ayrshire.jpg", "Reuzenui")],
 },
 
 "Hyacinthus orientalis": {
@@ -3191,7 +3192,7 @@ ENRICHMENTS: dict = {
     "family": "Asparagaceae", "family_common": "Aspergefamilie",
     "origin": "Oost-Mediterraan gebied",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Hyacinthus_orientalis_kz.jpg", "Hyacint")],
+    "photos": [wiki("Hyacinthus_orientalis,_1_-_geograph.org.uk_-_6088043.jpg", "Hyacint")],
 },
 
 "Fritillaria meleagris": {
@@ -3217,7 +3218,7 @@ ENRICHMENTS: dict = {
     "family": "Ranunculaceae", "family_common": "Boterbloemfamilie",
     "origin": "Zuidoost-Europa en Turkije",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Anemone_blanda_kz1.jpg", "Blauwe anemoon")],
+    "photos": [wiki("Anemone_blanda,_Jardín_Botánico_de_Múnich,_Alemania,_2013-05-04,_DD_01.jpg", "Blauwe anemoon")],
 },
 
 "Scilla siberica": {
@@ -3230,7 +3231,7 @@ ENRICHMENTS: dict = {
     "family": "Asparagaceae", "family_common": "Aspergefamilie",
     "origin": "Kaukasus en Turkije",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Scilla_siberica_kz.jpg", "Sterhyacint")],
+    "photos": [wiki("Scilla_siberica,_Siberian_squill.jpg", "Sterhyacint")],
 },
 
 "Fritillaria imperialis": {
@@ -3243,7 +3244,7 @@ ENRICHMENTS: dict = {
     "family": "Liliaceae", "family_common": "Leliesfamilie",
     "origin": "Turkije en Iran",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Fritillaria_imperialis_kz01.jpg", "Keizerskroon")],
+    "photos": [wiki("Fritillaria_imperialis,.jpg", "Keizerskroon")],
 },
 
 "Anemone coronaria": {
@@ -3256,7 +3257,7 @@ ENRICHMENTS: dict = {
     "family": "Ranunculaceae", "family_common": "Boterbloemfamilie",
     "origin": "Mediterraan gebied",
     "hardiness": "matig_winterhard", "evergreen": False,
-    "photos": [wiki("Anemone_coronaria_kz.jpg", "Kroonanemoon")],
+    "photos": [wiki("Anemone_coronaria,_Chouf,_Lebanon_(52260833549).jpg", "Kroonanemoon")],
 },
 
 "Fuchsia hybriden": {
@@ -3283,7 +3284,7 @@ ENRICHMENTS: dict = {
     "family": "Apocynaceae", "family_common": "Maagdenpalfamilie",
     "origin": "Brazilië",
     "hardiness": "niet_winterhard", "evergreen": True,
-    "photos": [wiki("Mandevilla_splendens_kz.jpg", "Braziliaanse jasmijn")],
+    "photos": [wiki("Mandevilla_splendens.jpg", "Braziliaanse jasmijn")],
 },
 
 "Pelargonium zonale": {
@@ -3296,7 +3297,7 @@ ENRICHMENTS: dict = {
     "family": "Geraniaceae", "family_common": "Ooievaarsbekfamilie",
     "origin": "Zuid-Afrika",
     "hardiness": "niet_winterhard", "evergreen": True,
-    "photos": [wiki("Pelargonium_zonale_kz.jpg", "Geranium/Pelargonium")],
+    "photos": [wiki("Pelargonium_zonale.jpg", "Geranium/Pelargonium")],
 },
 
 "Cordyline australis": {
@@ -3308,7 +3309,7 @@ ENRICHMENTS: dict = {
     "family": "Asparagaceae", "family_common": "Aspergefamilie",
     "origin": "Nieuw-Zeeland",
     "hardiness": "matig_winterhard", "evergreen": True,
-    "photos": [wiki("Cordyline_australis_kz.jpg", "Koolpalm")],
+    "photos": [wiki("Cordyline_australis,_Anderson_Shelter_and_Copse_-_geograph.org.uk_-_126026.jpg", "Koolpalm")],
 },
 
 "Petunia surfinia cultivars": {
@@ -3320,7 +3321,7 @@ ENRICHMENTS: dict = {
     "family": "Solanaceae", "family_common": "Nachtschadefamilie",
     "origin": "Zuid-Amerika (hybride)",
     "hardiness": "niet_winterhard", "evergreen": False,
-    "photos": [wiki("Petunia_Surfinia_White_kz.jpg", "Hangpetunia")],
+    "photos": [wiki("Petunia_Surfinia_Hot_Pink_Flower.jpg", "Hangpetunia")],
 },
 
 "Begonia semperflorens": {
@@ -3332,7 +3333,7 @@ ENRICHMENTS: dict = {
     "family": "Begoniaceae", "family_common": "Begoniafamilie",
     "origin": "Brazilië",
     "hardiness": "niet_winterhard", "evergreen": False,
-    "photos": [wiki("Begonia_semperflorens_kz.jpg", "Zaaibegonia")],
+    "photos": [wiki("Begonia_semperflorens,_Impatiens_walleriana,_Abutilon_pictum.jpg", "Zaaibegonia")],
 },
 
 "Impatiens walleriana": {
@@ -3344,7 +3345,7 @@ ENRICHMENTS: dict = {
     "family": "Balsaminaceae", "family_common": "Balsemkruidfamilie",
     "origin": "Oost-Afrika",
     "hardiness": "niet_winterhard", "evergreen": False,
-    "photos": [wiki("Impatiens_walleriana_kz.jpg", "Vlijtig Liesje")],
+    "photos": [wiki("Impatiens_walleriana,_Washington,_D.C.jpg", "Vlijtig Liesje")],
 },
 
 "Dianthus barbatus": {
@@ -3357,7 +3358,7 @@ ENRICHMENTS: dict = {
     "family": "Caryophyllaceae", "family_common": "Anjerfamilie",
     "origin": "Midden- en Zuid-Europa",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Dianthus_barbatus_kz.jpg", "Duizendschoon")],
+    "photos": [wiki("Dianthus_barbatus*_(7188916133).jpg", "Duizendschoon")],
 },
 
 "Osteospermum cultivars": {
@@ -3369,7 +3370,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Zuid-Afrika",
     "hardiness": "vorstgevoelig", "evergreen": False,
-    "photos": [wiki("Osteospermum_cultivar_kz.jpg", "Spaanse margriet")],
+    "photos": [wiki("Osteospermum_cultivar.jpg", "Spaanse margriet")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -3397,7 +3398,7 @@ ENRICHMENTS: dict = {
     "family": "Betulaceae", "family_common": "Berkenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Carpinus_betulus_kz2.jpg", "Haagbeuk")],
+    "photos": [wiki("Carpinus_betulus,_Betulacaeae_01.jpg", "Haagbeuk")],
 },
 
 "Acer pseudoplatanus": {
@@ -3409,7 +3410,7 @@ ENRICHMENTS: dict = {
     "family": "Sapindaceae", "family_common": "Zeepboompjesfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Acer_pseudoplatanus_kz1.jpg", "Gewone esdoorn")],
+    "photos": [wiki("Acer_pseudoplatanus(01).jpg", "Gewone esdoorn")],
 },
 
 "Aesculus hippocastanum": {
@@ -3436,7 +3437,7 @@ ENRICHMENTS: dict = {
     "family": "Oleaceae", "family_common": "Olijffamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Fraxinus_excelsior_kz1.jpg", "Es")],
+    "photos": [wiki("Fraxinus_excelsior(01).jpg", "Es")],
 },
 
 "Laburnum x watereri": {
@@ -3449,7 +3450,7 @@ ENRICHMENTS: dict = {
     "family": "Fabaceae", "family_common": "Vlinderbloemenfamilie",
     "origin": "Zuid-Europa (hybride)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Laburnum_x_watereri_kz.jpg", "Goudenregen in bloei")],
+    "photos": [wiki("Laburnum_x_watereri_'Vossii'_Złotokap_Waterera_2019-06-09_01.jpg", "Goudenregen in bloei")],
 },
 
 "Platanus x hispanica": {
@@ -3460,7 +3461,7 @@ ENRICHMENTS: dict = {
     "family": "Platanaceae", "family_common": "Platanenfamilie",
     "origin": "Hybride (Mediterraan)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Platanus_hispanica_kz1.jpg", "Plataan")],
+    "photos": [wiki("Platanus_hispanica,_3x_transplanted,_Lappen_nursery,_Nattetal.jpg", "Plataan")],
 },
 
 "Populus alba": {
@@ -3472,7 +3473,7 @@ ENRICHMENTS: dict = {
     "family": "Salicaceae", "family_common": "Wilgenfamilie",
     "origin": "Europa en West-Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Populus_alba_kz1.jpg", "Abeel")],
+    "photos": [wiki("Populus_alba,_Czajecice,_20060812_1358.jpg", "Abeel")],
 },
 
 "Prunus cerasifera": {
@@ -3485,7 +3486,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "West-Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Prunus_cerasifera_kz1.jpg", "Kerspruim in bloei")],
+    "photos": [wiki("Prunus_cerasifera,_2020_Marcali.jpg", "Kerspruim in bloei")],
 },
 
 "Salix x sepulcralis": {
@@ -3497,7 +3498,7 @@ ENRICHMENTS: dict = {
     "family": "Salicaceae", "family_common": "Wilgenfamilie",
     "origin": "Hybride",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Salix_x_sepulcralis_kz.jpg", "Treurwilg")],
+    "photos": [wiki("Salix_x_20050523_894.jpg", "Treurwilg")],
 },
 
 "Abies koreana": {
@@ -3520,7 +3521,7 @@ ENRICHMENTS: dict = {
     "family": "Pinaceae", "family_common": "Dennenfamilie",
     "origin": "Noord-Afrika (Atlas-gebergte)",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Cedrus_atlantica_kz.jpg", "Blauwe ceder")],
+    "photos": [wiki("Cedrus_atlantica,_2016-02-04-2.jpg", "Blauwe ceder")],
 },
 
 "Chamaecyparis lawsoniana": {
@@ -3532,7 +3533,7 @@ ENRICHMENTS: dict = {
     "family": "Cupressaceae", "family_common": "Cipresfamilie",
     "origin": "Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Chamaecyparis_lawsoniana_kz.jpg", "Californische cipres")],
+    "photos": [wiki("Chamaecyparis_lawsoniana,_Palais-Royal.jpg", "Californische cipres")],
 },
 
 "x Cupressocyparis leylandii": {
@@ -3543,7 +3544,7 @@ ENRICHMENTS: dict = {
     "family": "Cupressaceae", "family_common": "Cipresfamilie",
     "origin": "Hybride (tuincultivaar)",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Cupressocyparis_leylandii_kz.jpg", "Leylandcipres als heg")],
+    "photos": [wiki("Cupressocyparis_leylandii.jpeg", "Leylandcipres als heg")],
 },
 
 "Picea abies": {
@@ -3555,7 +3556,7 @@ ENRICHMENTS: dict = {
     "family": "Pinaceae", "family_common": "Dennenfamilie",
     "origin": "Noord- en Midden-Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Picea_abies_kz03.jpg", "Fijnspar")],
+    "photos": [wiki("Picea_abies,_2017_(32191917644).jpg", "Fijnspar")],
 },
 
 "Pinus mugo mughus": {
@@ -3566,7 +3567,7 @@ ENRICHMENTS: dict = {
     "family": "Pinaceae", "family_common": "Dennenfamilie",
     "origin": "Alpen",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Pinus_mugo_kz.jpg", "Bergden")],
+    "photos": [wiki("Pinus_mugo'mughus'_Mugo_Pine_შვეიცარული_მთის_ფიჭვი.JPG", "Bergden")],
 },
 
 "Thuja occidentalis": {
@@ -3577,7 +3578,7 @@ ENRICHMENTS: dict = {
     "family": "Cupressaceae", "family_common": "Cipresfamilie",
     "origin": "Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Thuja_occidentalis_kz.jpg", "Westerse levensboom")],
+    "photos": [wiki("Thuja_occidentalis'Rheingold'.jpg", "Westerse levensboom")],
 },
 
 "Tsuga canadensis": {
@@ -3588,7 +3589,7 @@ ENRICHMENTS: dict = {
     "family": "Pinaceae", "family_common": "Dennenfamilie",
     "origin": "Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Tsuga_canadensis_kz.jpg", "Hemlockspar")],
+    "photos": [wiki("Tsuga_canadensis,_female_and_male_strobili.jpg", "Hemlockspar")],
 },
 
 # ── Wilde planten (resterende soorten) ──────────────────────
@@ -3606,7 +3607,7 @@ ENRICHMENTS: dict = {
     "family": "Convolvulaceae", "family_common": "Windefamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Calystegia_sepium_kz.jpg", "Haagwinde in bloei")],
+    "photos": [wiki("Calystegia_sepium,_2020-08-03,_Beechview,_01.jpg", "Haagwinde in bloei")],
 },
 
 "Cardamine hirsuta": {
@@ -3623,7 +3624,7 @@ ENRICHMENTS: dict = {
     "family": "Brassicaceae", "family_common": "Kruisbloemenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Cardamine_hirsuta_kz.jpg", "Kleine veldkers")],
+    "photos": [wiki("Cardamine_hirsuta,_2015-04-05,_Mount_Lebanon,_01.jpg", "Kleine veldkers")],
 },
 
 "Cerastium fontanum": {
@@ -3635,7 +3636,7 @@ ENRICHMENTS: dict = {
     "family": "Caryophyllaceae", "family_common": "Anjerfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Cerastium_fontanum_kz.jpg", "Gewone hoornbloem")],
+    "photos": [wiki("Cerastium_fontanum.jpg", "Gewone hoornbloem")],
 },
 
 "Elytrigia repens": {
@@ -3647,7 +3648,7 @@ ENRICHMENTS: dict = {
     "family": "Poaceae", "family_common": "Grassenfamilie",
     "origin": "Europa en Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Elymus_repens_kz.jpg", "Kweek")],
+    "photos": [wiki("Elymus_repens_(3738612411).jpg", "Kweek")],
 },
 
 "Erigeron canadensis": {
@@ -3662,7 +3663,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Noord-Amerika",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Erigeron_canadensis_kz.jpg", "Canadese fijnstraal")],
+    "photos": [wiki("Erigeron_canadensis,_angel.jpg", "Canadese fijnstraal")],
 },
 
 "Persicaria maculosa": {
@@ -3677,7 +3678,7 @@ ENRICHMENTS: dict = {
     "family": "Polygonaceae", "family_common": "Duizendknoopfamilie",
     "origin": "Europa en Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Persicaria_maculosa_kz.jpg", "Perzikkruid")],
+    "photos": [wiki("Persicaria_maculosa,_Perzikkruid.jpg", "Perzikkruid")],
 },
 
 "Petasites hybridus": {
@@ -3693,7 +3694,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Petasites_hybridus_kz.jpg", "Groot hoefblad")],
+    "photos": [wiki("Petasites_hybridus,_Ripaljka,_Sokobanja.jpg", "Groot hoefblad")],
 },
 
 "Poa annua": {
@@ -3705,7 +3706,7 @@ ENRICHMENTS: dict = {
     "family": "Poaceae", "family_common": "Grassenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Poa_annua_kz.jpg", "Straatgras")],
+    "photos": [wiki("Poa_annua.jpeg", "Straatgras")],
 },
 
 "Polygonum aviculare": {
@@ -3717,7 +3718,7 @@ ENRICHMENTS: dict = {
     "family": "Polygonaceae", "family_common": "Duizendknoopfamilie",
     "origin": "Kosmopolitisch",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Polygonum_aviculare_kz.jpg", "Varkensgras")],
+    "photos": [wiki("Polygonum_aviculare,_Espoo.jpg", "Varkensgras")],
 },
 
 "Pteridium aquilinum": {
@@ -3731,7 +3732,7 @@ ENRICHMENTS: dict = {
     "family": "Dennstaedtiaceae", "family_common": "Adelaarsvarenfamilie",
     "origin": "Kosmopolitisch",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Pteridium_aquilinum_kz.jpg", "Adelaarsvaren")],
+    "photos": [wiki("Pteridium_aquilinum,_AJT_Johnsingh._P1000671.jpg", "Adelaarsvaren")],
 },
 
 "Ranunculus acris": {
@@ -3747,7 +3748,7 @@ ENRICHMENTS: dict = {
     "family": "Ranunculaceae", "family_common": "Ranonkelfamilie",
     "origin": "Europa en Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Ranunculus_acris_kz.jpg", "Scherpe boterbloem")],
+    "photos": [wiki("Ranunculus_acris,_Ranunculaceae_01.jpg", "Scherpe boterbloem")],
 },
 
 "Rumex obtusifolius": {
@@ -3763,7 +3764,7 @@ ENRICHMENTS: dict = {
     "family": "Polygonaceae", "family_common": "Duizendknoopfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Rumex_obtusifolius_kz.jpg", "Ridderzuring")],
+    "photos": [wiki("Rumex_obtusifolius,_London_1.jpg", "Ridderzuring")],
 },
 
 "Sedum acre": {
@@ -3793,7 +3794,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Kosmopolitisch",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Senecio_vulgaris_kz.jpg", "Klein kruiskruid")],
+    "photos": [wiki("Senecio_vulgaris,_2021-06-27,_Beechview,_01.jpg", "Klein kruiskruid")],
 },
 
 "Solanum nigrum": {
@@ -3810,7 +3811,7 @@ ENRICHMENTS: dict = {
     "family": "Solanaceae", "family_common": "Nachtschadefamilie",
     "origin": "Kosmopolitisch",
     "hardiness": "vorstgevoelig", "evergreen": False,
-    "photos": [wiki("Solanum_nigrum_kz.jpg", "Zwarte nachtschade")],
+    "photos": [wiki("Solanum_nigrum,_black_nightshade_at_Wayanad_2021_(1).jpg", "Zwarte nachtschade")],
 },
 
 "Sonchus arvensis": {
@@ -3827,7 +3828,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Sonchus_arvensis_kz.jpg", "Akkermelkdistel")],
+    "photos": [wiki("Sonchus_arvensis.JPG", "Akkermelkdistel")],
 },
 
 "Urtica urens": {
@@ -3845,7 +3846,7 @@ ENRICHMENTS: dict = {
     "family": "Urticaceae", "family_common": "Brandnetelfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Urtica_urens_kz.jpg", "Kleine brandnetel")],
+    "photos": [wiki("Urtica_urens-1.jpg", "Kleine brandnetel")],
 },
 
 "Veronica filiformis": {
@@ -3861,7 +3862,7 @@ ENRICHMENTS: dict = {
     "family": "Plantaginaceae", "family_common": "Weegbreefamilie",
     "origin": "West-Azië",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Veronica_filiformis_kz.jpg", "Draadereprijs")],
+    "photos": [wiki("Veronica_filiformis,_2015-05-02,_Fox_Chapel,_02.jpg", "Draadereprijs")],
 },
 
 # === EINDE VERRIJKINGSDATA ===
