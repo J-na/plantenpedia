@@ -92,6 +92,19 @@ PHOTO_TYPE_LABELS: Dict[str, str] = {
 
 # ── Hulpfuncties ─────────────────────────────────────────────────────────────
 
+def _parse_height_from_growth_habit(text: str) -> Optional[str]:
+    """Extraheert hoogte-informatie uit een groeiwijze-tekst als fallback."""
+    if not text:
+        return None
+    m = re.search(r'\b(\d+)\s*[–\-]\s*(\d+)\s*(cm|m)\b', text)
+    if m:
+        return f"{m.group(1)}–{m.group(2)} {m.group(3)}"
+    m = re.search(r'tot\s+(\d+)\s*(cm|m)\b', text)
+    if m:
+        return f"tot {m.group(1)} {m.group(2)}"
+    return None
+
+
 def make_slug(scientific_name: str) -> str:
     slug = scientific_name.lower().strip()
     slug = re.sub(r"[^a-z0-9]+", "-", slug)
@@ -215,7 +228,7 @@ def _render_header(plant: Dict) -> None:
     elif h_max:
         hoogte_val = f"tot {h_max} cm"
     else:
-        hoogte_val = "–"
+        hoogte_val = _parse_height_from_growth_habit(plant.get("growth_habit") or "") or "–"
 
     if light:
         licht_val = f"{LIGHT_ICONS.get(light, '')} {LIGHT_LABELS.get(light, light)}"
@@ -237,10 +250,10 @@ def _render_header(plant: Dict) -> None:
     def _badge(label: str, value: str) -> str:
         return (
             f'<div style="background:#eef4eb;border:1px solid #c5ddbf;border-radius:7px;'
-            f'padding:0.35rem 0.7rem;display:inline-block;margin:0.2rem 0.3rem 0.2rem 0">'
-            f'<div style="font-size:0.65rem;color:#5a7a55;text-transform:uppercase;'
+            f'padding:0.45rem 0.9rem;display:inline-block;margin:0.2rem 0.3rem 0.2rem 0">'
+            f'<div style="font-size:0.85rem;color:#5a7a55;text-transform:uppercase;'
             f'font-weight:600;letter-spacing:0.03em">{label}</div>'
-            f'<div style="font-size:0.82rem;font-weight:600;color:#1e5218;line-height:1.3">{value}</div>'
+            f'<div style="font-size:1.07rem;font-weight:600;color:#1e5218;line-height:1.3">{value}</div>'
             f'</div>'
         )
 

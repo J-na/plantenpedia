@@ -14,13 +14,6 @@ from utils.display import (
     render_plant_page,
 )
 
-st.set_page_config(
-    page_title="Planten — Plantenpedia",
-    page_icon="🌿",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-)
-
 st.markdown(
     """
     <style>

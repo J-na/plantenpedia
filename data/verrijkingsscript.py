@@ -92,7 +92,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa en West-Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Achillea_millefolium_20030724_145500_1.jpg", "Duizendblad in bloei")],
+    "photos": [wiki("Achillea_millefolium_kz.jpg", "Duizendblad in bloei")],
 },
 
 "Aconitum carmichaelii": {
