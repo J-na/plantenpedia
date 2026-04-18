@@ -9,7 +9,7 @@ Gebruik:
 Elke plant wordt direct na verwerking opgeslagen; onderbreking is veilig.
 """
 from __future__ import annotations
-import os, re, sys
+import os, re, sys, urllib.parse
 sys.stdout.reconfigure(encoding='utf-8')
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -29,7 +29,8 @@ from supabase import create_client
 client = create_client(url, key)
 
 def img(filename, source, license_="CC BY-SA 4.0", caption=""):
-    return {"url": f"https://commons.wikimedia.org/wiki/Special:FilePath/{filename}",
+    encoded = urllib.parse.quote(filename, safe='_-.')
+    return {"url": f"https://commons.wikimedia.org/wiki/Special:FilePath/{encoded}",
             "source": source, "license": license_, "caption": caption}
 
 def wiki(filename, caption=""):
@@ -194,7 +195,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Tuinhybride (Europa)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Aster_×_frikartii_'Mönch'_3.jpg", "Herfstaster 'Mönch'")],
+    "photos": [wiki("Aster_frikartii-1-yercaud-salem-India.jpg", "Herfstaster 'Mönch'")],
 },
 
 "Astrantia major": {
@@ -575,7 +576,7 @@ ENRICHMENTS: dict = {
     "family": "Asparagaceae", "family_common": "Aspergefamilie",
     "origin": "Oost-Azië (hybride)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Hosta_tardiana_'Halcyon'.jpg", "Hartlelie 'Halcyon'")],
+    "photos": [wiki("Hosta_tardiana_'Halcyon'._24-06-2022_(actm.)_01.jpg", "Hartlelie 'Halcyon'")],
 },
 
 "Iberis sempervirens": {
@@ -648,7 +649,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa (hybride)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Leucanthemum_x_superbum_'Becky'.jpg", "Tuin-margriet in bloei")],
+    "photos": [wiki("Leucanthemum_x_superbum_'Alaska'.jpg", "Tuin-margriet in bloei")],
 },
 
 "Linaria purpurea": {
@@ -723,7 +724,7 @@ ENRICHMENTS: dict = {
     "family": "Paeoniaceae", "family_common": "Pionenfamilie",
     "origin": "Oost-Azië en Europa (hybride)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Paeonia_lactiflora_'Sarah_Bernhardt'_1.jpg", "Pioen 'Sarah Bernhardt'")],
+    "photos": [wiki("Paeonia_lactiflora,_Sorte_Cincinatti.jpg", "Pioen 'Sarah Bernhardt'")],
 },
 
 "Persicaria affinis": {
@@ -768,7 +769,7 @@ ENRICHMENTS: dict = {
     "family": "Boraginaceae", "family_common": "Ruwblaadfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": True,
-    "photos": [wiki("Pulmonaria_saccharata_'Mrs_Moon'.jpg", "Longkruid 'Mrs Moon'")],
+    "photos": [wiki("Pulmonaria_saccharata_'Argentea'.jpg", "Longkruid 'Mrs Moon'")],
 },
 
 "Pulsatilla vulgaris": {
@@ -802,7 +803,7 @@ ENRICHMENTS: dict = {
     "family": "Lamiaceae", "family_common": "Lipbloemenfamilie",
     "origin": "Centraal-Europa tot West-Azië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Salvia_nemorosa_'Caradonna'_kz02.jpg", "Bossalie 'Caradonna'")],
+    "photos": [wiki("Salvia_nemorosa-IMG_0585.jpg", "Bossalie 'Caradonna'")],
 },
 
 "Sanguisorba officinalis": {
@@ -918,7 +919,7 @@ ENRICHMENTS: dict = {
     "family": "Violaceae", "family_common": "Viooltjesfamilie",
     "origin": "Europa (hybride)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Viola_x_wittrockiana_Blaue_Schönheit.jpg", "Viooltje")],
+    "photos": [wiki("Viola_x_wittrockiana-1-jayanti_nagar-bengaluru-India.jpg", "Viooltje")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -1132,7 +1133,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Mexico",
     "hardiness": "vorstgevoelig", "evergreen": False,
-    "photos": [wiki("Dahlia_x_hybrida_Nuit_d'ete.jpg", "Dahlia in bloei")],
+    "photos": [wiki("Dahlia's,_RP-T-1916-42.jpg", "Dahlia in bloei")],
 },
 
 "Crocus chrysanthus": {
@@ -1146,7 +1147,7 @@ ENRICHMENTS: dict = {
     "family": "Iridaceae", "family_common": "Irissensfamilie",
     "origin": "Balkan",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Crocus_chrysanthus_'Blue_Bird'_02.jpg", "Goudkrokus")],
+    "photos": [wiki("Crocus_chrysanthus,_Berlin-Charlottenburg,_160319,_ako.jpg", "Goudkrokus")],
 },
 
 "Muscari armeniacum": {
@@ -1380,7 +1381,7 @@ ENRICHMENTS: dict = {
     "family": "Poaceae", "family_common": "Grassenfamilie",
     "origin": "Azië en Australië",
     "hardiness": "winterhard", "evergreen": False,
-    "photos": [wiki("Pennisetum_alopecuroides_'Hameln'.jpg", "Lampenpoetsersgras")],
+    "photos": [wiki("Pennisetum_alopecuroides.jpg", "Lampenpoetsersgras")],
 },
 
 # ══════════════════════════════════════════════════════════════
@@ -1486,7 +1487,7 @@ ENRICHMENTS: dict = {
     "family": "Asteraceae", "family_common": "Composietenfamilie",
     "origin": "Europa",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Leucanthemum_vulgare_'Maikonigin'_kz.jpg", "Gewone margriet")],
+    "photos": [wiki("Leucanthemum_vulgare(1).jpg", "Gewone margriet")],
 },
 
 "Papaver rhoeas": {
@@ -2069,7 +2070,7 @@ ENRICHMENTS: dict = {
     "family": "Cornaceae", "family_common": "Kornoeljefamilie",
     "origin": "Oost-Europa en Siberië",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Cornus_alba_'Sibirica'_kz1.jpg", "Witte kornoelje in de winter")],
+    "photos": [wiki("Cornus_alba-a1.jpg", "Witte kornoelje in de winter")],
 },
 
 "Spiraea nipponica": {
@@ -2082,7 +2083,7 @@ ENRICHMENTS: dict = {
     "family": "Rosaceae", "family_common": "Rozenfamilie",
     "origin": "Japan",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Spiraea_nipponica_'Snowmound'_kz.jpg", "Spierstruik in bloei")],
+    "photos": [wiki("Spiraea_nipponica_'Gerlve's_Rainbow'_01.JPG", "Spierstruik in bloei")],
 },
 
 "Magnolia x soulangeana": {
@@ -2449,7 +2450,7 @@ ENRICHMENTS: dict = {
     "family": "Ranunculaceae", "family_common": "Boterbloemfamilie",
     "origin": "Hybride (Aziatisch/Europees)",
     "hardiness": "volledig_winterhard", "evergreen": False,
-    "photos": [wiki("Clematis_'Jackmanii'_kz.jpg", "Clematis 'Jackmanii'")],
+    "photos": [wiki("Clematis_jackmanii_(1).jpg", "Clematis 'Jackmanii'")],
 },
 
 "Parthenocissus tricuspidata": {
@@ -2904,7 +2905,7 @@ ENRICHMENTS: dict = {
     "family": "Hypericaceae", "family_common": "Sint-Janskruidfamilie",
     "origin": "Tuincultivaar",
     "hardiness": "winterhard", "evergreen": True,
-    "photos": [wiki("Hypericum_'Hidcote'_kz.jpg", "Hertshooi 'Hidcote'")],
+    "photos": [wiki("Hypericum_calycinum-Feuilles_de_Millepertuis_à_grandes_fleurs-20230716.jpg", "Hertshooi 'Hidcote'")],
 },
 
 "Leycesteria formosa": {
@@ -3271,7 +3272,7 @@ ENRICHMENTS: dict = {
     "family": "Onagraceae", "family_common": "Teunisbloemfamilie",
     "origin": "Zuid-Amerika (hybride)",
     "hardiness": "vorstgevoelig", "evergreen": False,
-    "photos": [wiki("Fuchsia_hybrida_hort_ex_Siebold_&_Voss.jpg", "Fuchsia in bloei")],
+    "photos": [wiki("Fuchsia's,_RP-T-1969-555.jpg", "Fuchsia in bloei")],
 },
 
 "Mandevilla": {
