@@ -122,7 +122,7 @@ if selected_family:
                         key=f"fam_plant_{slug}_{row_start}_{i}",
                         use_container_width=True,
                     ):
-                        st.query_params["plant"] = slug
+                        st.session_state["navigate_to_plant"] = slug
                         st.switch_page("pages/1_Planten.py")
 
 else:

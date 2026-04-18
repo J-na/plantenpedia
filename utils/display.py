@@ -110,15 +110,18 @@ def bloom_label(start: Optional[int], end: Optional[int]) -> str:
 
 def first_photo(plant: Dict, preferred: Optional[List[str]] = None) -> Optional[Dict]:
     """Geeft de eerste foto terug in voorkeursvolgorde."""
-    photos = plant.get("photos") or []
-    if not photos:
+    photos = plant.get("photos")
+    if not isinstance(photos, list) or not photos:
+        return None
+    valid = [p for p in photos if isinstance(p, dict) and isinstance(p.get("url"), str) and p["url"]]
+    if not valid:
         return None
     order = preferred or ["bloeiwijze", "habitus", "algemeen", "jonge_plant"]
     for ptype in order:
-        for p in photos:
+        for p in valid:
             if p.get("type") == ptype:
                 return p
-    return photos[0]
+    return valid[0]
 
 
 def render_photo_caption(photo: Dict) -> None:
@@ -199,63 +202,79 @@ def _render_header(plant: Dict) -> None:
         st.caption("🌲 Wintergroene plant — behoudt zijn blad het hele jaar door")
     st.markdown(f"### *{plant['scientific_name']}*")
 
-    # Eigenschappen-badges als 6 columns
+    # Eigenschappen-badges (compact HTML, geen grote st.metric)
     cat = plant.get("category", "overig")
-    cols = st.columns(6)
-    with cols[0]:
-        st.metric("Type", CATEGORY_LABELS.get(cat, cat))
-    with cols[1]:
-        bl = bloom_label(plant.get("bloom_start"), plant.get("bloom_end"))
-        st.metric("Bloeitijd", bl)
+    bl = bloom_label(plant.get("bloom_start"), plant.get("bloom_end"))
     light = plant.get("light_needs")
-    with cols[2]:
-        if light:
-            icon = LIGHT_ICONS.get(light, "")
-            st.metric("Licht", f"{icon} {LIGHT_LABELS.get(light, light)}")
-        else:
-            st.metric("Licht", "–")
     h_min = plant.get("height_min")
     h_max = plant.get("height_max")
-    with cols[3]:
-        if h_min and h_max:
-            st.metric("Hoogte", f"{h_min}–{h_max} cm")
-        elif h_max:
-            st.metric("Hoogte", f"tot {h_max} cm")
-        else:
-            st.metric("Hoogte", "–")
-    with cols[4]:
-        hardiness = plant.get("hardiness")
-        if hardiness:
-            icon = HARDINESS_ICONS.get(hardiness, "❄️")
-            st.metric("Winterhardheid", f"{icon} {HARDINESS_LABELS.get(hardiness, hardiness)}")
-        else:
-            st.metric("Winterhardheid", "–")
-    with cols[5]:
-        if plant.get("toxic"):
-            st.metric("Status", "⚠️ Giftig")
-        elif plant.get("edible"):
-            st.metric("Status", "✅ Eetbaar")
-        else:
-            st.metric("Status", "–")
+    hardiness = plant.get("hardiness")
+
+    if h_min and h_max:
+        hoogte_val = f"{h_min}–{h_max} cm"
+    elif h_max:
+        hoogte_val = f"tot {h_max} cm"
+    else:
+        hoogte_val = "–"
+
+    if light:
+        licht_val = f"{LIGHT_ICONS.get(light, '')} {LIGHT_LABELS.get(light, light)}"
+    else:
+        licht_val = "–"
+
+    if hardiness:
+        hard_val = f"{HARDINESS_ICONS.get(hardiness, '❄️')} {HARDINESS_LABELS.get(hardiness, hardiness)}"
+    else:
+        hard_val = "–"
+
+    if plant.get("toxic"):
+        status_val = "⚠️ Giftig"
+    elif plant.get("edible"):
+        status_val = "✅ Eetbaar"
+    else:
+        status_val = "–"
+
+    def _badge(label: str, value: str) -> str:
+        return (
+            f'<div style="background:#eef4eb;border:1px solid #c5ddbf;border-radius:7px;'
+            f'padding:0.35rem 0.7rem;display:inline-block;margin:0.2rem 0.3rem 0.2rem 0">'
+            f'<div style="font-size:0.65rem;color:#5a7a55;text-transform:uppercase;'
+            f'font-weight:600;letter-spacing:0.03em">{label}</div>'
+            f'<div style="font-size:0.82rem;font-weight:600;color:#1e5218;line-height:1.3">{value}</div>'
+            f'</div>'
+        )
+
+    badges_html = (
+        '<div style="display:flex;flex-wrap:wrap;margin:0.6rem 0 0.8rem">'
+        + _badge("Type", CATEGORY_LABELS.get(cat, cat))
+        + _badge("Bloeitijd", bl)
+        + _badge("Licht", licht_val)
+        + _badge("Hoogte", hoogte_val)
+        + _badge("Winterhardheid", hard_val)
+        + _badge("Status", status_val)
+        + '</div>'
+    )
+    st.markdown(badges_html, unsafe_allow_html=True)
 
     # Foto's
-    photos = plant.get("photos") or []
-    if photos:
-        # Sorteer op voorkeur voor weergave
-        order = list(PHOTO_TYPE_LABELS.keys())
+    photos = plant.get("photos")
+    valid_photos = [p for p in (photos or []) if isinstance(p, dict) and isinstance(p.get("url"), str) and p["url"]]
+    if valid_photos:
+        order_keys = list(PHOTO_TYPE_LABELS.keys())
         def sort_key(p):
             t = p.get("type", "algemeen")
-            return order.index(t) if t in order else len(order)
-        sorted_photos = sorted(photos, key=sort_key)[:5]
+            return order_keys.index(t) if t in order_keys else len(order_keys)
+        sorted_photos = sorted(valid_photos, key=sort_key)[:5]
 
         photo_cols = st.columns(len(sorted_photos))
         for i, photo in enumerate(sorted_photos):
             with photo_cols[i]:
-                label = PHOTO_TYPE_LABELS.get(photo.get("type", ""), photo.get("caption", "Foto"))
+                caption_text = photo.get("caption") or ""
+                label = PHOTO_TYPE_LABELS.get(photo.get("type", ""), caption_text or "Foto")
                 try:
-                    st.image(photo["url"], caption=label, use_container_width=True)
+                    st.image(photo["url"], caption=str(label), use_container_width=True)
                 except Exception:
-                    st.caption(f"*(foto niet beschikbaar: {photo.get('url', '')})*")
+                    st.caption("*(foto niet beschikbaar)*")
                 render_photo_caption(photo)
 
 
@@ -319,13 +338,6 @@ def _render_needs(plant: Dict) -> None:
             st.subheader("🌱 Grondsoort")
             for s in soils:
                 st.markdown(f"- {SOIL_LABELS.get(s, s)}")
-
-        # Licht
-        light = plant.get("light_needs")
-        if light:
-            st.subheader("☀️ Lichtbehoefte")
-            icon = LIGHT_ICONS.get(light, "")
-            st.markdown(f"{icon} {LIGHT_LABELS.get(light, light)}")
 
         # Voeding
         if plant.get("fertilizer_needs"):

@@ -130,7 +130,7 @@ if plant:
         # Knop naar detailpagina
         slug = plant.get("slug") or make_slug(plant["scientific_name"])
         if st.button("Lees het volledige artikel →", type="primary"):
-            st.query_params["plant"] = slug
+            st.session_state["navigate_to_plant"] = slug
             st.switch_page("pages/1_Planten.py")
 else:
     st.info(

@@ -32,7 +32,10 @@ st.markdown(
 )
 
 # ── Router: detailpagina of overzicht ─────────────────────────────────────────
-plant_slug = st.query_params.get("plant", None)
+# Query param heeft voorrang; session_state vangt navigatie vanuit andere pagina's op
+plant_slug = st.query_params.get("plant") or st.session_state.pop("navigate_to_plant", None)
+if plant_slug and not st.query_params.get("plant"):
+    st.query_params["plant"] = plant_slug
 
 # ═══════════════════════════════════════════════════════════════
 # DETAILPAGINA
