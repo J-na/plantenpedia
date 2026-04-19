@@ -9,7 +9,6 @@ import streamlit as st
 from utils.database import get_all_plants
 from utils.display import CATEGORY_LABELS, MONTH_NAMES
 
-st.set_page_config(page_title="Seizoenskalender · Plantenpedia", page_icon="📅", layout="wide")
 st.title("📅 Seizoenskalender")
 st.caption("Bloeitijden van alle planten in één overzicht. Gebruik de filters om te verfijnen.")
 
