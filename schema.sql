@@ -237,3 +237,7 @@ CREATE INDEX IF NOT EXISTS idx_plants_drought       ON plants(drought_tolerant);
 CREATE INDEX IF NOT EXISTS idx_plants_water_needs   ON plants(water_needs);
 CREATE INDEX IF NOT EXISTS idx_plants_score_insects ON plants(score_insects);
 CREATE INDEX IF NOT EXISTS idx_plants_score_birds   ON plants(score_birds);
+
+-- v6
+ALTER TABLE plants ADD COLUMN IF NOT EXISTS companion_plants JSONB NOT NULL DEFAULT '[]';
+-- Formaat: [{"scientific_name": "Achillea millefolium", "dutch_name": "Duizendblad", "reason": "..."}]

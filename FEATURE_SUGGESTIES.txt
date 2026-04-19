@@ -384,8 +384,11 @@ Sprint 2 (middel inspanning):
       → display_eco_score() in utils/display.py (★★★☆☆ sterren)
       → "Top 5 voor bijen nu in bloei" op startpagina
   [x] Foto's op detailpagina geschaald naar 80% breedte (gecentreerd)
-  [ ] Bestaande lege DB-velden vullen via enrichments (pruning_info, pests_diseases, etc.)
-      → python data/upload.py --fields pruning_info  ← nog te doen
+  [x] Bestaande lege DB-velden vullen via enrichments (pruning_info, cultivars)
+      → data/enrichments/_pruning.py: snoeiadviezen voor ~45 planten (heesters, klimplanten, bomen, vaste planten)
+      → data/enrichments/_cultivars.py: cultivars voor ~20 soorten (Lavandula, Salvia, Rosa, Clematis, etc.)
+      → upload: python data/upload.py --fields pruning_info
+      → upload: python data/upload.py --fields cultivars
 
 Sprint 3 (grotere features) — GEDAAN ✓:
   [x] Mijn Tuinlijst (pages/6_MijnTuin.py)
@@ -412,9 +415,9 @@ Sprint 4 (nice-to-have):
   [x] Lookalikes sectie uitwerken
       → data in _lookalikes.py; display-code bestond al in utils/display.py
       → focus op veiligheidsrelevante verwisselingen (Aconitum, Digitalis, Anthriscus, etc.)
-  [ ] Cultivars sectie uitwerken (veld bestaat al in DB, display-code bestaat)
-      → vul cultivar-data in via data/enrichments/<categorie>.py
-      → bijv. Rosa rugosa, Hydrangea, Echinacea, Achillea cultivars
+  [x] Cultivars sectie uitwerken (veld bestaat al in DB, display-code bestaat)
+      → data in _cultivars.py: Rosa rugosa, Hydrangea, Echinacea, Achillea, Clematis, Buddleja, etc.
+      → upload: python data/upload.py --fields cultivars
 
 ====================================================================
 EINDE DOCUMENT

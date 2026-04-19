@@ -19,6 +19,8 @@ from ._ecology import ECOLOGY as _eco
 from ._scores import SCORES as _scores
 from ._companions import COMPANIONS as _companions
 from ._lookalikes import LOOKALIKES as _lookalikes
+from ._pruning import PRUNING as _pruning
+from ._cultivars import CULTIVARS as _cultivars
 
 
 ENRICHMENTS: dict = {
@@ -57,6 +59,18 @@ for _name, _look_data in _lookalikes.items():
         ENRICHMENTS[_name].update(_look_data)
     else:
         ENRICHMENTS[_name] = _look_data
+
+for _name, _prune_data in _pruning.items():
+    if _name in ENRICHMENTS:
+        ENRICHMENTS[_name].update(_prune_data)
+    else:
+        ENRICHMENTS[_name] = _prune_data
+
+for _name, _cv_data in _cultivars.items():
+    if _name in ENRICHMENTS:
+        ENRICHMENTS[_name].update(_cv_data)
+    else:
+        ENRICHMENTS[_name] = _cv_data
 
 
 __all__ = ["ENRICHMENTS"]
