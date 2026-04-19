@@ -373,7 +373,7 @@ Sprint 1 (laagste inspanning, hoogste waarde) — GEDAAN ✓:
   [x] "Wat te doen deze maand?" sectie op startpagina (hardcoded tekst)
       → MONTHLY_TASKS dict met 12 maanden × 4 ecologische tuintips
 
-Sprint 2 (middel inspanning) — GEDAAN ✓:
+Sprint 2 (middel inspanning):
   [x] Seizoenskalender pagina (pages/5_Kalender.py)
       → 12-maanden bloei-tijdlijn op basis van bloom_start/bloom_end
       → filter op categorie, naam, inheems; kleurcodering per categorie; legenda
@@ -397,14 +397,24 @@ Sprint 3 (grotere features) — GEDAAN ✓:
       → maandselectie; kolom met zaaien/planten/snoeien/taken per maand
       → kolom met "Nu in bloei" (gesorteerd op insectenscore)
       → 12 maanden volledig uitgewerkt met specifieke tuintaken
-  [ ] Combinatieplanten sectie op detailpagina (companion_plants JSONB veld)
-      → schema: ALTER TABLE plants ADD COLUMN IF NOT EXISTS companion_plants JSONB;
-      → data invullen in enrichments + display-sectie bouwen
+  [x] Combinatieplanten sectie op detailpagina (companion_plants JSONB veld)
+      → data/_companions.py aangemaakt: ~35 planten met companion plant data
+      → data/_lookalikes.py aangemaakt: ~20 verwisselingsgevaren (incl. giftig-waarschuwingen)
+      → _render_companion_plants() in utils/display.py; zichtbaar op detailpagina
+      → schema nodig: ALTER TABLE plants ADD COLUMN IF NOT EXISTS companion_plants JSONB DEFAULT '[]';
+      → upload: python data/upload.py --fields companion_plants,lookalikes
 
 Sprint 4 (nice-to-have):
-  [ ] Vergelijkingspagina
-  [ ] Cultivars sectie uitwerken (veld bestaat al in DB)
-  [ ] Lookalikes sectie uitwerken (veld bestaat al in DB)
+  [x] Vergelijkingspagina (pages/7_Vergelijk.py)
+      → multiselect 2–4 planten; foto's + namen bovenaan
+      → vergelijkingstabel: type, bloei, licht, hoogte, water, bodem, inheems, scores
+      → totale ecologiescore (som van 3 scores, max. 15)
+  [x] Lookalikes sectie uitwerken
+      → data in _lookalikes.py; display-code bestond al in utils/display.py
+      → focus op veiligheidsrelevante verwisselingen (Aconitum, Digitalis, Anthriscus, etc.)
+  [ ] Cultivars sectie uitwerken (veld bestaat al in DB, display-code bestaat)
+      → vul cultivar-data in via data/enrichments/<categorie>.py
+      → bijv. Rosa rugosa, Hydrangea, Echinacea, Achillea cultivars
 
 ====================================================================
 EINDE DOCUMENT

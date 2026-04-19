@@ -47,7 +47,8 @@ LIST_COLUMNS = (
     "edible, toxic, light_needs, bloom_start, bloom_end, soil_types, photos, "
     "evergreen, hardiness, family, family_common, "
     "native_nl, drought_tolerant, water_needs, insects_animals, "
-    "score_insects, score_birds, score_soil"
+    "score_insects, score_birds, score_soil, "
+    "height_min, height_max"
 )
 
 

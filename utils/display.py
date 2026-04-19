@@ -232,6 +232,12 @@ def render_plant_page(plant: Dict) -> None:
     _render_basic_info(plant)
     st.divider()
     _render_needs(plant)
+
+    companions = plant.get("companion_plants") or []
+    if companions:
+        st.divider()
+        _render_companion_plants(companions)
+
     st.divider()
     _render_human_relations(plant)
 
@@ -244,6 +250,33 @@ def render_plant_page(plant: Dict) -> None:
     if sources:
         st.divider()
         _render_sources(sources)
+
+
+def _render_companion_plants(companions: List[Dict]) -> None:
+    st.header("🌿 Goed mee combineren")
+    cols_per_row = min(len(companions), 3)
+    for row_start in range(0, len(companions), cols_per_row):
+        row_items = companions[row_start: row_start + cols_per_row]
+        cols = st.columns(cols_per_row)
+        for i, comp in enumerate(row_items):
+            with cols[i]:
+                with st.container(border=True):
+                    sci = comp.get("scientific_name", "")
+                    dutch = comp.get("dutch_name") or sci
+                    reason = comp.get("reason", "")
+                    slug = make_slug(sci) if sci else ""
+                    if slug:
+                        st.markdown(
+                            f'**<a href="/Planten?plant={slug}" target="_self" '
+                            f'style="color:inherit;text-decoration:none">{dutch}</a>**',
+                            unsafe_allow_html=True,
+                        )
+                    else:
+                        st.markdown(f"**{dutch}**")
+                    if sci and sci != dutch:
+                        st.caption(f"*{sci}*")
+                    if reason:
+                        st.markdown(reason)
 
 
 # ── Sectie: header ────────────────────────────────────────────────────────────

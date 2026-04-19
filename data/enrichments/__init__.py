@@ -17,6 +17,8 @@ from .vaste_planten import ENRICHMENTS as _e8
 from .wilde_planten import ENRICHMENTS as _e9
 from ._ecology import ECOLOGY as _eco
 from ._scores import SCORES as _scores
+from ._companions import COMPANIONS as _companions
+from ._lookalikes import LOOKALIKES as _lookalikes
 
 
 ENRICHMENTS: dict = {
@@ -32,19 +34,29 @@ ENRICHMENTS: dict = {
     **_e9
 }
 
-# Merge ecology data (native_nl, drought_tolerant, water_needs) into existing entries
 for _name, _eco_data in _eco.items():
     if _name in ENRICHMENTS:
         ENRICHMENTS[_name].update(_eco_data)
     else:
         ENRICHMENTS[_name] = _eco_data
 
-# Merge ecological scores (score_insects, score_birds, score_soil)
 for _name, _score_data in _scores.items():
     if _name in ENRICHMENTS:
         ENRICHMENTS[_name].update(_score_data)
     else:
         ENRICHMENTS[_name] = _score_data
+
+for _name, _comp_data in _companions.items():
+    if _name in ENRICHMENTS:
+        ENRICHMENTS[_name].update(_comp_data)
+    else:
+        ENRICHMENTS[_name] = _comp_data
+
+for _name, _look_data in _lookalikes.items():
+    if _name in ENRICHMENTS:
+        ENRICHMENTS[_name].update(_look_data)
+    else:
+        ENRICHMENTS[_name] = _look_data
 
 
 __all__ = ["ENRICHMENTS"]
