@@ -113,7 +113,7 @@ def filter_payload(data: dict, existing_row: dict | None, fields: list[str] | No
     payload = dict(data)
 
     if fields:
-        payload = {k: v for k, v in payload.items() if k in fields}
+        payload = {k: v for k, v in payload.items() if k in fields or k == "scientific_name"}
 
     if safe and existing_row:
         # Verwijder velden die al een niet-lege waarde hebben in de DB
