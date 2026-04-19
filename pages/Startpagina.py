@@ -6,7 +6,7 @@ from datetime import date
 
 import streamlit as st
 
-from utils.database import get_plant_of_day
+from utils.database import get_plant_of_day, get_top_insects_this_month
 from utils.display import (
     CATEGORY_LABELS,
     MONTH_NAMES,
@@ -249,10 +249,41 @@ with task_cols[1]:
 
 st.divider()
 
+# ── Top 5 voor bijen ──────────────────────────────────────────────────────────
+st.markdown(f"## 🐝 Top 5 voor bijen in {MONTH_NAMES[today.month].capitalize()}")
+st.caption("Planten die nu bloeien én de meeste waarde hebben voor bijen en insecten.")
+
+top_bijen = get_top_insects_this_month(today.month, limit=5)
+if top_bijen:
+    bee_cols = st.columns(5)
+    for col, p in zip(bee_cols, top_bijen):
+        with col:
+            photo = first_photo(p)
+            if photo:
+                try:
+                    st.image(photo["url"], use_container_width=True)
+                except Exception:
+                    pass
+            dutch = p.get("dutch_names") or []
+            name = dutch[0] if dutch else p["scientific_name"]
+            slug = p.get("slug") or make_slug(p["scientific_name"])
+            score = p.get("score_insects")
+            stars = ("★" * score + "☆" * (5 - score)) if score else ""
+            native = " 🌿" if p.get("native_nl") else ""
+            st.markdown(
+                f"**[{name}](/Planten?plant={slug})**{native}  \n"
+                f"*{p['scientific_name']}*  \n"
+                f"{stars}"
+            )
+else:
+    st.info(f"Geen bloeiende planten gevonden voor {MONTH_NAMES[today.month]}.")
+
+st.divider()
+
 # ── Navigatiekaarten ──────────────────────────────────────────────────────────
 st.markdown("## Verken de gids")
 
-nav1, nav2, nav3, nav4 = st.columns(4, gap="medium")
+nav1, nav2, nav3, nav4, nav5 = st.columns(5, gap="medium")
 
 with nav1:
     with st.container(border=True):
@@ -274,6 +305,15 @@ with nav2:
 
 with nav3:
     with st.container(border=True):
+        st.markdown("### 📅 Seizoenskalender")
+        st.markdown(
+            "Bekijk welke planten wanneer bloeien in een visuele 12-maanden "
+            "tijdlijn. Filter op categorie of alleen inheemse soorten."
+        )
+        st.page_link("pages/5_Kalender.py", label="Ga naar kalender →", icon="📅")
+
+with nav4:
+    with st.container(border=True):
         st.markdown("### 🌿 Plantenfamilies")
         st.markdown(
             "Verken planten per botanische familie. Lees over gemeenschappelijke "
@@ -281,7 +321,7 @@ with nav3:
         )
         st.page_link("pages/4_Families.py", label="Ga naar families →", icon="🌿")
 
-with nav4:
+with nav5:
     with st.container(border=True):
         st.markdown("### ⚙️ Beheer")
         st.markdown(

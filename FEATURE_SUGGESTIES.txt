@@ -1,7 +1,7 @@
 ====================================================================
 PLANTENPEDIA — FEATURE SUGGESTIES & UITBREIDINGSPLAN
 Doelgroep: ecologisch georiënteerde hoveniers en tuinliefhebbers
-Datum opgesteld: 2026-04-18 | Bijgewerkt: 2026-04-18 (na refactor)
+Datum opgesteld: 2026-04-18 | Bijgewerkt: 2026-04-19 (Sprint 1 gedaan)
 ====================================================================
 
 CODEBASE STRUCTUUR NA REFACTOR
@@ -364,16 +364,24 @@ Sprint 0 (refactor — GEDAAN):
   [x] README.md aangemaakt voor GitHub-bijdragers
   [x] Eenmalige foto-fix scripts gearchiveerd in data/archive/
 
-Sprint 1 (laagste inspanning, hoogste waarde):
-  [ ] native_nl + water_needs + drought_tolerant invullen in enrichments
-      → SQL toevoegen in Supabase, dan velden invullen per categorie-bestand
-      → python data/upload.py --fields native_nl,drought_tolerant,water_needs
-  [ ] Inheems-filter + preset-knoppen op zoekpagina (2_Zoeken.py)
-  [ ] "Wat te doen deze maand?" sectie op startpagina (hardcoded tekst)
+Sprint 1 (laagste inspanning, hoogste waarde) — GEDAAN ✓:
+  [x] native_nl + water_needs + drought_tolerant invullen in enrichments
+      → data/enrichments/_ecology.py aangemaakt (~150 planten)
+      → samengevoegd via __init__.py; upload: python data/upload.py --fields native_nl,drought_tolerant,water_needs
+  [x] Inheems-filter + preset-knoppen op zoekpagina (2_Zoeken.py)
+      → 6 presets: 🌿 Inheems, ☀️ Droogtebestendig, 🐝 Bijentuin, 🦋 Vlindertuin, 🍽️ Eetbaar, 🌊 Waterplant
+  [x] "Wat te doen deze maand?" sectie op startpagina (hardcoded tekst)
+      → MONTHLY_TASKS dict met 12 maanden × 4 ecologische tuintips
 
-Sprint 2 (middel inspanning):
-  [ ] Seizoenskalender pagina (bloom-tijdlijn, 12 maanden)
-  [ ] score_insects / score_birds invullen in enrichments + tonen op detailpagina
+Sprint 2 (middel inspanning) — BEZIG:
+  [ ] Seizoenskalender pagina (pages/5_Kalender.py)
+      → 12-maanden bloei-tijdlijn op basis van bloom_start/bloom_end
+      → filter op categorie; kleurcodering per categorie
+  [ ] score_insects / score_birds / score_soil schema + data + display
+      → schema.sql v5: kolommen toevoegen
+      → data/enrichments/_scores.py aanmaken per plant
+      → display_eco_score() in utils/display.py (★★★☆☆)
+      → "Top 5 voor bijen nu in bloei" op startpagina
   [ ] Bestaande lege DB-velden vullen via enrichments (pruning_info, pests_diseases, etc.)
       → python data/upload.py --fields pruning_info
 

@@ -97,6 +97,24 @@ PHOTO_TYPE_LABELS: Dict[str, str] = {
     "algemeen":     "Algemeen",
 }
 
+# ── Eco-score ────────────────────────────────────────────────────────────────
+
+def display_eco_score(plant: Dict) -> None:
+    """Toont ecologische scores (insecten, vogels, bodem) als sterren."""
+    scores = {
+        "🐝 Insecten": plant.get("score_insects"),
+        "🐦 Vogels":   plant.get("score_birds"),
+        "🌱 Bodem":    plant.get("score_soil"),
+    }
+    if not any(v for v in scores.values()):
+        return
+    cols = st.columns(3)
+    for col, (label, val) in zip(cols, scores.items()):
+        if val is not None:
+            stars = "★" * val + "☆" * (5 - val)
+            col.metric(label, stars)
+
+
 # ── Hulpfuncties ─────────────────────────────────────────────────────────────
 
 def _parse_height_from_growth_habit(text: str) -> Optional[str]:

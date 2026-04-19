@@ -59,6 +59,11 @@ CREATE TABLE IF NOT EXISTS plants (
     drought_tolerant BOOLEAN NOT NULL DEFAULT FALSE,   -- droogtebestendig
     water_needs      TEXT CHECK (water_needs IN ('droog', 'normaal', 'vochtig', 'nat')),
 
+    -- Ecologische scores (toegevoegd v5)
+    score_insects    SMALLINT CHECK (score_insects BETWEEN 0 AND 5),  -- waarde voor insecten/bijen
+    score_birds      SMALLINT CHECK (score_birds   BETWEEN 0 AND 5),  -- waarde voor vogels
+    score_soil       SMALLINT CHECK (score_soil    BETWEEN 0 AND 5),  -- bodemverbetering
+
     -- Filtervelden (geïndexeerd)
     edible          BOOLEAN NOT NULL DEFAULT FALSE,
     toxic           BOOLEAN NOT NULL DEFAULT FALSE,
@@ -215,10 +220,20 @@ CREATE POLICY "service_write_families"
 -- ============================================================
 -- v4-migratie: nieuwe kolommen (idempotent voor bestaande databases)
 -- ============================================================
+-- v4
 ALTER TABLE plants ADD COLUMN IF NOT EXISTS native_nl        BOOLEAN NOT NULL DEFAULT FALSE;
 ALTER TABLE plants ADD COLUMN IF NOT EXISTS drought_tolerant BOOLEAN NOT NULL DEFAULT FALSE;
 ALTER TABLE plants ADD COLUMN IF NOT EXISTS water_needs      TEXT CHECK (water_needs IN ('droog', 'normaal', 'vochtig', 'nat'));
 
+-- v5
+ALTER TABLE plants ADD COLUMN IF NOT EXISTS score_insects SMALLINT CHECK (score_insects BETWEEN 0 AND 5);
+ALTER TABLE plants ADD COLUMN IF NOT EXISTS score_birds   SMALLINT CHECK (score_birds   BETWEEN 0 AND 5);
+ALTER TABLE plants ADD COLUMN IF NOT EXISTS score_soil    SMALLINT CHECK (score_soil    BETWEEN 0 AND 5);
+CREATE INDEX IF NOT EXISTS idx_plants_score_insects ON plants(score_insects);
+CREATE INDEX IF NOT EXISTS idx_plants_score_birds   ON plants(score_birds);
+
 CREATE INDEX IF NOT EXISTS idx_plants_native_nl     ON plants(native_nl);
 CREATE INDEX IF NOT EXISTS idx_plants_drought       ON plants(drought_tolerant);
 CREATE INDEX IF NOT EXISTS idx_plants_water_needs   ON plants(water_needs);
+CREATE INDEX IF NOT EXISTS idx_plants_score_insects ON plants(score_insects);
+CREATE INDEX IF NOT EXISTS idx_plants_score_birds   ON plants(score_birds);

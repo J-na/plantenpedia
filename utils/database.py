@@ -46,7 +46,8 @@ LIST_COLUMNS = (
     "id, scientific_name, dutch_names, slug, category, "
     "edible, toxic, light_needs, bloom_start, bloom_end, soil_types, photos, "
     "evergreen, hardiness, family, family_common, "
-    "native_nl, drought_tolerant, water_needs, insects_animals"
+    "native_nl, drought_tolerant, water_needs, insects_animals, "
+    "score_insects, score_birds, score_soil"
 )
 
 
@@ -193,6 +194,36 @@ def filter_plants(
         ]
 
     return results
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def get_top_insects_this_month(month: int, limit: int = 5) -> List[Dict]:
+    """
+    Geeft de top-N planten die deze maand bloeien, gesorteerd op ecologische waarde
+    voor insecten (score_insects DESC, daarna aantal insect-entries in insects_animals).
+    """
+    resp = (
+        get_client()
+        .table("plants")
+        .select(LIST_COLUMNS)
+        .lte("bloom_start", month)
+        .gte("bloom_end", month)
+        .order("score_insects", desc=True, nulls_last=True)
+        .execute()
+    )
+    candidates = resp.data or []
+
+    # Secundaire sortering op aantal insect-entries voor planten zonder score
+    def _sort_key(p: Dict):
+        score = p.get("score_insects") or 0
+        insect_count = sum(
+            1 for i in (p.get("insects_animals") or [])
+            if i.get("type") in ("insect", "vlinder")
+        )
+        return (score, insect_count)
+
+    candidates.sort(key=_sort_key, reverse=True)
+    return candidates[:limit]
 
 
 # ── Plantenfamilies ──────────────────────────────────────────────────────────
