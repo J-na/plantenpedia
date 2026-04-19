@@ -1,7 +1,7 @@
 ====================================================================
 PLANTENPEDIA — FEATURE SUGGESTIES & UITBREIDINGSPLAN
 Doelgroep: ecologisch georiënteerde hoveniers en tuinliefhebbers
-Datum opgesteld: 2026-04-18 | Bijgewerkt: 2026-04-19 (Sprint 1 gedaan)
+Datum opgesteld: 2026-04-18 | Bijgewerkt: 2026-04-19 (Sprint 2 gedaan)
 ====================================================================
 
 CODEBASE STRUCTUUR NA REFACTOR
@@ -373,22 +373,33 @@ Sprint 1 (laagste inspanning, hoogste waarde) — GEDAAN ✓:
   [x] "Wat te doen deze maand?" sectie op startpagina (hardcoded tekst)
       → MONTHLY_TASKS dict met 12 maanden × 4 ecologische tuintips
 
-Sprint 2 (middel inspanning) — BEZIG:
-  [ ] Seizoenskalender pagina (pages/5_Kalender.py)
+Sprint 2 (middel inspanning) — GEDAAN ✓:
+  [x] Seizoenskalender pagina (pages/5_Kalender.py)
       → 12-maanden bloei-tijdlijn op basis van bloom_start/bloom_end
-      → filter op categorie; kleurcodering per categorie
-  [ ] score_insects / score_birds / score_soil schema + data + display
-      → schema.sql v5: kolommen toevoegen
-      → data/enrichments/_scores.py aanmaken per plant
-      → display_eco_score() in utils/display.py (★★★☆☆)
+      → filter op categorie, naam, inheems; kleurcodering per categorie; legenda
+      → huidige maand gemarkeerd; plantnamen klikbaar naar detailpagina
+  [x] score_insects / score_birds / score_soil schema + data + display
+      → schema.sql v5: kolommen toegevoegd
+      → data/enrichments/_scores.py aangemaakt: 268 planten gescored (0–5)
+      → display_eco_score() in utils/display.py (★★★☆☆ sterren)
       → "Top 5 voor bijen nu in bloei" op startpagina
+  [x] Foto's op detailpagina geschaald naar 80% breedte (gecentreerd)
   [ ] Bestaande lege DB-velden vullen via enrichments (pruning_info, pests_diseases, etc.)
-      → python data/upload.py --fields pruning_info
+      → python data/upload.py --fields pruning_info  ← nog te doen
 
-Sprint 3 (grotere features):
-  [ ] Mijn Tuinlijst (session_state + PDF export, fpdf2)
-  [ ] Zaaikalender (sow_indoors / sow_outdoors SQL + enrichments + UI)
-  [ ] Combinatieplanten sectie (companion_plants veld)
+Sprint 3 (grotere features) — GEDAAN ✓:
+  [x] Mijn Tuinlijst (pages/6_MijnTuin.py)
+      → session_state opslaan van plant-slugs; "♥ Voeg toe" knop op detailpagina
+      → overzichtspagina: foto, naam, bloeitijd, insectenscore, inheems-badge
+      → bloei-samenvatting: wanneer bloeit de tuin, piekmaan
+      → verwijderen per plant + alles wissen
+  [x] Tuinagenda tab op Seizoenskalender (pages/5_Kalender.py tab 2)
+      → maandselectie; kolom met zaaien/planten/snoeien/taken per maand
+      → kolom met "Nu in bloei" (gesorteerd op insectenscore)
+      → 12 maanden volledig uitgewerkt met specifieke tuintaken
+  [ ] Combinatieplanten sectie op detailpagina (companion_plants JSONB veld)
+      → schema: ALTER TABLE plants ADD COLUMN IF NOT EXISTS companion_plants JSONB;
+      → data invullen in enrichments + display-sectie bouwen
 
 Sprint 4 (nice-to-have):
   [ ] Vergelijkingspagina

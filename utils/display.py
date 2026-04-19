@@ -205,9 +205,29 @@ def render_plant_card(plant: Dict, col_key: str = "") -> bool:
 
 # ── Volledige plantpagina ─────────────────────────────────────────────────────
 
+def _render_mijn_tuin_button(plant: Dict) -> None:
+    slug = plant.get("slug", "")
+    if not slug:
+        return
+    if "mijn_tuin" not in st.session_state:
+        st.session_state["mijn_tuin"] = []
+    in_tuin = slug in st.session_state["mijn_tuin"]
+    btn_col, _ = st.columns([2, 5])
+    with btn_col:
+        if in_tuin:
+            if st.button("✓ In mijn tuin  —  verwijder", type="secondary", width="stretch"):
+                st.session_state["mijn_tuin"].remove(slug)
+                st.rerun()
+        else:
+            if st.button("♥ Voeg toe aan mijn tuin", type="primary", width="stretch"):
+                st.session_state["mijn_tuin"].append(slug)
+                st.rerun()
+
+
 def render_plant_page(plant: Dict) -> None:
     """Render de volledige detailpagina voor een plant."""
     _render_header(plant)
+    _render_mijn_tuin_button(plant)
     st.divider()
     _render_basic_info(plant)
     st.divider()
@@ -304,16 +324,18 @@ def _render_header(plant: Dict) -> None:
             return order_keys.index(t) if t in order_keys else len(order_keys)
         sorted_photos = sorted(valid_photos, key=sort_key)[:5]
 
-        photo_cols = st.columns(len(sorted_photos))
-        for i, photo in enumerate(sorted_photos):
-            with photo_cols[i]:
-                caption_text = photo.get("caption") or ""
-                label = PHOTO_TYPE_LABELS.get(photo.get("type", ""), caption_text or "Foto")
-                try:
-                    st.image(photo["url"], caption=str(label), width="stretch")
-                except Exception:
-                    st.caption("*(foto niet beschikbaar)*")
-                render_photo_caption(photo)
+        _, _photo_area, _ = st.columns([0.1, 0.8, 0.1])
+        with _photo_area:
+            photo_cols = st.columns(len(sorted_photos))
+            for i, photo in enumerate(sorted_photos):
+                with photo_cols[i]:
+                    caption_text = photo.get("caption") or ""
+                    label = PHOTO_TYPE_LABELS.get(photo.get("type", ""), caption_text or "Foto")
+                    try:
+                        st.image(photo["url"], caption=str(label), width="stretch")
+                    except Exception:
+                        st.caption("*(foto niet beschikbaar)*")
+                    render_photo_caption(photo)
 
 
 # ── Sectie: basisinformatie ───────────────────────────────────────────────────
