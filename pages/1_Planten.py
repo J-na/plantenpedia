@@ -14,16 +14,6 @@ from utils.display import (
     render_plant_page,
 )
 
-st.markdown(
-    """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer     {visibility: hidden;}
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
 # ── Router: detailpagina of overzicht ─────────────────────────────────────────
 # Query param heeft voorrang; session_state vangt navigatie vanuit andere pagina's op
 plant_slug = st.query_params.get("plant") or st.session_state.pop("navigate_to_plant", None)

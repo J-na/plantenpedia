@@ -9,23 +9,12 @@ from utils.database import (
     get_families_with_counts,
     get_family,
     get_plants_by_family,
-    make_slug,
 )
 from utils.display import (
     CATEGORY_LABELS,
     bloom_label,
     first_photo,
     make_slug,
-)
-
-st.markdown(
-    """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer     {visibility: hidden;}
-    </style>
-    """,
-    unsafe_allow_html=True,
 )
 
 # ── Routing op basis van query param ─────────────────────────────────────────

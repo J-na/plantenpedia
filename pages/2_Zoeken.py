@@ -4,7 +4,7 @@ Gebruikers kunnen planten zoeken op basis van meerdere eigenschappen.
 """
 import streamlit as st
 
-from utils.database import filter_plants, make_slug
+from utils.database import filter_plants
 from utils.display import (
     CATEGORY_LABELS,
     HARDINESS_LABELS,
@@ -15,16 +15,6 @@ from utils.display import (
     bloom_label,
     first_photo,
     make_slug,
-)
-
-st.markdown(
-    """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer     {visibility: hidden;}
-    </style>
-    """,
-    unsafe_allow_html=True,
 )
 
 st.title("🔍 Zoeken & filteren")
@@ -131,6 +121,22 @@ with st.expander("Geavanceerde filters", expanded=not st.session_state.get("acti
             only_native       = st.checkbox("Alleen inheemse planten (NL/BE)")
             only_drought      = st.checkbox("Alleen droogtebestendige planten")
 
+            st.markdown("**Hoogteklasse**")
+            selected_height_class = st.multiselect(
+                "Hoogte",
+                options=["laag", "middel", "hoog"],
+                format_func=lambda x: {"laag": "Laag (< 50 cm)", "middel": "Middel (50–150 cm)", "hoog": "Hoog (> 150 cm)"}[x],
+                label_visibility="collapsed",
+            )
+
+            st.markdown("**Minimale bijenwaarde**")
+            min_bee_score = st.selectbox(
+                "Bijenwaarde",
+                options=[0, 1, 2, 3, 4, 5],
+                format_func=lambda x: "Alle" if x == 0 else f"≥ {'★' * x}{'☆' * (5 - x)}",
+                label_visibility="collapsed",
+            )
+
             st.markdown("&nbsp;")
             submitted = st.form_submit_button(
                 "🔍 Zoeken", type="primary", width="stretch"
@@ -175,6 +181,8 @@ if show_results:
             native_nl=True if only_native else None,
             drought_tolerant=True if only_drought else None,
             water_needs=selected_water or None,
+            min_score_insects=min_bee_score if min_bee_score > 0 else None,
+            height_class=selected_height_class or None,
         )
 
     st.divider()

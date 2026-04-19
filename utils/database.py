@@ -52,7 +52,7 @@ LIST_COLUMNS = (
 )
 
 
-@st.cache_data(ttl=300, show_spinner=False)
+@st.cache_data(ttl=3600, show_spinner=False)
 def get_all_plants(columns: str = LIST_COLUMNS) -> List[Dict]:
     """Geeft alle planten terug (gesorteerd op wetenschappelijke naam)."""
     response = (
@@ -65,7 +65,7 @@ def get_all_plants(columns: str = LIST_COLUMNS) -> List[Dict]:
     return response.data or []
 
 
-@st.cache_data(ttl=300, show_spinner=False)
+@st.cache_data(ttl=3600, show_spinner=False)
 def get_plant_by_slug(slug: str) -> Optional[Dict]:
     """Zoek één plant op basis van de slug (volledige gegevens)."""
     response = (
@@ -79,7 +79,7 @@ def get_plant_by_slug(slug: str) -> Optional[Dict]:
     return response.data[0] if response.data else None
 
 
-@st.cache_data(ttl=300, show_spinner=False)
+@st.cache_data(ttl=3600, show_spinner=False)
 def get_plant_by_id(plant_id: str) -> Optional[Dict]:
     """Zoek één plant op ID (volledige gegevens)."""
     response = (
@@ -93,16 +93,16 @@ def get_plant_by_id(plant_id: str) -> Optional[Dict]:
     return response.data[0] if response.data else None
 
 
-@st.cache_data(ttl=60, show_spinner=False)
+@st.cache_data(ttl=3600, show_spinner=False)
 def search_plants(query: str) -> List[Dict]:
-    """Zoek planten op naam (wetenschappelijk of Nederlands)."""
+    """Zoek planten op wetenschappelijke naam, Nederlandse naam of beschrijving."""
     q = query.strip()
     if not q:
         return get_all_plants()
 
     client = get_client()
 
-    # Zoek in wetenschappelijke naam (case-insensitive)
+    # 1. DB-query: wetenschappelijke naam
     sci = (
         client.table("plants")
         .select(LIST_COLUMNS)
@@ -111,33 +111,31 @@ def search_plants(query: str) -> List[Dict]:
         .execute()
     ).data or []
 
-    sci_ids = {p["id"] for p in sci}
+    found_ids = {p["id"] for p in sci}
 
-    # Zoek ook in Nederlandse namen via array-contains (exact woord)
-    # Supabase ondersteunt cs (contains) op text arrays
-    try:
-        dutch = (
-            client.table("plants")
-            .select(LIST_COLUMNS)
-            .ilike("scientific_name", f"%{q}%")  # fallback
-            .order("scientific_name")
-            .execute()
-        ).data or []
-    except Exception:
-        dutch = []
-
-    # Handmatige filterronde: controleer dutch_names array
+    # 2. Client-side: Nederlandse namen (hergebruikt gecachte all-plants)
     all_plants = get_all_plants()
     dutch_matches = [
         p for p in all_plants
-        if p["id"] not in sci_ids
+        if p["id"] not in found_ids
         and any(q.lower() in name.lower() for name in (p.get("dutch_names") or []))
     ]
+    found_ids.update(p["id"] for p in dutch_matches)
 
-    return sci + dutch_matches
+    # 3. DB-query: beschrijving (filtert server-side, retourneert LIST_COLUMNS)
+    desc = (
+        client.table("plants")
+        .select(LIST_COLUMNS)
+        .ilike("description", f"%{q}%")
+        .order("scientific_name")
+        .execute()
+    ).data or []
+    desc_matches = [p for p in desc if p["id"] not in found_ids]
+
+    return sci + dutch_matches + desc_matches
 
 
-@st.cache_data(ttl=60, show_spinner=False)
+@st.cache_data(ttl=3600, show_spinner=False)
 def filter_plants(
     edible: Optional[bool] = None,
     toxic: Optional[bool] = None,
@@ -151,6 +149,8 @@ def filter_plants(
     drought_tolerant: Optional[bool] = None,
     water_needs: Optional[List[str]] = None,
     insect_types: Optional[List[str]] = None,
+    min_score_insects: Optional[int] = None,
+    height_class: Optional[List[str]] = None,
 ) -> List[Dict]:
     """Filter planten op basis van eigenschappen."""
     client = get_client()
@@ -176,6 +176,8 @@ def filter_plants(
         q = q.eq("drought_tolerant", drought_tolerant)
     if water_needs:
         q = q.in_("water_needs", water_needs)
+    if min_score_insects is not None:
+        q = q.gte("score_insects", min_score_insects)
 
     results: List[Dict] = (q.order("scientific_name").execute()).data or []
 
@@ -193,11 +195,25 @@ def filter_plants(
                 for i in (p.get("insects_animals") or [])
             )
         ]
+    if height_class:
+        def _in_height_class(p: Dict) -> bool:
+            h = p.get("height_max")
+            if h is None:
+                return False
+            for cls in height_class:
+                if cls == "laag" and h < 50:
+                    return True
+                if cls == "middel" and 50 <= h <= 150:
+                    return True
+                if cls == "hoog" and h > 150:
+                    return True
+            return False
+        results = [p for p in results if _in_height_class(p)]
 
     return results
 
 
-@st.cache_data(ttl=300, show_spinner=False)
+@st.cache_data(ttl=3600, show_spinner=False)
 def get_top_insects_this_month(month: int, limit: int = 5) -> List[Dict]:
     """
     Geeft de top-N planten die deze maand bloeien, gesorteerd op ecologische waarde
@@ -229,7 +245,7 @@ def get_top_insects_this_month(month: int, limit: int = 5) -> List[Dict]:
 
 # ── Plantenfamilies ──────────────────────────────────────────────────────────
 
-@st.cache_data(ttl=300, show_spinner=False)
+@st.cache_data(ttl=3600, show_spinner=False)
 def get_all_families() -> List[Dict]:
     """Geeft alle plantenfamilies terug, gesorteerd op naam."""
     response = (
@@ -242,7 +258,7 @@ def get_all_families() -> List[Dict]:
     return response.data or []
 
 
-@st.cache_data(ttl=300, show_spinner=False)
+@st.cache_data(ttl=3600, show_spinner=False)
 def get_family(name: str) -> Optional[Dict]:
     """Zoek één plantenfamilie op naam."""
     response = (
@@ -256,7 +272,7 @@ def get_family(name: str) -> Optional[Dict]:
     return response.data[0] if response.data else None
 
 
-@st.cache_data(ttl=300, show_spinner=False)
+@st.cache_data(ttl=3600, show_spinner=False)
 def get_plants_by_family(family_name: str) -> List[Dict]:
     """Geeft alle planten in een bepaalde familie terug."""
     response = (
@@ -270,11 +286,11 @@ def get_plants_by_family(family_name: str) -> List[Dict]:
     return response.data or []
 
 
-@st.cache_data(ttl=300, show_spinner=False)
+@st.cache_data(ttl=3600, show_spinner=False)
 def get_families_with_counts() -> List[Dict]:
     """Geeft families terug met het aantal planten per familie."""
-    # Haal alle planten op met hun familie
-    all_pl = get_all_plants("family, family_common")
+    # Haal alle planten op (hergebruikt de bestaande cache)
+    all_pl = get_all_plants()
     counts: dict = {}
     for p in all_pl:
         fam = p.get("family")

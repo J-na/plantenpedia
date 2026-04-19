@@ -130,9 +130,6 @@ MONTHLY_TASKS: dict = {
 st.markdown(
     """
     <style>
-    #MainMenu {visibility: hidden;}
-    footer     {visibility: hidden;}
-
     .hero-banner {
         background: linear-gradient(135deg, #1e5218 0%, #3d7a32 60%, #5aaa4c 100%);
         color: white;
@@ -283,7 +280,7 @@ st.divider()
 # ── Navigatiekaarten ──────────────────────────────────────────────────────────
 st.markdown("## Verken de gids")
 
-nav1, nav2, nav3, nav4, nav5 = st.columns(5, gap="medium")
+nav1, nav2, nav3, nav4 = st.columns(4, gap="medium")
 
 with nav1:
     with st.container(border=True):
@@ -308,11 +305,31 @@ with nav3:
         st.markdown("### 📅 Seizoenskalender")
         st.markdown(
             "Bekijk welke planten wanneer bloeien in een visuele 12-maanden "
-            "tijdlijn. Filter op categorie of alleen inheemse soorten."
+            "tijdlijn, met per maand een overzicht van tuintaken."
         )
         st.page_link("pages/5_Kalender.py", label="Ga naar kalender →", icon="📅")
 
 with nav4:
+    with st.container(border=True):
+        st.markdown("### 🌻 Mijn Tuin")
+        st.markdown(
+            "Sla je favoriete planten op en bekijk wanneer jouw tuin bloeit, "
+            "welke maand de piek is en hoeveel bijenwaarde je hebt."
+        )
+        st.page_link("pages/6_MijnTuin.py", label="Ga naar mijn tuin →", icon="🌻")
+
+nav5, nav6, nav7, _ = st.columns(4, gap="medium")
+
+with nav5:
+    with st.container(border=True):
+        st.markdown("### ⚖️ Vergelijk")
+        st.markdown(
+            "Selecteer 2 tot 4 planten en vergelijk ze naast elkaar op hoogte, "
+            "bloeitijd, licht, bodem en ecologische waarde."
+        )
+        st.page_link("pages/7_Vergelijk.py", label="Ga naar vergelijk →", icon="⚖️")
+
+with nav6:
     with st.container(border=True):
         st.markdown("### 🌿 Plantenfamilies")
         st.markdown(
@@ -321,7 +338,7 @@ with nav4:
         )
         st.page_link("pages/4_Families.py", label="Ga naar families →", icon="🌿")
 
-with nav5:
+with nav7:
     with st.container(border=True):
         st.markdown("### ⚙️ Beheer")
         st.markdown(

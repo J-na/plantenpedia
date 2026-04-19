@@ -1,423 +1,47 @@
 ====================================================================
-PLANTENPEDIA — FEATURE SUGGESTIES & UITBREIDINGSPLAN
-Doelgroep: ecologisch georiënteerde hoveniers en tuinliefhebbers
-Datum opgesteld: 2026-04-18 | Bijgewerkt: 2026-04-19 (Sprint 2 gedaan)
+PLANTENPEDIA — OPENSTAANDE TO-DOs
+Datum bijgewerkt: 2026-04-19
 ====================================================================
 
-CODEBASE STRUCTUUR NA REFACTOR
---------------------------------------------------------------------
-De codebase is opgeschoond. Belangrijkste wijzigingen:
-
-  data/enrichments/         ← NIEUW: plantdata gesplitst per categorie
-    _helpers.py             ← wiki() en img() hulpfuncties
-    __init__.py             ← samenvoegt alle categorieën
-    vaste_planten.py        (60 soorten)
-    eenjarigen.py           (13 soorten, incl. tweejarigen)
-    bollen_knollen.py       (14 soorten)
-    kuipplanten.py          ( 8 soorten)
-    wilde_planten.py        (71 soorten, incl. waterplanten)
-    keukenkruiden.py        ( 3 soorten)
-    grassen.py              ( 6 soorten)
-    heesters.py             (44 soorten, incl. wintergroene)
-    klimplanten.py          (12 soorten, incl. rozen)
-    bomen.py                (29 soorten, incl. coniferen)
-
-  data/upload.py            ← NIEUW: CLI vervangt verrijkingsscript.py
-    --plant "Naam"          slechts één plant uploaden
-    --category bomen        één categorie uploaden
-    --fields photos,...     slechts specifieke velden bijwerken
-    --safe                  sla bestaande DB-waarden NIET over
-    --dry-run               toon wat er zou gebeuren zonder te schrijven
-
-  schema.sql                ← GECONSOLIDEERD (vervangt 3 losse SQL-bestanden)
-  README.md                 ← NIEUW: installatie- en bijdragehandleiding
-  data/archive/             ← eenmalige foto-fix scripts (ter referentie)
-
-HOE EEN NIEUWE PLANT TOEVOEGEN:
-  1. Open data/enrichments/<categorie>.py
-  2. Voeg een item toe aan ENRICHMENTS
-  3. python data/upload.py --plant "Nieuwe naam"
-
-HOE EEN BESTAAND VELD BIJWERKEN (zonder andere velden te overschrijven):
-  python data/upload.py --plant "Taxus baccata" --fields photos
-
-
-BESTAANDE SCHEMA-VELDEN DIE NOG NIET ZIJN INGEVULD
---------------------------------------------------------------------
-De database heeft al kolommen voor onderstaande velden, maar ze zijn
-leeg. Deze toevoegen via data/enrichments/<categorie>.py.
-Na toevoegen uploaden met:  python data/upload.py --fields <veldnaam>
-
-  - distribution        → verspreidingsgebied per plant (vrije tekst)
-  - fertilizer_needs    → bemesting- en voedingsadvies
-  - pruning_info        → snoeiadviezen (wanneer + hoe)
-  - weed_behavior       → woekerende of zelfzaaiende eigenschappen
-  - pests_diseases      → veelvoorkomende plagen en ziektes + aanpak
-  - edible_parts        → welke delen zijn eetbaar
-  - recipes             → receptideeën / bereidingswijzen
-  - taste               → smaakbeschrijving
-  - nutritional_value   → voedingswaarde (bij eetbare planten)
-  - toxic_info          → welke delen zijn giftig, voor wie/wat
-  - lookalikes          → JSONB: makkelijk te verwarren soorten
-  - cultivars           → JSONB: bekende variëteiten met foto
-  - sources             → JSONB: wetenschappelijke bronnen
-  - wood_properties     → (bomen/struiken) houtkenmerken
-
-  Aanpak: voeg velden toe aan het juiste bestand in data/enrichments/
-  voor de meest relevante soorten (bijv. alle eetbare en giftige eerst).
-  Upload vervolgens selectief: python data/upload.py --fields edible_parts,toxic_info
-
+GEREALISEERD (alle sprints 0 t/m 4 + technische opschoonronde):
+  Refactor enrichments-structuur, upload CLI, schema.sql geconsolideerd,
+  native_nl / water_needs / drought_tolerant, zoekpagina presets,
+  seizoenskalender, eco-scores, mijn tuinlijst, tuinagenda,
+  vergelijkingspagina, companion plants, lookalikes, pruning_info,
+  cultivars.
+  Technisch: cache TTLs naar 3600, search_plants verbeterd (beschrijving
+  doorzoeken, dode DB-query verwijderd), dubbele table-scan families
+  opgelost, make_slug gedecentreerd naar database.py, dubbele imports
+  opgeschoond (2_Zoeken.py, 4_Families.py), CSS gecentraliseerd in
+  app.py, hoogteklasse-filter en bijenwaarde-filter toegevoegd aan
+  2_Zoeken.py, Mijn Tuin + Vergelijk nav-kaarten op startpagina.
 
 ====================================================================
-DEEL 1 — NIEUWE PAGINA'S / HOOFDFEATURES
+OPENSTAAND — DATA-UITBREIDINGEN
 ====================================================================
 
-────────────────────────────────────────────────────────────────────
-1. SEIZOENSKALENDER  (pages/5_Kalender.py)
-────────────────────────────────────────────────────────────────────
-Idee:
-  Visuele weergave van het tuinjaar, met per maand:
-  - Welke planten bloeien (kleurgecodeerd per categorie)
-  - Onderhoudstaken (snoeien, zaaien, planten, oogsten)
-
-Implementatie-aanwijzingen:
-  - Bouw een 12-kolommen tabel (jan–dec) met één rij per plant
-  - Gebruik bloom_start / bloom_end uit de database
-  - Kleur per categorie (gebruik CATEGORY_LABELS + bijpassende kleur)
-  - Filter op categorie via een sidebar-selectbox
-  - Optioneel: klik op een cel → spring naar de plantpagina
-
-  Benodigde data die nog ontbreekt:
-  - sow_indoors (tuple van maanden, bijv. [2, 3])
-  - sow_outdoors (tuple van maanden)
-  - plant_out_month (maand van uitplanten)
-  - prune_months (lijst van maanden)
-  Deze als nieuwe JSONB- of smallint-velden toevoegen aan schema:
-    ALTER TABLE plants ADD COLUMN IF NOT EXISTS sow_indoors INT[];
-    ALTER TABLE plants ADD COLUMN IF NOT EXISTS sow_outdoors INT[];
-    ALTER TABLE plants ADD COLUMN IF NOT EXISTS plant_out_month INT;
-    ALTER TABLE plants ADD COLUMN IF NOT EXISTS prune_months INT[];
-
-Prioriteit: HOOG — kernwaarde voor de doelgroep
-
-────────────────────────────────────────────────────────────────────
-2. ECOLOGISCHE WAARDE DASHBOARD  (sectie op startpagina of eigen pagina)
-────────────────────────────────────────────────────────────────────
-Idee:
-  Geef elke plant een ecologische-waarde score op basis van bestaande
-  data én een nieuw score-veld. Toon top-10 meest ecologisch waardevolle
-  planten voor bijen, vlinders, vogels, bodem.
-
-  Score-kolommen toevoegen aan schema:
-    ALTER TABLE plants ADD COLUMN IF NOT EXISTS score_insects SMALLINT CHECK (score_insects BETWEEN 0 AND 5);
-    ALTER TABLE plants ADD COLUMN IF NOT EXISTS score_birds   SMALLINT CHECK (score_birds   BETWEEN 0 AND 5);
-    ALTER TABLE plants ADD COLUMN IF NOT EXISTS score_soil    SMALLINT CHECK (score_soil    BETWEEN 0 AND 5);
-
-  De totaalscore = som van de drie. Automatisch berekend in Python.
-
-  Op de startpagina: een "Top 5 voor bijen deze maand" sectie die
-  filtert op bloeiende planten (huidige maand) met hoogste score_insects.
-
-Implementatie-aanwijzingen:
-  - Voeg score-velden toe aan data/enrichments/<categorie>.py per plant
-  - Upload: python data/upload.py --fields score_insects,score_birds,score_soil
-  - Maak een component display_eco_score(plant) in utils/display.py
-    die ★★★☆☆ sterren toont of kleurbalken gebruikt
-  - Op de plantdetailpagina tonen naast de bestaande badges
-
-Prioriteit: MIDDEL
-
-────────────────────────────────────────────────────────────────────
-3. MIJN TUINLIJST  (pages/6_MijnTuin.py)
-────────────────────────────────────────────────────────────────────
-Idee:
-  Gebruikers kunnen planten opslaan in een persoonlijke lijst.
-  Geen login nodig: gebruik st.session_state + browser localStorage
-  via een kleine JavaScript-injectie.
-
-  Alternatief zonder JS: sla de lijst op als queryparameter in de URL
-  (komma-gescheiden slugs) zodat de pagina-URL deelbaar is.
-
-  Functionaliteiten:
-  - "Voeg toe aan mijn tuin" knop op elke plantdetailpagina
-  - Overzichtspagina met geselecteerde planten
-  - Sortering op bloeitijd → geeft bloeiperiode van de eigen tuin
-  - PDF-export van de tuinlijst (gebruik reportlab of fpdf2)
-  - Compatibiliteitswaarschuwing: toon conflicten (bijv. plantjes die
-    volledige zon én schaduw willen in dezelfde selectie)
-
-Benodigde packages:
-  fpdf2  (pip install fpdf2)
-
-Prioriteit: MIDDEL-HOOG — verhoogt gebruikersbetrokkenheid
-
-────────────────────────────────────────────────────────────────────
-4. ZAAIKALENDER / TUINAGENDA (onderdeel van Seizoenskalender of apart)
-────────────────────────────────────────────────────────────────────
-Idee:
-  Praktische maand-voor-maand taakoverzicht. Gebruiker kiest een maand
-  en ziet: wat kan ik nu zaaien, planten, snoeien, oogsten?
-
-  Koppeling aan schema-velden sow_indoors, sow_outdoors, prune_months
-  (zie Seizoenskalender hierboven).
-
-  UI: dropdown "Kies een maand" → kaartjes per taak-type met planten.
-
-Prioriteit: HOOG (veel praktische waarde)
-
-────────────────────────────────────────────────────────────────────
-6. VERGELIJKINGSPAGINA  (pages/7_Vergelijk.py of modal)
-────────────────────────────────────────────────────────────────────
-Idee:
-  Selecteer 2–3 planten en bekijk ze naast elkaar in een tabel.
-  Kolommen = planten, rijen = kenmerken (hoogte, licht, bloeitijd, etc.)
-
-  Eenvoudige implementatie:
-  - Multiselect widget op de zoekpagina of eigen pagina
-  - Zet geselecteerde slugs in session_state
-  - Render met st.columns(n) + vergelijkingstabel
-
-Prioriteit: LAAG
-
-────────────────────────────────────────────────────────────────────
-7. INHEEMS-FILTER + "VLINDERTUIN" / "BIJENTUIN" PRESET
-────────────────────────────────────────────────────────────────────
-Idee:
-  Voeg een boolean `native_nl` toe aan de database:
-    ALTER TABLE plants ADD COLUMN IF NOT EXISTS native_nl BOOLEAN DEFAULT FALSE;
-
-  En een boolean `drought_tolerant`:
-    ALTER TABLE plants ADD COLUMN IF NOT EXISTS drought_tolerant BOOLEAN DEFAULT FALSE;
-
-  Op de zoekpagina: preset-knoppen zoals:
-  - "🦋 Vlindertuin"   → filter op insects_animals bevat vlinder + bloeitijd zomer
-  - "🐝 Bijentuin"     → hoge score_insects + bloeiend
-  - "🌿 Alleen inheems" → native_nl = true
-  - "☀️ Droogte-bestendig" → drought_tolerant = true
-
-  Invullen native_nl per soort in data/enrichments/<categorie>.py.
-  Upload: python data/upload.py --fields native_nl,drought_tolerant
-  Vuistregel: vaste planten en wilde planten in de catalogus zijn
-  vrijwel allemaal inheems; bomen/struiken wisselend; zomerbloemen
-  en bolgewassen grotendeels uitheems.
-
-Prioriteit: HOOG (kernwaarde ecologisch tuinieren)
-
-
-====================================================================
-DEEL 2 — UITBREIDINGEN OP BESTAANDE PAGINA'S
-====================================================================
-
-────────────────────────────────────────────────────────────────────
-A. PLANTDETAILPAGINA (pages/1_Planten.py + utils/display.py)
-────────────────────────────────────────────────────────────────────
-Toe te voegen secties (in volgorde van prioriteit):
-
-  1. "Goed mee combineren" sectie
-     - Nieuw JSONB-veld `companion_plants`:
-         [{"slug": "achillea-millefolium", "reason": "trekt sluipwespen aan"}]
-     - Toon als kleine kaartjes met foto + naam + korte reden
-     - Schema: ALTER TABLE plants ADD COLUMN IF NOT EXISTS companion_plants JSONB DEFAULT '[]';
-
-  2. "Zaaien en planten" sectie
-     - Toon sow_indoors, sow_outdoors, plant_out_month als maandnamen
-     - Erbij: spacing_cm (plantafstand)
-     - Schema: ALTER TABLE plants ADD COLUMN IF NOT EXISTS spacing_cm SMALLINT;
-
-  3. "Variëteiten" sectie
-     - cultivars-veld is al aanwezig in schema maar leeg
-     - Vul top-5 meest gevraagde cultivars in per soort
-     - Toon als kleine kaartjes (naam + beschrijving + optioneel foto)
-
-  4. Kijkalikes / Verwarring
-     - lookalikes-veld is al aanwezig in schema
-     - Toon met waarschuwingsicoontje ⚠️ indien gevuld
-
-  5. Bronnen
-     - sources-veld al aanwezig
-     - Toon onderaan de pagina als voetnoten
-
-  6. Extra foto's per groeistadium
-     - Huidige foto-implementatie ondersteunt al meerdere foto's
-     - Voeg voor de meest bekeken soorten 2–3 foto's toe via
-       verrijkingsscript.py (blad, vrucht, habitusfoto naast bloei)
-
-────────────────────────────────────────────────────────────────────
-B. ZOEKPAGINA (pages/2_Zoeken.py)
-────────────────────────────────────────────────────────────────────
-Ontbrekende filters:
-  - Hoogteklasse (laag < 50 cm / middel 50–150 cm / hoog > 150 cm)
-    → parse via _parse_height_from_growth_habit() in display.py
-    → of voeg height_min/height_max toe via verrijkingsscript.py
-  - Waterbehoeften (droog / normaal / vochtig)
-    → nieuw veld: ALTER TABLE plants ADD COLUMN IF NOT EXISTS water_needs TEXT
-       CHECK (water_needs IN ('droog', 'normaal', 'vochtig', 'nat'));
-  - Inheems (native_nl = true)
-  - Ecologische score (hoog = score_insects + score_birds > 6)
-  - Droogtebestendig
-
-────────────────────────────────────────────────────────────────────
-C. STARTPAGINA (pages/Startpagina.py)
-────────────────────────────────────────────────────────────────────
-  - "Wat te doen in [huidige maand]?" sectiekaart
-    Toont 3 tuintips op basis van de huidige maand (hardcoded tekst of
-    tabel in de code, geen DB-wijziging nodig)
-  - "Top 5 voor bijen nu in bloei" sectie
-    Filter: bloom_start <= huidigeMaand <= bloom_end + sorteer op
-    score_insects DESC + limit 5
-  - Seizoens-bannerfoto per kwartaal (lente/zomer/herfst/winter)
-    vervangen door een andere afbeelding boven aan de pagina
-
-
-====================================================================
-DEEL 3 — DATA-UITBREIDINGEN IN ENRICHMENTS-BESTANDEN
-====================================================================
-
-Velden toevoegen aan data/enrichments/<categorie>.py en uploaden met
-python data/upload.py --fields <veldnaam>  (of --safe voor alle).
-
-NIEUWE VELDEN (vereisen eerst ALTER TABLE in Supabase SQL Editor):
-
-  native_nl         : True/False — inheems in Nederland/België?
-    SQL: ALTER TABLE plants ADD COLUMN IF NOT EXISTS native_nl BOOLEAN DEFAULT FALSE;
-
-  drought_tolerant  : True/False — droogtebestendig?
-    SQL: ALTER TABLE plants ADD COLUMN IF NOT EXISTS drought_tolerant BOOLEAN DEFAULT FALSE;
-
-  water_needs       : 'droog' | 'normaal' | 'vochtig' | 'nat'
-    SQL: ALTER TABLE plants ADD COLUMN IF NOT EXISTS water_needs TEXT
-         CHECK (water_needs IN ('droog', 'normaal', 'vochtig', 'nat'));
-
-  spacing_cm        : plantafstand in cm (integer)
-    SQL: ALTER TABLE plants ADD COLUMN IF NOT EXISTS spacing_cm SMALLINT;
-
-  sow_indoors       : lijst van maandnummers, bijv. [2, 3]
-    SQL: ALTER TABLE plants ADD COLUMN IF NOT EXISTS sow_indoors INT[];
-
-  sow_outdoors      : lijst van maandnummers, bijv. [4, 5]
-    SQL: ALTER TABLE plants ADD COLUMN IF NOT EXISTS sow_outdoors INT[];
-
-  plant_out_month   : maandnummer, bijv. 5
-    SQL: ALTER TABLE plants ADD COLUMN IF NOT EXISTS plant_out_month SMALLINT;
-
-  prune_months      : lijst van maandnummers, bijv. [3, 8]
-    SQL: ALTER TABLE plants ADD COLUMN IF NOT EXISTS prune_months INT[];
-
-  score_insects     : 0–5 (0 = geen waarde, 5 = uitstekend voor insecten)
-  score_birds       : 0–5
-  score_soil        : 0–5
-    SQL: ALTER TABLE plants ADD COLUMN IF NOT EXISTS score_insects SMALLINT CHECK (score_insects BETWEEN 0 AND 5);
-         ALTER TABLE plants ADD COLUMN IF NOT EXISTS score_birds   SMALLINT CHECK (score_birds   BETWEEN 0 AND 5);
-         ALTER TABLE plants ADD COLUMN IF NOT EXISTS score_soil    SMALLINT CHECK (score_soil    BETWEEN 0 AND 5);
-
-BESTAANDE VELDEN (bestaan al in DB, geen SQL nodig — gewoon toevoegen aan enrichments):
-
-  distribution      : verspreidingsgebied beschrijving
-  fertilizer_needs  : bemestingsadvies
-  pruning_info      : snoeiadvies
-  weed_behavior     : agressieve spreiding / zelfzaai
-  pests_diseases    : veelv. plagen + ecologische aanpak
-  edible_parts      : welke delen eetbaar (voor eetbare soorten)
-  recipes           : 1–2 bereidingsideeën
-  toxic_info        : welke delen giftig + symptomen (voor giftige soorten)
-  cultivars         : bekende cultivars (JSONB)
-
-
-====================================================================
-DEEL 4 — TECHNISCHE VERBETERINGEN
-====================================================================
-
-  1. Caching verfijnen
-     - Huidige @st.cache_data TTL = 3600 sec
-     - Overweeg TTL = 86400 (1 dag) voor plantdata die zelden wijzigt
-     - Admin-wijzigingen moeten cache invalideren (al geïmplementeerd
-       via cache.clear() — controleren of dit goed werkt)
-
-  2. Full-text search verbeteren
-     - Huidige search_plants() zoekt via ilike op scientific_name +
-       dutch_names. Voeg ook description en growth_habit toe aan de
-       zoek-query voor betere resultaten.
-
-  3. Sitemap / SEO
-     - Genereer een sitemap.xml zodat zoekmachines alle plantpagina's
-       kunnen indexeren (relevant als de app publiek wordt)
-
-  4. Responsive layout
-     - Testen op mobiel (Streamlit is mobiel-bruikbaar maar niet
-       geoptimaliseerd). Overweeg CARDS_PER_ROW dynamisch maken:
-         cols = 1 if screen_width < 600 else (2 if < 900 else 4)
-       (vereist een JS-hack of Streamlit component)
-
-  5. Foto fallback
-     - In utils/display.py: wrap st.image() in try/except al gedaan;
-       voeg een placeholder-SVG toe als fallback
-
-
-====================================================================
-IMPLEMENTATIEVOLGORDE (aanbeveling)
-====================================================================
-
-Sprint 0 (refactor — GEDAAN):
-  [x] verrijkingsscript.py gesplitst in data/enrichments/<categorie>.py
-  [x] Nieuwe upload CLI: python data/upload.py --safe / --fields / --plant
-  [x] schema.sql geconsolideerd (3 losse SQL-bestanden samengevoegd)
-  [x] README.md aangemaakt voor GitHub-bijdragers
-  [x] Eenmalige foto-fix scripts gearchiveerd in data/archive/
-
-Sprint 1 (laagste inspanning, hoogste waarde) — GEDAAN ✓:
-  [x] native_nl + water_needs + drought_tolerant invullen in enrichments
-      → data/enrichments/_ecology.py aangemaakt (~150 planten)
-      → samengevoegd via __init__.py; upload: python data/upload.py --fields native_nl,drought_tolerant,water_needs
-  [x] Inheems-filter + preset-knoppen op zoekpagina (2_Zoeken.py)
-      → 6 presets: 🌿 Inheems, ☀️ Droogtebestendig, 🐝 Bijentuin, 🦋 Vlindertuin, 🍽️ Eetbaar, 🌊 Waterplant
-  [x] "Wat te doen deze maand?" sectie op startpagina (hardcoded tekst)
-      → MONTHLY_TASKS dict met 12 maanden × 4 ecologische tuintips
-
-Sprint 2 (middel inspanning):
-  [x] Seizoenskalender pagina (pages/5_Kalender.py)
-      → 12-maanden bloei-tijdlijn op basis van bloom_start/bloom_end
-      → filter op categorie, naam, inheems; kleurcodering per categorie; legenda
-      → huidige maand gemarkeerd; plantnamen klikbaar naar detailpagina
-  [x] score_insects / score_birds / score_soil schema + data + display
-      → schema.sql v5: kolommen toegevoegd
-      → data/enrichments/_scores.py aangemaakt: 268 planten gescored (0–5)
-      → display_eco_score() in utils/display.py (★★★☆☆ sterren)
-      → "Top 5 voor bijen nu in bloei" op startpagina
-  [x] Foto's op detailpagina geschaald naar 80% breedte (gecentreerd)
-  [x] Bestaande lege DB-velden vullen via enrichments (pruning_info, cultivars)
-      → data/enrichments/_pruning.py: snoeiadviezen voor ~45 planten (heesters, klimplanten, bomen, vaste planten)
-      → data/enrichments/_cultivars.py: cultivars voor ~20 soorten (Lavandula, Salvia, Rosa, Clematis, etc.)
-      → upload: python data/upload.py --fields pruning_info
-      → upload: python data/upload.py --fields cultivars
-
-Sprint 3 (grotere features) — GEDAAN ✓:
-  [x] Mijn Tuinlijst (pages/6_MijnTuin.py)
-      → session_state opslaan van plant-slugs; "♥ Voeg toe" knop op detailpagina
-      → overzichtspagina: foto, naam, bloeitijd, insectenscore, inheems-badge
-      → bloei-samenvatting: wanneer bloeit de tuin, piekmaan
-      → verwijderen per plant + alles wissen
-  [x] Tuinagenda tab op Seizoenskalender (pages/5_Kalender.py tab 2)
-      → maandselectie; kolom met zaaien/planten/snoeien/taken per maand
-      → kolom met "Nu in bloei" (gesorteerd op insectenscore)
-      → 12 maanden volledig uitgewerkt met specifieke tuintaken
-  [x] Combinatieplanten sectie op detailpagina (companion_plants JSONB veld)
-      → data/_companions.py aangemaakt: ~35 planten met companion plant data
-      → data/_lookalikes.py aangemaakt: ~20 verwisselingsgevaren (incl. giftig-waarschuwingen)
-      → _render_companion_plants() in utils/display.py; zichtbaar op detailpagina
-      → schema nodig: ALTER TABLE plants ADD COLUMN IF NOT EXISTS companion_plants JSONB DEFAULT '[]';
-      → upload: python data/upload.py --fields companion_plants,lookalikes
-
-Sprint 4 (nice-to-have):
-  [x] Vergelijkingspagina (pages/7_Vergelijk.py)
-      → multiselect 2–4 planten; foto's + namen bovenaan
-      → vergelijkingstabel: type, bloei, licht, hoogte, water, bodem, inheems, scores
-      → totale ecologiescore (som van 3 scores, max. 15)
-  [x] Lookalikes sectie uitwerken
-      → data in _lookalikes.py; display-code bestond al in utils/display.py
-      → focus op veiligheidsrelevante verwisselingen (Aconitum, Digitalis, Anthriscus, etc.)
-  [x] Cultivars sectie uitwerken (veld bestaat al in DB, display-code bestaat)
-      → data in _cultivars.py: Rosa rugosa, Hydrangea, Echinacea, Achillea, Clematis, Buddleja, etc.
-      → upload: python data/upload.py --fields cultivars
+Velden bestaan al in de DB, zijn voor de meeste planten leeg.
+Toevoegen via data/enrichments/<categorie>.py, dan uploaden.
+
+  distribution      → verspreidingsgebied (alle categorieën)
+  fertilizer_needs  → bemestingsadvies (heesters, bomen)
+  pests_diseases    → veelv. plagen + aanpak (wilde_planten, bomen)
+  weed_behavior     → woekerende eigenschappen (wilde_planten, heesters)
+  edible_parts      → specifieke eetbare delen (keukenkruiden, wilde_planten)
+  recipes           → bereidingsideeën (keukenkruiden)
+  toxic_info        → uitgebreide giftinformatie (bomen met giftige bessen)
+  sources           → wetenschappelijke bronnen per plant (ontbreekt overal)
+  wood_properties   → houtkenmerken (bomen)
+
+  Aanpak per upload:
+    python data/upload.py --fields distribution
+    python data/upload.py --fields fertilizer_needs
+    python data/upload.py --fields pests_diseases
+    python data/upload.py --fields sources
+
+  Keukenkruiden is de dunste categorie (3 soorten). Overweeg uitbreiding
+  met: tijm, rozemarijn, oregano, munt, bieslook, citroenmelisse, venkel,
+  bernagie, lovage, selderij.
 
 ====================================================================
 EINDE DOCUMENT

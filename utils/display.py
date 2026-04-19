@@ -8,6 +8,8 @@ from typing import Dict, List, Optional
 
 import streamlit as st
 
+from utils.database import make_slug
+
 # ── Constanten & labels ──────────────────────────────────────────────────────
 
 MONTH_NAMES = {
@@ -128,12 +130,6 @@ def _parse_height_from_growth_habit(text: str) -> Optional[str]:
     if m:
         return f"tot {m.group(1)} {m.group(2)}"
     return None
-
-
-def make_slug(scientific_name: str) -> str:
-    slug = scientific_name.lower().strip()
-    slug = re.sub(r"[^a-z0-9]+", "-", slug)
-    return slug.strip("-")
 
 
 def bloom_label(start: Optional[int], end: Optional[int]) -> str:

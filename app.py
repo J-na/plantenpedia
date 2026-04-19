@@ -11,6 +11,11 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+st.markdown(
+    "<style>#MainMenu{visibility:hidden}footer{visibility:hidden}</style>",
+    unsafe_allow_html=True,
+)
+
 pg = st.navigation([
     st.Page("pages/Startpagina.py",  title="Startpagina", icon="🌿", default=True),
     st.Page("pages/1_Planten.py",    title="Planten",     icon="📖"),
