@@ -15,6 +15,117 @@ from utils.display import (
     make_slug,
 )
 
+MONTHLY_TASKS: dict = {
+    1: {
+        "emoji": "📋",
+        "taken": [
+            "Bestel zaden voor het nieuwe seizoen via een ecologische zaadleverancier",
+            "Snoei fruitbomen en klimrozen op droge, vorstvrije dagen",
+            "Houd vogelvoer aangevuld — behangselpapier, meizenbolletjes en ongebrande noten",
+            "Controleer opgeslagen knollen (dahlia, gladiool) op rot",
+        ],
+    },
+    2: {
+        "emoji": "🌱",
+        "taken": [
+            "Zaai tomaten, paprika en aubergine binnen op een warme vensterbank (>18 °C)",
+            "Snoei Clematis groep 2 en 3 voor de knoppen uitlopen",
+            "Voeg materiaal toe aan de composthoop en keer hem om",
+            "Bewonder vroege bloemen: sneeuwklokjes, helleborus en kornoelje",
+        ],
+    },
+    3: {
+        "emoji": "🌿",
+        "taken": [
+            "Snoei vaste planten terug — laat dood materiaal staan tot je nieuwe scheuten ziet",
+            "Zaai kruiden en eenjarigen onder glas of op een warme vensterbank",
+            "Mulch borders om bodemvocht vast te houden en onkruid te remmen",
+            "Plant nieuwe vaste planten — de grond is actief maar nog niet te droog",
+        ],
+    },
+    4: {
+        "emoji": "🌸",
+        "taken": [
+            "Zaai eenjarigen direct buiten na de laatste nachtvorst (let op lokale weersvoorspelling)",
+            "Verdeel en herplant vaste planten die te groot zijn geworden",
+            "Leg een insectenhotel aan of vernieuw de oude vulling",
+            "Geef vroege groeiers een laagje rijpe compost als topdressing",
+        ],
+    },
+    5: {
+        "emoji": "🌼",
+        "taken": [
+            "Na de ijsheiligen (12–15 mei): zet kuipplanten en tropische soorten buiten",
+            "Zaai zomerbloemen: zonnebloemen, afrikaantjes, cosmea en tagetes",
+            "Controleer op luizen — introduceer lieveheersbeestjes als biologische bestrijding",
+            "Mulch de borders voor droge zomerweer",
+        ],
+    },
+    6: {
+        "emoji": "🦋",
+        "taken": [
+            "Laat uitgebloeide planten staan — vlinders en bijen hebben de bloemen nodig",
+            "Geef water vroeg in de ochtend, diep en doordringend — liever 1× per week dan dagelijks",
+            "Wied onkruid als de grond vochtig is na regen",
+            "Oogst vroege kruiden: basilicum, peterselie en dille",
+        ],
+    },
+    7: {
+        "emoji": "☀️",
+        "taken": [
+            "Geef diep water in lange droge periodes — focus op nieuwe aanplant",
+            "Verwijder verdroogde bloemen (deadheading) voor aanhoudende bloei",
+            "Zomersnoei voor appels en peren: verwijder overtollige scheuten",
+            "Oogst en droog of vries kruiden in voor de winter",
+        ],
+    },
+    8: {
+        "emoji": "🌾",
+        "taken": [
+            "Zaai tweejarigen (vingerhoedskruid, stokroos) voor bloei volgend jaar",
+            "Snoei heide-soorten licht na de bloei voor compact blijven",
+            "Bewaar zaad van wilde planten en inheemse soorten",
+            "Oogst appels en peren bij eerste rijpheid — wacht niet te lang",
+        ],
+    },
+    9: {
+        "emoji": "🍂",
+        "taken": [
+            "Plant voorjaarsbloeiers: narcissen, tulpen, krokussen en sneeuwklokjes",
+            "Verdeel en herplant vaste planten die te dicht op elkaar staan",
+            "Laat zaadhoofden staan voor mezen, sijsjes en vinken",
+            "Begin een nieuwe composthoop met bladeren en snoeihout",
+        ],
+    },
+    10: {
+        "emoji": "🍁",
+        "taken": [
+            "Laatste kans voor bollenplanting voor de vorst erin zit",
+            "Gebruik gevallen bladeren als mulch of verwerk ze tot bladcompost",
+            "Haal gevoelige kuipplanten voor de vorst naar binnen (boven 5 °C)",
+            "Maai gras kort om schimmel in de winter te voorkomen",
+        ],
+    },
+    11: {
+        "emoji": "❄️",
+        "taken": [
+            "Bescherm gevoelige vaste planten met vliesdoek of een dikke laag bladeren",
+            "Snoei besdragende struiken nog niet — vogels eten de bessen graag",
+            "Reinig en conserveer gereedschap voor de winteropslag",
+            "Blader door catalogi en plan aankopen voor komend voorjaar",
+        ],
+    },
+    12: {
+        "emoji": "🐦",
+        "taken": [
+            "Leg extra vogelvoer uit — bessen, noten en meizenbolletjes voor wintervogels",
+            "Controleer overwinterende planten op vorst- of muizenschade",
+            "Laat bloemstelen staan: de structuur is decoratief en dieren overwinteren erin",
+            "Maak een tuinplan voor het nieuwe jaar",
+        ],
+    },
+}
+
 # ── Globale CSS ───────────────────────────────────────────────────────────────
 st.markdown(
     """
@@ -119,6 +230,22 @@ else:
         "Nog geen planten in de database. Voeg soorten toe via het beheerpaneel "
         "of voer het seedscript uit."
     )
+
+st.divider()
+
+# ── Wat te doen deze maand? ───────────────────────────────────────────────────
+month_data = MONTHLY_TASKS[today.month]
+st.markdown(f"## {month_data['emoji']} Wat te doen in {MONTH_NAMES[today.month].capitalize()}?")
+
+task_cols = st.columns(2)
+tasks = month_data["taken"]
+half = (len(tasks) + 1) // 2
+with task_cols[0]:
+    for task in tasks[:half]:
+        st.markdown(f"- {task}")
+with task_cols[1]:
+    for task in tasks[half:]:
+        st.markdown(f"- {task}")
 
 st.divider()
 

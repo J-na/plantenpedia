@@ -45,7 +45,8 @@ def make_slug(scientific_name: str) -> str:
 LIST_COLUMNS = (
     "id, scientific_name, dutch_names, slug, category, "
     "edible, toxic, light_needs, bloom_start, bloom_end, soil_types, photos, "
-    "evergreen, hardiness, family, family_common"
+    "evergreen, hardiness, family, family_common, "
+    "native_nl, drought_tolerant, water_needs, insects_animals"
 )
 
 
@@ -144,6 +145,10 @@ def filter_plants(
     categories: Optional[List[str]] = None,
     evergreen: Optional[bool] = None,
     hardiness: Optional[List[str]] = None,
+    native_nl: Optional[bool] = None,
+    drought_tolerant: Optional[bool] = None,
+    water_needs: Optional[List[str]] = None,
+    insect_types: Optional[List[str]] = None,
 ) -> List[Dict]:
     """Filter planten op basis van eigenschappen."""
     client = get_client()
@@ -163,15 +168,28 @@ def filter_plants(
         q = q.eq("evergreen", evergreen)
     if hardiness:
         q = q.in_("hardiness", hardiness)
+    if native_nl is not None:
+        q = q.eq("native_nl", native_nl)
+    if drought_tolerant is not None:
+        q = q.eq("drought_tolerant", drought_tolerant)
+    if water_needs:
+        q = q.in_("water_needs", water_needs)
 
     results: List[Dict] = (q.order("scientific_name").execute()).data or []
 
-    # Grondsoort-filter (array overlap) — Python-kant omdat Supabase SDK
-    # geen native &&-operator biedt via de Python client
+    # Python-kant filters (Supabase SDK ondersteunt geen array-element queries)
     if soil_types:
         results = [
             p for p in results
             if p.get("soil_types") and any(s in p["soil_types"] for s in soil_types)
+        ]
+    if insect_types:
+        results = [
+            p for p in results
+            if any(
+                i.get("type") in insect_types
+                for i in (p.get("insects_animals") or [])
+            )
         ]
 
     return results

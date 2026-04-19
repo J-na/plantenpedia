@@ -54,6 +54,11 @@ CREATE TABLE IF NOT EXISTS plants (
     -- Onderhoud (toegevoegd v3)
     maintenance_level TEXT CHECK (maintenance_level IN ('laag', 'midden', 'hoog')),
 
+    -- Ecologische & tuintechnische velden (toegevoegd v4)
+    native_nl        BOOLEAN NOT NULL DEFAULT FALSE,   -- inheems in Nederland/België
+    drought_tolerant BOOLEAN NOT NULL DEFAULT FALSE,   -- droogtebestendig
+    water_needs      TEXT CHECK (water_needs IN ('droog', 'normaal', 'vochtig', 'nat')),
+
     -- Filtervelden (geïndexeerd)
     edible          BOOLEAN NOT NULL DEFAULT FALSE,
     toxic           BOOLEAN NOT NULL DEFAULT FALSE,
@@ -160,6 +165,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trg_plants_updated_at   ON plants;
+DROP TRIGGER IF EXISTS trg_families_updated_at ON plant_families;
+
 CREATE TRIGGER trg_plants_updated_at
     BEFORE UPDATE ON plants
     FOR EACH ROW
@@ -179,20 +187,38 @@ ALTER TABLE plants         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE plant_of_day   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE plant_families ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "public_read_plants"
+DROP POLICY IF EXISTS "public_read_plants"      ON plants;
+DROP POLICY IF EXISTS "public_read_pod"         ON plant_of_day;
+DROP POLICY IF EXISTS "public_read_families"    ON plant_families;
+DROP POLICY IF EXISTS "service_write_plants"    ON plants;
+DROP POLICY IF EXISTS "service_write_pod"       ON plant_of_day;
+DROP POLICY IF EXISTS "service_write_families"  ON plant_families;
+
+CREATE POLICY "public_read_plants"
     ON plants FOR SELECT USING (true);
 
-CREATE POLICY IF NOT EXISTS "public_read_pod"
+CREATE POLICY "public_read_pod"
     ON plant_of_day FOR SELECT USING (true);
 
-CREATE POLICY IF NOT EXISTS "public_read_families"
+CREATE POLICY "public_read_families"
     ON plant_families FOR SELECT USING (true);
 
-CREATE POLICY IF NOT EXISTS "service_write_plants"
+CREATE POLICY "service_write_plants"
     ON plants FOR ALL USING (auth.role() = 'service_role');
 
-CREATE POLICY IF NOT EXISTS "service_write_pod"
+CREATE POLICY "service_write_pod"
     ON plant_of_day FOR ALL USING (auth.role() = 'service_role');
 
-CREATE POLICY IF NOT EXISTS "service_write_families"
+CREATE POLICY "service_write_families"
     ON plant_families FOR ALL USING (auth.role() = 'service_role');
+
+-- ============================================================
+-- v4-migratie: nieuwe kolommen (idempotent voor bestaande databases)
+-- ============================================================
+ALTER TABLE plants ADD COLUMN IF NOT EXISTS native_nl        BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE plants ADD COLUMN IF NOT EXISTS drought_tolerant BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE plants ADD COLUMN IF NOT EXISTS water_needs      TEXT CHECK (water_needs IN ('droog', 'normaal', 'vochtig', 'nat'));
+
+CREATE INDEX IF NOT EXISTS idx_plants_native_nl     ON plants(native_nl);
+CREATE INDEX IF NOT EXISTS idx_plants_drought       ON plants(drought_tolerant);
+CREATE INDEX IF NOT EXISTS idx_plants_water_needs   ON plants(water_needs);

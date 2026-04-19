@@ -15,6 +15,7 @@ from .klimplanten import ENRICHMENTS as _e6
 from .kuipplanten import ENRICHMENTS as _e7
 from .vaste_planten import ENRICHMENTS as _e8
 from .wilde_planten import ENRICHMENTS as _e9
+from ._ecology import ECOLOGY as _eco
 
 
 ENRICHMENTS: dict = {
@@ -29,6 +30,13 @@ ENRICHMENTS: dict = {
     **_e8,
     **_e9
 }
+
+# Merge ecology data (native_nl, drought_tolerant, water_needs) into existing entries
+for _name, _eco_data in _eco.items():
+    if _name in ENRICHMENTS:
+        ENRICHMENTS[_name].update(_eco_data)
+    else:
+        ENRICHMENTS[_name] = _eco_data
 
 
 __all__ = ["ENRICHMENTS"]

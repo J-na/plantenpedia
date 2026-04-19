@@ -71,6 +71,13 @@ HARDINESS_LABELS: Dict[str, str] = {
     "niet_winterhard":     "Niet winterhard",
 }
 
+WATER_NEEDS_LABELS: Dict[str, str] = {
+    "droog":   "Droog",
+    "normaal": "Normaal",
+    "vochtig": "Vochtig",
+    "nat":     "Nat / moerassig",
+}
+
 HARDINESS_ICONS: Dict[str, str] = {
     "volledig_winterhard": "❄️❄️",
     "winterhard":          "❄️",
