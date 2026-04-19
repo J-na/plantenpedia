@@ -8,7 +8,7 @@ from datetime import date
 import streamlit as st
 
 from utils.database import get_all_plants
-from utils.display import CATEGORY_LABELS, MONTH_NAMES
+from utils.display import CATEGORY_LABELS, MONTH_NAMES, render_footer
 
 st.title("📅 Seizoenskalender")
 
@@ -383,3 +383,5 @@ with tab2:
                 st.caption(f"... en {len(blooming_now) - 30} meer. Zie de Bloeikalender voor het volledige overzicht.")
         else:
             st.info("Geen planten met bekende bloeitijd voor deze maand.")
+
+render_footer()

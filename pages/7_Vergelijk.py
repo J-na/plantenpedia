@@ -12,6 +12,7 @@ from utils.display import (
     bloom_label,
     first_photo,
     make_slug,
+    render_footer,
 )
 
 st.title("⚖️ Vergelijk planten")
@@ -143,3 +144,5 @@ totals = [
 ]
 if any(t > 0 for t in totals):
     _row("Totaal ecologie", [f"**{t}/15**" for t in totals])
+
+render_footer()

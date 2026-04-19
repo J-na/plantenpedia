@@ -15,6 +15,7 @@ from utils.display import (
     bloom_label,
     first_photo,
     make_slug,
+    render_footer,
 )
 
 st.title("🔍 Zoeken & filteren")
@@ -271,3 +272,5 @@ else:
         álle actieve filters voldoen.
         """
     )
+
+render_footer()

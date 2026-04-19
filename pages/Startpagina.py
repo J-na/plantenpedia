@@ -13,6 +13,7 @@ from utils.display import (
     bloom_label,
     first_photo,
     make_slug,
+    render_footer,
 )
 
 MONTHLY_TASKS: dict = {
@@ -347,8 +348,4 @@ with nav7:
         )
         st.page_link("pages/3_Beheer.py", label="Ga naar beheer →", icon="⚙️")
 
-st.divider()
-st.caption(
-    "Plantenpedia is een project van Jonathan. "
-    "Alle informatie is bedoeld als leidraad; raadpleeg bij twijfel altijd een expert."
-)
+render_footer()

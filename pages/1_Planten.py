@@ -11,6 +11,7 @@ from utils.display import (
     bloom_label,
     first_photo,
     make_slug,
+    render_footer,
     render_plant_page,
 )
 
@@ -39,6 +40,7 @@ if plant_slug:
             st.query_params.clear()
             st.rerun()
 
+    render_footer()
     st.stop()
 
 # ═══════════════════════════════════════════════════════════════
@@ -140,3 +142,5 @@ for group_key, group_plants in _groups.items():
                     ):
                         st.query_params["plant"] = slug
                         st.rerun()
+
+render_footer()

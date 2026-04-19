@@ -565,3 +565,16 @@ def _render_sources(sources: List[Dict]) -> None:
             st.markdown(f"- [{title}]({url}){suffix}")
         else:
             st.markdown(f"- **{title}**{suffix}")
+
+
+# ── Sitewijde footer ──────────────────────────────────────────────────────────
+
+def render_footer() -> None:
+    """Standaard footer met attributie en contactgegevens. Roep aan als laatste regel van elke pagina."""
+    st.divider()
+    st.caption(
+        "Plantenpedia is een project van Jonathan Meijers. "
+        "Alle informatie is bedoeld als leidraad; raadpleeg bij twijfel altijd een expert.  \n"
+        "Voor vragen, opmerkingen of suggesties: "
+        "[jonathanmeijers2000@gmail.com](mailto:jonathanmeijers2000@gmail.com)"
+    )

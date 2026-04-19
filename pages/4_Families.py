@@ -15,6 +15,7 @@ from utils.display import (
     bloom_label,
     first_photo,
     make_slug,
+    render_footer,
 )
 
 # ── Routing op basis van query param ─────────────────────────────────────────
@@ -160,8 +161,9 @@ else:
                         st.query_params["family"] = name
                         st.rerun()
 
-    st.divider()
     st.caption(
         "Families zonder planten in de encyclopedie worden hier niet getoond. "
         "Familie-beschrijvingen kunnen worden toegevoegd via het beheerpaneel."
     )
+
+render_footer()

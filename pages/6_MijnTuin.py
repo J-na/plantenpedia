@@ -5,7 +5,7 @@ Persoonlijk overzicht van opgeslagen planten (opgeslagen in sessie).
 import streamlit as st
 
 from utils.database import get_plant_by_slug
-from utils.display import CATEGORY_LABELS, MONTH_NAMES, bloom_label, first_photo
+from utils.display import CATEGORY_LABELS, MONTH_NAMES, bloom_label, first_photo, render_footer
 
 st.title("🌻 Mijn Tuinlijst")
 st.caption("Sla planten op vanuit de detailpagina. Je lijst blijft bewaard zolang je browser-tab open is.")
@@ -98,3 +98,5 @@ for p in plants:
             if st.button("✕", key=f"remove_{slug}", help="Verwijder uit lijst"):
                 st.session_state["mijn_tuin"].remove(slug)
                 st.rerun()
+
+render_footer()
