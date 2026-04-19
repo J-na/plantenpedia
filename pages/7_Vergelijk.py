@@ -58,7 +58,7 @@ n = len(plants)
 photo_cols = st.columns(n)
 for col, p in zip(photo_cols, plants):
     with col:
-        photo = first_photo(p)
+        photo = first_photo(p, preferred=["habitus", "algemeen", "bloeiwijze", "blad"])
         if photo:
             try:
                 st.image(photo["url"], width="stretch")

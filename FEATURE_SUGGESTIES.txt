@@ -3,18 +3,21 @@ PLANTENPEDIA — OPENSTAANDE TO-DOs
 Datum bijgewerkt: 2026-04-19
 ====================================================================
 
-GEREALISEERD (alle sprints 0 t/m 4 + technische opschoonronde):
+GEREALISEERD (alle sprints 0 t/m 4 + technische opschoonrondes):
   Refactor enrichments-structuur, upload CLI, schema.sql geconsolideerd,
   native_nl / water_needs / drought_tolerant, zoekpagina presets,
   seizoenskalender, eco-scores, mijn tuinlijst, tuinagenda,
   vergelijkingspagina, companion plants, lookalikes, pruning_info,
-  cultivars.
-  Technisch: cache TTLs naar 3600, search_plants verbeterd (beschrijving
-  doorzoeken, dode DB-query verwijderd), dubbele table-scan families
-  opgelost, make_slug gedecentreerd naar database.py, dubbele imports
-  opgeschoond (2_Zoeken.py, 4_Families.py), CSS gecentraliseerd in
-  app.py, hoogteklasse-filter en bijenwaarde-filter toegevoegd aan
-  2_Zoeken.py, Mijn Tuin + Vergelijk nav-kaarten op startpagina.
+  cultivars, sitewijde footer (render_footer), familiebeschrijvingen
+  (_families.py + upload --families), externe bronnen per plant
+  (_sources.py: Wikipedia + PFAF + FLORON voor 269 planten).
+  Technisch: cache TTLs naar 3600, search_plants verbeterd
+  (beschrijving doorzoeken, dode DB-query verwijderd), dubbele
+  table-scan families opgelost, make_slug gededupliceerd, dubbele
+  imports opgeschoond, CSS gecentraliseerd in app.py, hoogteklasse-
+  filter + bijenwaarde-filter in 2_Zoeken.py, Mijn Tuin + Vergelijk
+  nav-kaarten op startpagina, totaalbeeldfoto als eerste in
+  kaartweergaven.
 
 ====================================================================
 OPENSTAAND — DATA-UITBREIDINGEN
@@ -30,179 +33,41 @@ Toevoegen via data/enrichments/<categorie>.py, dan uploaden.
   edible_parts      → specifieke eetbare delen (keukenkruiden, wilde_planten)
   recipes           → bereidingsideeën (keukenkruiden)
   toxic_info        → uitgebreide giftinformatie (bomen met giftige bessen)
-  sources           → wetenschappelijke bronnen per plant (ontbreekt overal)
   wood_properties   → houtkenmerken (bomen)
 
   Aanpak per upload:
     python data/upload.py --fields distribution
     python data/upload.py --fields fertilizer_needs
     python data/upload.py --fields pests_diseases
-    python data/upload.py --fields sources
+
+  Uploaden van al gemaakte data:
+    python data/upload.py --fields sources          ← bronnen (269 planten)
+    python data/upload.py --families                ← 15 familiebeschrijvingen
 
   Keukenkruiden is de dunste categorie (3 soorten). Overweeg uitbreiding
   met: tijm, rozemarijn, oregano, munt, bieslook, citroenmelisse, venkel,
   bernagie, lovage, selderij.
 
 ====================================================================
-OPENSTAAND — NIEUWE FEATURES
+OPENSTAAND — FOTO'S
 ====================================================================
 
-────────────────────────────────────────────────────────────────────
-A. EXTRA FOTO'S PER PLANT (data + kleine code-aanpassing)
-────────────────────────────────────────────────────────────────────
-Doel:
-  Elke plant krijgt idealiter 3 foto's:
-    1. bloem / bloeivorm  → type: "bloeiwijze"
-    2. vrucht / zaad      → type: "vrucht" of "zaad"
-    3. blad / totaalbeeld → type: "blad" of "habitus"
+Elke plant krijgt idealiter 3 foto's:
+  1. bloem / bloeivorm  → type: "bloeiwijze"
+  2. vrucht / zaad      → type: "vrucht" of "zaad"
+  3. blad / totaalbeeld → type: "blad" of "habitus"
 
-  Op de startpagina en in het plantenoverzicht (1_Planten.py,
-  2_Zoeken.py, 4_Families.py, 6_MijnTuin.py, 7_Vergelijk.py)
-  moet het totaalbeeld / habitusfoto als eerste worden getoond,
-  zodat de plant als geheel herkenbaar is. Op de detailpagina
-  zelf blijft bloeiwijze de voorkeursfoto (detail-header).
+Toevoegen via data/enrichments/<categorie>.py:
+  {"url": "...", "source": "Wikimedia Commons",
+   "license": "CC BY-SA 4.0", "type": "habitus", "caption": "..."}
 
-Code-aanpassing (klein):
-  In utils/display.py heeft first_photo() een `preferred`-parameter.
-  Alle kaartweergaven (render_plant_card, en alle inline card-loops
-  in 1_Planten.py, 2_Zoeken.py, 4_Families.py, 5_Kalender.py,
-  6_MijnTuin.py, 7_Vergelijk.py) roepen first_photo(plant) aan
-  zonder preferred-argument → volgorde is nu bloeiwijze eerst.
+Upload: python data/upload.py --fields photos
 
-  Fix: pas de aanroep aan in alle kaartweergaven naar:
-    photo = first_photo(plant, preferred=["habitus", "algemeen", "bloeiwijze", "blad"])
-  Zo is totaalbeeld altijd de kaartfoto, en bloeiwijze blijft de
-  voorkeur op de detailpagina (_render_header roept first_photo
-  niet aan — die toont álle foto's gesorteerd).
+Prioriteit: wilde_planten en vaste_planten (meeste bezoekers),
+            daarna heesters en bomen.
 
-  render_plant_card() in display.py gebruikt ook first_photo()
-  zonder preferred → aanpassen in die functie zelf zodat het
-  automatisch geldt voor alle callers.
-
-Data-aanpak:
-  Voeg extra foto's toe in data/enrichments/<categorie>.py via de
-  img() helper uit _helpers.py. Formaat:
-    {"url": "...", "source": "Wikimedia Commons",
-     "license": "CC BY-SA 4.0", "type": "habitus", "caption": "..."}
-
-  Upload:  python data/upload.py --fields photos
-
-  Prioriteit qua soorten: begin met de 50 meest bekeken soorten
-  (wilde_planten en vaste_planten), dan heesters en bomen.
-
-────────────────────────────────────────────────────────────────────
-B. FAMILIEPAGINA UITBREIDEN MET BESCHRIJVINGEN
-────────────────────────────────────────────────────────────────────
-Status:
-  De DB-tabel plant_families heeft een `description` TEXT-veld.
-  De pagina 4_Families.py toont de beschrijving al als die gevuld is,
-  en laat een "nog geen beschrijving"-melding zien als die leeg is.
-  Het beheerpaneel (3_Beheer.py) kan beschrijvingen invoeren.
-
-Aanpak:
-  Optie 1 (via beheer): Log in als admin → Families → kies een familie
-    → voeg Nederlandse beschrijving toe (1–3 alinea's: kenmerken,
-    verspreiding, ecologische rol, bekende vertegenwoordigers).
-
-  Optie 2 (via script): Maak data/enrichments/_families.py aan met
-  een FAMILIES-dict:
-    FAMILIES: dict = {
-        "Asteraceae": {
-            "description": "De composietenfamilie omvat ...",
-            "dutch_name":  "Composietenfamilie",
-        },
-        ...
-    }
-  Schrijf een upload-functie die upsert_family() aanroept per entry.
-  Of voer direct SQL uit in Supabase:
-    UPDATE plant_families SET description = '...' WHERE name = 'Asteraceae';
-
-  Te beschrijven families (prioriteit — meeste soorten in DB):
-    Asteraceae, Lamiaceae, Rosaceae, Ranunculaceae, Apiaceae,
-    Scrophulariaceae, Liliaceae, Poaceae, Fabaceae, Betulaceae,
-    Salicaceae, Ericaceae, Caprifoliaceae, Boraginaceae, Geraniaceae
-
-────────────────────────────────────────────────────────────────────
-C. EXTERNE INFORMATIEBRONNEN PER PLANT
-────────────────────────────────────────────────────────────────────
-Status:
-  Het `sources` JSONB-veld bestaat al in de DB en wordt al getoond
-  via _render_sources() in utils/display.py. Het is voor alle
-  planten leeg.
-
-Aanpak:
-  Voeg een `_sources.py` toe aan data/enrichments/ met een SOURCES-
-  dict (zelfde patroon als _companions.py, _pruning.py, etc.):
-
-    SOURCES: dict = {
-        "Taraxacum officinale": {"sources": [
-            {"title": "FLORON – Paardenbloem",
-             "url":   "https://www.floron.nl/...",
-             "description": "Verspreiding en ecologie in Nederland"},
-            {"title": "Wilde Planten – Weeda et al.",
-             "description": "Standaardwerk Nederlandse flora"},
-        ]},
-        ...
-    }
-
-  Importeer in __init__.py (zelfde merge-patroon als de andere _*.py
-  bestanden) en voeg de for-loop toe:
-    for _name, _src_data in _sources.items():
-        if _name in ENRICHMENTS:
-            ENRICHMENTS[_name].update(_src_data)
-
-  Upload: python data/upload.py --fields sources
-
-  Nuttige standaardbronnen om toe te voegen (voor alle planten):
-    - FLORON (floron.nl) — verspreiding in Nederland
-    - Wilde Planten (wildeplanten.nl) — determinatie & ecologie
-    - Tuin & Natuur (tuinnatuur.nl) — tuinadvies
-    - Wikipedia (nl.wikipedia.org/wiki/<wetenschappelijke naam>)
-    - PFAF (pfaf.org) — eetbaar & medicinaal gebruik
-
-────────────────────────────────────────────────────────────────────
-D. SITEWIJDE FOOTER MET CONTACT EN ATTRIBUTIE
-────────────────────────────────────────────────────────────────────
-Doel:
-  Elke pagina eindigt met dezelfde footer-tekst:
-    "Plantenpedia is een project van Jonathan Meijers.
-     Alle informatie is bedoeld als leidraad; raadpleeg bij twijfel
-     altijd een expert.
-     Voor vragen, opmerkingen of suggesties:
-     jonathanmeijers2000@gmail.com"
-
-Technische beperking:
-  Code in app.py na pg.run() wordt nooit uitgevoerd — Streamlit
-  geeft na pg.run() controle volledig aan het pagina-bestand.
-  Oplossing: maak een render_footer()-functie in utils/display.py
-  en roep die aan als laatste regel in elk pagina-bestand.
-
-Implementatie:
-  1. Voeg toe aan utils/display.py:
-
-    def render_footer() -> None:
-        st.divider()
-        st.caption(
-            "Plantenpedia is een project van Jonathan Meijers. "
-            "Alle informatie is bedoeld als leidraad; raadpleeg bij "
-            "twijfel altijd een expert.  \n"
-            "Voor vragen, opmerkingen of suggesties: "
-            "[jonathanmeijers2000@gmail.com]"
-            "(mailto:jonathanmeijers2000@gmail.com)"
-        )
-
-  2. Importeer en roep aan onderaan elk pagina-bestand:
-       from utils.display import render_footer  (of voeg toe aan
-       de bestaande display-import)
-       render_footer()
-
-     Pagina's: Startpagina.py, 1_Planten.py, 2_Zoeken.py,
-               4_Families.py, 5_Kalender.py, 6_MijnTuin.py,
-               7_Vergelijk.py
-     (3_Beheer.py optioneel — admin-only pagina)
-
-  3. Verwijder de bestaande hard-coded st.caption() in Startpagina.py
-     (huidige laatste regels) zodat er geen dubbele footer staat.
+Foto-volgorde in kaartweergaven is al ingesteld op totaalbeeld
+eerst (habitus > algemeen > bloeiwijze > blad).
 
 ====================================================================
 EINDE DOCUMENT

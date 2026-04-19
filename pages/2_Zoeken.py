@@ -204,7 +204,7 @@ if show_results:
 
         for i, plant in enumerate(row):
             with cols[i]:
-                photo = first_photo(plant)
+                photo = first_photo(plant, preferred=["habitus", "algemeen", "bloeiwijze", "blad"])
                 dutch = plant.get("dutch_names") or []
                 primary = dutch[0] if dutch else plant["scientific_name"]
                 cat = plant.get("category", "overig")

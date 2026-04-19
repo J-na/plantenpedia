@@ -175,7 +175,7 @@ def render_plant_card(plant: Dict, col_key: str = "") -> bool:
     Compacte plantkaart voor de rasterweergave.
     Geeft True terug als de gebruiker op 'Bekijk' klikt.
     """
-    photo = first_photo(plant)
+    photo = first_photo(plant, preferred=["habitus", "algemeen", "bloeiwijze", "blad"])
     dutch_names = plant.get("dutch_names") or []
     primary_name = dutch_names[0] if dutch_names else plant["scientific_name"]
     cat = plant.get("category", "overig")

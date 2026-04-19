@@ -70,7 +70,7 @@ if selected_family:
 
         for i, plant in enumerate(row):
             with cols[i]:
-                photo = first_photo(plant)
+                photo = first_photo(plant, preferred=["habitus", "algemeen", "bloeiwijze", "blad"])
                 dutch_names = plant.get("dutch_names") or []
                 primary = dutch_names[0] if dutch_names else plant["scientific_name"]
                 cat = plant.get("category", "overig")

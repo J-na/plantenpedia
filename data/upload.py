@@ -10,6 +10,7 @@ Gebruik:
     python data/upload.py --category bomen         # Alle planten in een categorie
     python data/upload.py --fields photos,description  # Alleen deze velden bijwerken
     python data/upload.py --dry-run                # Toon wat er bijgewerkt wordt zonder te schrijven
+    python data/upload.py --families               # Plantenfamilie-beschrijvingen uploaden
 
 Opties combineren:
     python data/upload.py --plant "Taxus baccata" --fields photos
@@ -133,7 +134,36 @@ def filter_payload(data: dict, existing_row: dict | None, fields: list[str] | No
     return payload
 
 
+def run_families(args: argparse.Namespace) -> None:
+    """Upload plantenfamilie-beschrijvingen naar de plant_families tabel."""
+    from data.enrichments._families import FAMILIES
+
+    items = list(FAMILIES.items())
+    print(f"Families uploaden: {len(items)}" + (" | DRY-RUN" if args.dry_run else ""))
+    success = errors = 0
+
+    for name, data in items:
+        payload = {"name": name, **data}
+        if args.dry_run:
+            print(f"  [DRY] {name}: dutch_name={data.get('dutch_name')}")
+            success += 1
+            continue
+        try:
+            _client.table("plant_families").upsert(payload, on_conflict="name").execute()
+            print(f"  ✓ {name}")
+            success += 1
+        except Exception as exc:
+            print(f"  ✗ {name}: {exc}")
+            errors += 1
+
+    print(f"\nKlaar: {success} bijgewerkt, {errors} fouten.")
+
+
 def run(args: argparse.Namespace) -> None:
+    if args.families:
+        run_families(args)
+        return
+
     enrichments = load_enrichments(args.category)
 
     # Filter op specifieke plant
@@ -214,6 +244,10 @@ def main() -> None:
     parser.add_argument(
         "--dry-run", action="store_true",
         help="Toon wat er bijgewerkt zou worden zonder iets te schrijven",
+    )
+    parser.add_argument(
+        "--families", action="store_true",
+        help="Upload plantenfamilie-beschrijvingen uit data/enrichments/_families.py",
     )
     args = parser.parse_args()
     run(args)

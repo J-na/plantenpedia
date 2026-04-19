@@ -67,7 +67,7 @@ for p in plants:
     slug = p.get("slug", "")
     dutch = p.get("dutch_names") or []
     name = dutch[0] if dutch else p["scientific_name"]
-    photo = first_photo(p)
+    photo = first_photo(p, preferred=["habitus", "algemeen", "bloeiwijze", "blad"])
     cat = p.get("category", "overig")
     bl = bloom_label(p.get("bloom_start"), p.get("bloom_end"))
     native = p.get("native_nl")

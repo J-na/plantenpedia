@@ -176,7 +176,7 @@ st.markdown(f"## 🌸 Soort van de dag &nbsp;·&nbsp; {dag_str}")
 plant = get_plant_of_day(today)
 
 if plant:
-    photo = first_photo(plant)
+    photo = first_photo(plant, preferred=["habitus", "algemeen", "bloeiwijze", "blad"])
     dutch_names = plant.get("dutch_names") or []
     primary_name = dutch_names[0] if dutch_names else plant["scientific_name"]
     all_dutch = ", ".join(dutch_names) if dutch_names else ""
@@ -256,7 +256,7 @@ if top_bijen:
     bee_cols = st.columns(5)
     for col, p in zip(bee_cols, top_bijen):
         with col:
-            photo = first_photo(p)
+            photo = first_photo(p, preferred=["habitus", "algemeen", "bloeiwijze", "blad"])
             if photo:
                 try:
                     st.image(photo["url"], width="stretch")
