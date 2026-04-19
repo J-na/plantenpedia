@@ -208,7 +208,7 @@ def get_top_insects_this_month(month: int, limit: int = 5) -> List[Dict]:
         .select(LIST_COLUMNS)
         .lte("bloom_start", month)
         .gte("bloom_end", month)
-        .order("score_insects", desc=True, nulls_last=True)
+        .order("score_insects", desc=True)
         .execute()
     )
     candidates = resp.data or []

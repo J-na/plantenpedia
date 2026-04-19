@@ -69,7 +69,7 @@ col_h, col_out = st.columns([5, 1])
 with col_h:
     st.title("⚙️ Beheerpaneel")
 with col_out:
-    if st.button("Uitloggen", use_container_width=True):
+    if st.button("Uitloggen", width="stretch"):
         st.session_state["admin_ok"] = False
         st.rerun()
 

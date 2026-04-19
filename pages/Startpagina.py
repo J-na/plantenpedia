@@ -190,7 +190,7 @@ if plant:
     with col_img:
         if photo:
             try:
-                st.image(photo["url"], use_container_width=True)
+                st.image(photo["url"], width="stretch")
                 if photo.get("source"):
                     st.caption(f"Foto: {photo['source']} · {photo.get('license', '')}")
             except Exception:
@@ -261,7 +261,7 @@ if top_bijen:
             photo = first_photo(p)
             if photo:
                 try:
-                    st.image(photo["url"], use_container_width=True)
+                    st.image(photo["url"], width="stretch")
                 except Exception:
                     pass
             dutch = p.get("dutch_names") or []

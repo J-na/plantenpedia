@@ -47,7 +47,7 @@ for col, (label, preset_filters) in zip(preset_cols, PRESETS.items()):
         active = st.session_state.get("active_preset") == label
         if st.button(
             label,
-            use_container_width=True,
+            width="stretch",
             type="primary" if active else "secondary",
             key=f"preset_{label}",
         ):
@@ -133,7 +133,7 @@ with st.expander("Geavanceerde filters", expanded=not st.session_state.get("acti
 
             st.markdown("&nbsp;")
             submitted = st.form_submit_button(
-                "🔍 Zoeken", type="primary", use_container_width=True
+                "🔍 Zoeken", type="primary", width="stretch"
             )
 
 # ── Resultaten ────────────────────────────────────────────────────────────────
@@ -205,7 +205,7 @@ if show_results:
                 with st.container(border=True):
                     if photo:
                         try:
-                            st.image(photo["url"], use_container_width=True)
+                            st.image(photo["url"], width="stretch")
                         except Exception:
                             pass
 
@@ -230,7 +230,7 @@ if show_results:
                     if st.button(
                         "Bekijk →",
                         key=f"res_{slug}_{row_start}_{i}",
-                        use_container_width=True,
+                        width="stretch",
                     ):
                         st.query_params["plant"] = slug
                         st.switch_page("pages/1_Planten.py")

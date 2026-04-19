@@ -90,7 +90,7 @@ if selected_family:
                 with st.container(border=True):
                     if photo:
                         try:
-                            st.image(photo["url"], use_container_width=True)
+                            st.image(photo["url"], width="stretch")
                         except Exception:
                             pass
 
@@ -113,7 +113,7 @@ if selected_family:
                     if st.button(
                         "Bekijk →",
                         key=f"fam_plant_{slug}_{row_start}_{i}",
-                        use_container_width=True,
+                        width="stretch",
                     ):
                         st.session_state["navigate_to_plant"] = slug
                         st.switch_page("pages/1_Planten.py")
@@ -166,7 +166,7 @@ else:
                     if st.button(
                         "Bekijk →",
                         key=f"fam_card_{name}_{row_start}_{i}",
-                        use_container_width=True,
+                        width="stretch",
                     ):
                         st.query_params["family"] = name
                         st.rerun()

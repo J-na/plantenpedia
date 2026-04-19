@@ -133,7 +133,7 @@ for group_key, group_plants in _groups.items():
                 with st.container(border=True):
                     if photo:
                         try:
-                            st.image(photo["url"], use_container_width=True)
+                            st.image(photo["url"], width="stretch")
                         except Exception:
                             pass
 
@@ -146,7 +146,7 @@ for group_key, group_plants in _groups.items():
                     if st.button(
                         "Bekijk →",
                         key=f"plant_{slug}_{row_start}_{i}",
-                        use_container_width=True,
+                        width="stretch",
                     ):
                         st.query_params["plant"] = slug
                         st.rerun()

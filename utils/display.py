@@ -189,7 +189,7 @@ def render_plant_card(plant: Dict, col_key: str = "") -> bool:
     with st.container(border=True):
         if photo:
             try:
-                st.image(photo["url"], use_container_width=True)
+                st.image(photo["url"], width="stretch")
             except Exception:
                 pass
         st.markdown(f"**{primary_name}**")
@@ -198,7 +198,7 @@ def render_plant_card(plant: Dict, col_key: str = "") -> bool:
         bl = bloom_label(plant.get("bloom_start"), plant.get("bloom_end"))
         if bl != "Onbekend":
             st.caption(f"🌸 {bl}")
-        if st.button("Bekijk →", key=f"card_{slug}_{col_key}", use_container_width=True):
+        if st.button("Bekijk →", key=f"card_{slug}_{col_key}", width="stretch"):
             clicked = True
     return clicked
 
@@ -310,7 +310,7 @@ def _render_header(plant: Dict) -> None:
                 caption_text = photo.get("caption") or ""
                 label = PHOTO_TYPE_LABELS.get(photo.get("type", ""), caption_text or "Foto")
                 try:
-                    st.image(photo["url"], caption=str(label), use_container_width=True)
+                    st.image(photo["url"], caption=str(label), width="stretch")
                 except Exception:
                     st.caption("*(foto niet beschikbaar)*")
                 render_photo_caption(photo)
@@ -491,7 +491,7 @@ def _render_cultivars(cultivars: List[Dict]) -> None:
                 with st.container(border=True):
                     if cv.get("photo_url"):
                         try:
-                            st.image(cv["photo_url"], use_container_width=True)
+                            st.image(cv["photo_url"], width="stretch")
                         except Exception:
                             pass
                         if cv.get("photo_source"):
