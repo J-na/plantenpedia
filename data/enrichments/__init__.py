@@ -22,6 +22,7 @@ from ._lookalikes import LOOKALIKES as _lookalikes
 from ._pruning import PRUNING as _pruning
 from ._cultivars import CULTIVARS as _cultivars
 from ._sources import SOURCES as _sources
+from ._photos import PHOTOS as _photos
 
 
 ENRICHMENTS: dict = {
@@ -78,6 +79,12 @@ for _name, _src_data in _sources.items():
         ENRICHMENTS[_name].update(_src_data)
     else:
         ENRICHMENTS[_name] = _src_data
+
+for _name, _photo_data in _photos.items():
+    if _name in ENRICHMENTS:
+        ENRICHMENTS[_name].update(_photo_data)
+    else:
+        ENRICHMENTS[_name] = _photo_data
 
 
 __all__ = ["ENRICHMENTS"]

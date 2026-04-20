@@ -49,25 +49,23 @@ Toevoegen via data/enrichments/<categorie>.py, dan uploaden.
   bernagie, lovage, selderij.
 
 ====================================================================
-OPENSTAAND — FOTO'S
+OPENSTAAND — FOTO'S (nalopen & aanvullen)
 ====================================================================
 
-Elke plant krijgt idealiter 3 foto's:
-  1. bloem / bloeivorm  → type: "bloeiwijze"
-  2. vrucht / zaad      → type: "vrucht" of "zaad"
-  3. blad / totaalbeeld → type: "blad" of "habitus"
+Foto-structuur is aangemaakt in data/enrichments/_photos.py
+Alle 263 planten hebben 2–3 foto's met type ("bloeiwijze", "habitus",
+"blad", "vrucht"). Upload via:
 
-Toevoegen via data/enrichments/<categorie>.py:
-  {"url": "...", "source": "Wikimedia Commons",
-   "license": "CC BY-SA 4.0", "type": "habitus", "caption": "..."}
+  python data/upload.py --fields photos
 
-Upload: python data/upload.py --fields photos
-
-Prioriteit: wilde_planten en vaste_planten (meeste bezoekers),
-            daarna heesters en bomen.
-
-Foto-volgorde in kaartweergaven is al ingesteld op totaalbeeld
-eerst (habitus > algemeen > bloeiwijze > blad).
+Nog te doen:
+  - Controleer per plant of de Wikimedia Commons filenames bestaan.
+    Niet-bestaande bestanden geven een broken image in Streamlit.
+    Werkwijze: open de app, zoek planten met ontbrekende foto's,
+    zoek het juiste bestand op commons.wikimedia.org en pas
+    _photos.py aan.
+  - Prioriteit voor controle: wilde_planten en vaste_planten
+    (meeste bezoekers), daarna heesters en bomen.
 
 ====================================================================
 EINDE DOCUMENT
