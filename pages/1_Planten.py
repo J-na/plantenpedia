@@ -124,10 +124,13 @@ for group_key, group_plants in _groups.items():
 
                 with st.container(border=True):
                     if photo:
-                        try:
-                            st.image(photo["url"], width="stretch")
-                        except Exception:
-                            pass
+                        url = photo["url"].replace('"', "%22")
+                        st.markdown(
+                            f'<img src="{url}" style="width:100%;max-height:160px;'
+                            'object-fit:cover;border-radius:6px;display:block;" '
+                            'loading="lazy" />',
+                            unsafe_allow_html=True,
+                        )
 
                     st.markdown(f"**{primary}**")
                     st.markdown(f"*{plant['scientific_name']}*")

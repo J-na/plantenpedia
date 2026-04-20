@@ -184,10 +184,13 @@ def render_plant_card(plant: Dict, col_key: str = "") -> bool:
     clicked = False
     with st.container(border=True):
         if photo:
-            try:
-                st.image(photo["url"], width="stretch")
-            except Exception:
-                pass
+            url = photo["url"].replace('"', "%22")
+            st.markdown(
+                f'<img src="{url}" style="width:100%;max-height:160px;'
+                'object-fit:cover;border-radius:6px;display:block;" '
+                'loading="lazy" />',
+                unsafe_allow_html=True,
+            )
         st.markdown(f"**{primary_name}**")
         st.markdown(f"*{plant['scientific_name']}*")
         st.caption(CATEGORY_LABELS.get(cat, cat))
